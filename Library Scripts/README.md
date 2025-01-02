@@ -1,4 +1,4 @@
-# Library Script
+# Library Scripts
 
 Library Scripts are reusable pieces of code that can be executed across Journeys in the PingOne AIC platform.
 
