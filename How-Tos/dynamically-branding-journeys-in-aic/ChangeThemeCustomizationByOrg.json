@@ -1,0 +1,553 @@
+{
+    "meta": {
+      "treesSelectedForExport": [
+        "ChangeThemeCustomizationByOrg"
+      ],
+      "innerTreesIncluded": []
+    },
+    "trees": {
+      "ChangeThemeCustomizationByOrg": {
+        "tree": {
+          "_id": "ChangeThemeCustomizationByOrg",
+          "_rev": "-182935133",
+          "identityResource": "managed/alpha_user",
+          "uiConfig": {
+            "categories": "[\"Organizations\",\"Theming\"]"
+          },
+          "entryNodeId": "28492126-9778-407c-baee-e1a145dd246a",
+          "innerTreeOnly": false,
+          "nodes": {
+            "28492126-9778-407c-baee-e1a145dd246a": {
+              "x": 210,
+              "y": 147,
+              "connections": {
+                "Error": "e301438c-0bd0-429c-ab0c-66126501069a",
+                "Found": "ea094817-1f60-4441-b0b5-dc8220ab6d80",
+                "Missing": "ea094817-1f60-4441-b0b5-dc8220ab6d80"
+              },
+              "nodeType": "ScriptedDecisionNode",
+              "displayName": "Get Org ID from Query Param"
+            },
+            "ea094817-1f60-4441-b0b5-dc8220ab6d80": {
+              "x": 514,
+              "y": 80,
+              "connections": {
+                "Error": "e301438c-0bd0-429c-ab0c-66126501069a",
+                "Success": "ed799a69-05fc-4a9b-9f61-ec040d2ada97"
+              },
+              "nodeType": "PageNode",
+              "displayName": "Page Node"
+            },
+            "ed799a69-05fc-4a9b-9f61-ec040d2ada97": {
+              "x": 759,
+              "y": 159.5,
+              "connections": {
+                "false": "e301438c-0bd0-429c-ab0c-66126501069a",
+                "true": "22c8192f-cf9a-4243-b274-890906e5eba4"
+              },
+              "nodeType": "DataStoreDecisionNode",
+              "displayName": "Data Store Decision"
+            },
+            "414c5ad2-c2ed-4a2a-8954-7d7c2ab88fd5": {
+              "x": 1243,
+              "y": 83,
+              "connections": {
+                "Success": "3b539adc-2724-4e8e-a914-c7e6cb1022a7",
+                "Error": "3b539adc-2724-4e8e-a914-c7e6cb1022a7"
+              },
+              "nodeType": "ScriptedDecisionNode",
+              "displayName": "Set Email Styling"
+            },
+            "3b539adc-2724-4e8e-a914-c7e6cb1022a7": {
+              "x": 1473,
+              "y": 184.5,
+              "connections": {
+                "outcome": "70e691a5-1e33-4ac3-a356-e7b6d60d92e0"
+              },
+              "nodeType": "EmailSuspendNode",
+              "displayName": "Registration Email"
+            },
+            "22c8192f-cf9a-4243-b274-890906e5eba4": {
+              "x": 996,
+              "y": 159.5,
+              "connections": {
+                "true": "414c5ad2-c2ed-4a2a-8954-7d7c2ab88fd5",
+                "false": "e301438c-0bd0-429c-ab0c-66126501069a"
+              },
+              "nodeType": "IdentifyExistingUserNode",
+              "displayName": "Identify Existing User"
+            }
+          },
+          "staticNodes": {
+            "startNode": {
+              "x": 70,
+              "y": 177
+            },
+            "70e691a5-1e33-4ac3-a356-e7b6d60d92e0": {
+              "x": 1703,
+              "y": 177
+            },
+            "e301438c-0bd0-429c-ab0c-66126501069a": {
+              "x": 1243,
+              "y": 266.5
+            }
+          },
+          "description": "An example journey showcasing how you can dynamically change the theme customization based on the metadata set on the Organization.",
+          "mustRun": false,
+          "enabled": true
+        },
+        "nodes": {
+          "28492126-9778-407c-baee-e1a145dd246a": {
+            "_id": "28492126-9778-407c-baee-e1a145dd246a",
+            "_rev": "-731073553",
+            "script": "384e42a0-8ae9-4847-8251-5c7ddd9d033e",
+            "outcomes": [
+              "Found",
+              "Missing",
+              "Error"
+            ],
+            "outputs": [
+              "*"
+            ],
+            "inputs": [
+              "*"
+            ],
+            "_type": {
+              "_id": "ScriptedDecisionNode",
+              "name": "Scripted Decision",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "Found",
+                "displayName": "Found"
+              },
+              {
+                "id": "Missing",
+                "displayName": "Missing"
+              },
+              {
+                "id": "Error",
+                "displayName": "Error"
+              }
+            ]
+          },
+          "ea094817-1f60-4441-b0b5-dc8220ab6d80": {
+            "_id": "ea094817-1f60-4441-b0b5-dc8220ab6d80",
+            "_rev": "-741101790",
+            "nodes": [
+              {
+                "_id": "71f0771a-a63c-452c-a2e0-f7836c6e65af",
+                "nodeType": "ValidatedUsernameNode",
+                "displayName": "Platform Username"
+              },
+              {
+                "_id": "e8bce629-7782-46c0-b048-e0e6385ef1f0",
+                "nodeType": "ValidatedPasswordNode",
+                "displayName": "Platform Password"
+              },
+              {
+                "_id": "4110050a-64a8-4ae7-b059-dda6289939bd",
+                "nodeType": "ScriptedDecisionNode",
+                "displayName": "Set Theme Styling"
+              }
+            ],
+            "pageDescription": {
+              "en": "Log in to continue."
+            },
+            "pageHeader": {
+              "en": "Welcome"
+            },
+            "_type": {
+              "_id": "PageNode",
+              "name": "Page Node",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "Success",
+                "displayName": "Success"
+              },
+              {
+                "id": "Error",
+                "displayName": "Error"
+              }
+            ]
+          },
+          "ed799a69-05fc-4a9b-9f61-ec040d2ada97": {
+            "_id": "ed799a69-05fc-4a9b-9f61-ec040d2ada97",
+            "_rev": "-1845820041",
+            "_type": {
+              "_id": "DataStoreDecisionNode",
+              "name": "Data Store Decision",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "true",
+                "displayName": "True"
+              },
+              {
+                "id": "false",
+                "displayName": "False"
+              }
+            ]
+          },
+          "414c5ad2-c2ed-4a2a-8954-7d7c2ab88fd5": {
+            "_id": "414c5ad2-c2ed-4a2a-8954-7d7c2ab88fd5",
+            "_rev": "834349041",
+            "script": "bd84d377-835e-4f69-85e1-9073c0d8a83f",
+            "outcomes": [
+              "Success",
+              "Error"
+            ],
+            "outputs": [
+              "*"
+            ],
+            "inputs": [
+              "*"
+            ],
+            "_type": {
+              "_id": "ScriptedDecisionNode",
+              "name": "Scripted Decision",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "Success",
+                "displayName": "Success"
+              },
+              {
+                "id": "Error",
+                "displayName": "Error"
+              }
+            ]
+          },
+          "3b539adc-2724-4e8e-a914-c7e6cb1022a7": {
+            "_id": "3b539adc-2724-4e8e-a914-c7e6cb1022a7",
+            "_rev": "-1012008641",
+            "emailSuspendMessage": {
+              "en": "An email has been sent to the address you entered. Click the link in that email to proceed."
+            },
+            "emailTemplateName": "globalRegistration",
+            "identityAttribute": "userName",
+            "emailAttribute": "mail",
+            "objectLookup": false,
+            "_type": {
+              "_id": "EmailSuspendNode",
+              "name": "Email Suspend Node",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "outcome",
+                "displayName": "Outcome"
+              }
+            ]
+          },
+          "22c8192f-cf9a-4243-b274-890906e5eba4": {
+            "_id": "22c8192f-cf9a-4243-b274-890906e5eba4",
+            "_rev": "845825803",
+            "identityAttribute": "userName",
+            "identifier": "mail",
+            "_type": {
+              "_id": "IdentifyExistingUserNode",
+              "name": "Identify Existing User",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "true",
+                "displayName": "True"
+              },
+              {
+                "id": "false",
+                "displayName": "False"
+              }
+            ]
+          }
+        },
+        "innerNodes": {
+          "71f0771a-a63c-452c-a2e0-f7836c6e65af": {
+            "_id": "71f0771a-a63c-452c-a2e0-f7836c6e65af",
+            "_rev": "1695930447",
+            "usernameAttribute": "userName",
+            "validateInput": false,
+            "_type": {
+              "_id": "ValidatedUsernameNode",
+              "name": "Platform Username",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "outcome",
+                "displayName": "Outcome"
+              }
+            ]
+          },
+          "e8bce629-7782-46c0-b048-e0e6385ef1f0": {
+            "_id": "e8bce629-7782-46c0-b048-e0e6385ef1f0",
+            "_rev": "-1808044257",
+            "passwordAttribute": "password",
+            "validateInput": false,
+            "_type": {
+              "_id": "ValidatedPasswordNode",
+              "name": "Platform Password",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "outcome",
+                "displayName": "Outcome"
+              }
+            ]
+          },
+          "4110050a-64a8-4ae7-b059-dda6289939bd": {
+            "_id": "4110050a-64a8-4ae7-b059-dda6289939bd",
+            "_rev": "1109268195",
+            "script": "9562d68f-915a-466d-b51a-0aac0c2d7d44",
+            "outcomes": [
+              "Success",
+              "Error"
+            ],
+            "outputs": [
+              "*"
+            ],
+            "inputs": [
+              "*"
+            ],
+            "_type": {
+              "_id": "ScriptedDecisionNode",
+              "name": "Scripted Decision",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "Success",
+                "displayName": "Success"
+              },
+              {
+                "id": "Error",
+                "displayName": "Error"
+              }
+            ]
+          }
+        },
+        "scripts": {
+          "384e42a0-8ae9-4847-8251-5c7ddd9d033e": {
+            "_id": "384e42a0-8ae9-4847-8251-5c7ddd9d033e",
+            "name": "Get Org ID by Query Parameter",
+            "description": "Capture the URL Query Param specified (orgId)",
+            "script": "\"/*\\n Capture the URL Query Param specified\\n \\n This script does not need to be parametrized. It will work properly as is.\\n \\n The scripted decision node needs the following outcomes defined:\\n - Found\\n - Missing\\n - Error\\n \\n Author: @gwizdala\\n */\\n//// CONSTANTS\\n// Change the query parameter below if you want to gather a different value.\\n// Ideally, this sort of functionality could be handled in a library script.\\nvar QUERY_PARAM = \\\"orgId\\\";\\nvar SHARED_STATE_KEY = \\\"orgId\\\";\\n// Request Params\\nvar HOST = requestHeaders.get(\\\"host\\\").get(0); // e.g. openam-example.forgeblocks.com\\n\\nvar NodeOutcome = {\\n    FOUND: \\\"Found\\\",\\n    MISSING: \\\"Missing\\\",\\n    ERROR: \\\"Error\\\"\\n};\\n\\n//// MAIN\\n(function () {\\n    try {  \\n      // Gather the Query Parameter & pass into shared state\\n      if (requestParameters.get(QUERY_PARAM)) {\\n        nodeState.putShared(SHARED_STATE_KEY, decodeURI(requestParameters.get(QUERY_PARAM).get(0)));\\n        outcome = NodeOutcome.FOUND;\\n      } else {\\n\\t\\toutcome = NodeOutcome.MISSING;\\n      }\\n    } catch (e) {\\n        logger.error(e);\\n        outcome = NodeOutcome.ERROR;\\n    }\\n    \\n    action.goTo(outcome);\\n}());\\n\"",
+            "default": false,
+            "language": "JAVASCRIPT",
+            "context": "AUTHENTICATION_TREE_DECISION_NODE",
+            "createdBy": "id=7dcc118c-8283-4730-984b-b12327ad1744,ou=user,ou=am-config",
+            "creationDate": 1731105769566,
+            "lastModifiedBy": "id=7dcc118c-8283-4730-984b-b12327ad1744,ou=user,ou=am-config",
+            "lastModifiedDate": 1731444681942,
+            "evaluatorVersion": "2.0"
+          },
+          "bd84d377-835e-4f69-85e1-9073c0d8a83f": {
+            "_id": "bd84d377-835e-4f69-85e1-9073c0d8a83f",
+            "name": "Set Email Styling by Organization Metadata",
+            "description": "Utilizing the organization metadata provided, set the logo and colors of the brand inside emails.",
+            "script": "\"/*\\nUtilizing the organization metadata provided, set the logo and colors of the brand inside emails.\\nThis script does not need to be parametrized. It will work properly as is.\\nThis script expects an `_id` or `userName` of an existing user in order to populate the mail field of object attributes\\n \\n The scripted decision node needs the following outcomes defined:\\n    - Success\\n    - Error\\n \\n Author: @gwizdala\\n */\\n\\n//// CONSTANTS\\nvar REALM = 'alpha';\\nvar NodeOutcome = {\\n  SUCCESS: \\\"Success\\\",\\n  ERROR: \\\"Error\\\"\\n};\\n\\n//// MAIN\\n(function () {\\n    outcome = NodeOutcome.SUCCESS;\\n\\n    try {\\n        var logoUrl = \\\"\\\";\\n        var name = \\\"\\\";\\n        var backgroundColorHex = \\\"\\\";\\n        var primaryColorHex = \\\"\\\";\\n\\n        var orgId = nodeState.get('orgId');\\n        var objectAttributes = nodeState.get(\\\"objectAttributes\\\");\\n\\n        // If there's no object attributes we should create an object to fill\\n        if (null == objectAttributes) {\\n            objectAttributes = {};\\n        }\\n\\n        // Make sure we are not passing password into shared state\\n        if (!!objectAttributes.password) {\\n            delete objectAttributes.password;\\n        }\\n\\n        if (null != orgId) {\\n            var queryFilter = `_id eq \\\"${orgId}\\\"`;\\n            var fields = 'name,themeCustomization';\\n            \\n            var orgMetadata = openidm.query(`managed/${REALM}_organization`, { \\n              \\\"_queryFilter\\\": queryFilter,\\n              \\\"_fields\\\": fields\\n            }).result;\\n  \\n            if (null != orgMetadata && orgMetadata.length === 1) {\\n                var orgMetadataJson = JSON.parse(orgMetadata)[0];\\n                name = orgMetadataJson.name;\\n                var customization = orgMetadataJson.themeCustomization;\\n                if (customization != null) {\\n                    logoUrl = customization.logoUrl != null ? customization.logoUrl : '';\\n                    backgroundColorHex = customization.backgroundColorHex ? customization.backgroundColorHex : \\\"\\\";\\n                    primaryColorHex = customization.primaryColorHex ? customization.primaryColorHex : \\\"\\\";\\n                    objectAttributes[\\\"orgLogoUrl\\\"] = logoUrl;\\n                    objectAttributes[\\\"backgroundColorHex\\\"] = backgroundColorHex;\\n                    objectAttributes[\\\"primaryColorHex\\\"] = primaryColorHex;\\n                }\\n            }\\n\\n            objectAttributes[\\\"orgName\\\"] = name;\\n            nodeState.mergeShared({\\\"objectAttributes\\\": objectAttributes});\\n        }\\n    } catch(e) {\\n        logger.error(e);\\n        outcome = NodeOutcome.ERROR;\\n    }\\n\\n    action.goTo(outcome);\\n}());\\n\"",
+            "default": false,
+            "language": "JAVASCRIPT",
+            "context": "AUTHENTICATION_TREE_DECISION_NODE",
+            "createdBy": "id=7dcc118c-8283-4730-984b-b12327ad1744,ou=user,ou=am-config",
+            "creationDate": 1731707740927,
+            "lastModifiedBy": "id=7dcc118c-8283-4730-984b-b12327ad1744,ou=user,ou=am-config",
+            "lastModifiedDate": 1731712426417,
+            "evaluatorVersion": "2.0"
+          },
+          "9562d68f-915a-466d-b51a-0aac0c2d7d44": {
+            "_id": "9562d68f-915a-466d-b51a-0aac0c2d7d44",
+            "name": "Set Hosted Page Styling by Organization Metadata",
+            "description": "Utilizing the organization metadata provided, set the logo and colors of the brand on the page.",
+            "script": "\"/*\\nUtilizing the organization metadata provided, set the logo and colors of the brand on the page.\\nThis script does not need to be parametrized. It will work properly as is.\\n \\n The scripted decision node needs the following outcomes defined:\\n    - Success\\n    - Error\\n \\n Author: @gwizdala\\n */\\n\\n//// CONSTANTS\\nvar REALM = 'alpha';\\nvar NodeOutcome = {\\n  SUCCESS: \\\"Success\\\",\\n  ERROR: \\\"Error\\\"\\n};\\n\\n//// HELPERS\\n\\nfunction generateUI(name, logoUrl, backgroundColorHex, primaryColorHex) {\\n\\n    var CSS = '';\\n\\n    if (backgroundColorHex) {\\n        CSS += `\\\\\\n        .fr-body-image-branded {\\\\\\n          background-color: ${backgroundColorHex}!important;\\\\\\n        }`;\\n    }\\n\\n    if (primaryColorHex) {\\n      CSS += `\\\\\\n        button[id^='brandedButton_'] {\\\\\\n          background-color: ${primaryColorHex}!important;\\\\\\n          border-color: ${primaryColorHex}!important;\\\\\\n        }`;\\n    }\\n    \\n  var html = `\\\\\\n        var logoUrl = \\\"${logoUrl ? logoUrl : ''}\\\";\\\\\\n        var logoName = \\\"${name ? name : 'Partner'} Logo\\\";\\\\\\n        var logoId = \\\"partnerLogo\\\";\\\\\\n        var logoContainer = document.getElementById(\\\"partnerLogoWrapper\\\");\\\\\\n        var preexistingLogo = document.getElementById(logoId);\\\\\\n        var backgroundImages = document.getElementsByClassName(\\\"fr-body-image\\\");\\\\\\n        var buttons = document.getElementsByClassName(\\\"btn-primary\\\");\\\\\\n        \\\\\\n        for (var i = 0; i < backgroundImages.length; i++) {\\\\\\n            var backgroundImage = backgroundImages[i];\\\\\\n            backgroundImage.classList.add('fr-body-image-branded');\\\\\\n        };\\\\\\n        \\\\\\n        for (var j = 0; j < buttons.length; j++) {\\\\\\n            var button = buttons[j];\\\\\\n            button.id = 'brandedButton_'.concat(j);\\\\\\n        };\\\\\\n        \\\\\\n        document.head.appendChild(document.createElement(\\\"style\\\")).innerHTML = \\\"${CSS}\\\";\\\\\\n        \\\\\\n        if (logoUrl != \\\"\\\" && logoContainer != null && preexistingLogo == null) {\\\\\\n            var logo = document.createElement('img');\\\\\\n            logo.id = logoId;\\\\\\n            logo.src = logoUrl;\\\\\\n            logo.alt = logoName;\\\\\\n            logo.classList.add('ping-logo');\\\\\\n            logo.classList.add('mb-4');\\\\\\n            logo.classList.add('mt-2');\\\\\\n            console.log(logo);\\\\\\n            logoContainer.insertBefore(logo, logoContainer.firstChild);\\\\\\n        }\\\\\\n        `;\\n  \\n  return html;\\n}  \\n\\n//// MAIN\\n(function () {\\n    outcome = NodeOutcome.SUCCESS;\\n\\n    try {\\n        var logoUrl = \\\"\\\";\\n        var name = \\\"\\\";\\n        var backgroundColorHex = \\\"\\\";\\n        var primaryColorHex = \\\"\\\";\\n\\n        var orgId = nodeState.get('orgId');\\n\\n        if (null != orgId) {\\n            var queryFilter = `_id eq \\\"${orgId}\\\"`;\\n            var fields = 'name,themeCustomization';\\n            \\n            var orgMetadata = openidm.query(`managed/${REALM}_organization`, { \\n              \\\"_queryFilter\\\": queryFilter,\\n              \\\"_fields\\\": fields\\n            }).result;\\n  \\n            if (null != orgMetadata && orgMetadata.length === 1) {\\n                var orgMetadataJson = JSON.parse(orgMetadata)[0];\\n                name = orgMetadataJson.name;\\n                var customization = orgMetadataJson.themeCustomization;\\n                if (customization != null) {\\n                    logoUrl = customization.logoUrl != null ? customization.logoUrl : '';\\n                    backgroundColorHex = customization.backgroundColorHex ? customization.backgroundColorHex : \\\"\\\";\\n                    primaryColorHex = customization.primaryColorHex ? customization.primaryColorHex : \\\"\\\";\\n                }\\n            }\\n                \\n            if (callbacks.isEmpty()) {\\n                callbacksBuilder.scriptTextOutputCallback(generateUI(name, logoUrl, backgroundColorHex, primaryColorHex));\\n            }\\n        }\\n    } catch(e) {\\n        logger.error(e);\\n        outcome = NodeOutcome.ERROR;\\n    }\\n\\n    action.goTo(outcome);\\n}());\\n\"",
+            "default": false,
+            "language": "JAVASCRIPT",
+            "context": "AUTHENTICATION_TREE_DECISION_NODE",
+            "createdBy": "id=7dcc118c-8283-4730-984b-b12327ad1744,ou=user,ou=am-config",
+            "creationDate": 1731542393189,
+            "lastModifiedBy": "id=7dcc118c-8283-4730-984b-b12327ad1744,ou=user,ou=am-config",
+            "lastModifiedDate": 1731710217045,
+            "evaluatorVersion": "2.0"
+          }
+        },
+        "emailTemplates": {
+          "globalRegistration": {
+            "_id": "emailTemplate/globalRegistration",
+            "displayName": "globalRegistration",
+            "from": "",
+            "templateId": "globalRegistration",
+            "advancedEditor": true,
+            "defaultLocale": "en",
+            "description": "",
+            "enabled": true,
+            "html": {
+              "en": "",
+              "fr": ""
+            },
+            "message": {
+              "en": "<html>\n  <head>\n    <style>\n      .background {\n        background-color: {{#if object.backgroundColorHex}}{{object.backgroundColorHex}}{{else}}#324054{{/if}};\n      }\n      .button {\n        background-color:{{#if object.primaryColorHex}}{{object.primaryColorHex}}{{else}}black{{/if}};\n        border:1px solid {{#if object.primaryColorHex}}{{object.primaryColorHex}}{{else}}black{{/if}};\n        border-radius:5px;\n        color:white!important;\n        padding:15px 32px;\n        text-align:center;\n        text-decoration:none;\n        display:inline-block;\n        font-size:16px;\n      }\n.button:hover {\n  background-color: white;\n  color: {{#if object.primaryColorHex}}{{object.primaryColorHex}}{{else}}black{{/if}}!important;\n}\n</style>\n  </head>\n  <body class=\"background\" style=\"color:#5e6d82;padding:60px;text-align:center\">\n    <div class=\"content\" style=\"background-color:#fff;border-radius:4px;margin:0 auto;padding:48px;width:600px\">\n      <div class=\"logo-wrapper\" style=\"text-align:center;width:100%\">\n        {{#if object.orgLogoUrl}}                         \n        \n        <img src=\"{{object.orgLogoUrl}}\" alt=\"{{object.orgName}} Logo\" style=\"padding:0.5em;border-right:3px solid #000000;align-self:center;max-height:100px\" /> \n        {{/if}}                         \n        \n        <img alt=\"Main Logo\" src=\"https://upload.wikimedia.org/wikipedia/en/0/01/PingIdentity_logo.png\" style=\"padding:0.5em;border-right:3px solid #000000;align-self:center;max-height:100px;border:none\" />\n      </div>\n      <h3>This is your registration email.</h3>\n      <div>\n        <a href=\"{{object.resumeURI}}\" class=\"button\">Email verification link</a>\n      </div>\n    </div>\n  </body>\n</html>",
+              "fr": "<html>\n  <head></head>\n  <body style=\"background-color: #324054; color: #5e6d82; padding: 60px; text-align: center;\">\n    <h3>Ceci est votre mail d'inscription.</h3>\n    <p>\n      <a href=\"{{object.resumeURI}}\" style=\"text-decoration: none; color: #109cf1;\">Lien de vérification email</a>\n    </p>\n  </body>\n</html>"
+            },
+            "mimeType": "text/html",
+            "styles": "body{background-color:#324054;color:#5e6d82;padding:60px;text-align:center}a{text-decoration:none;color:#109cf1}.content{background-color:#fff;border-radius:4px;margin:0 auto;padding:48px;width:235px}",
+            "subject": {
+              "en": "Register new account",
+              "fr": "Créer un nouveau compte"
+            },
+            "name": "globalRegistrationCopy"
+          }
+        },
+        "socialIdentityProviders": {},
+        "themes": [
+          {
+            "_id": "7830b212-cec9-4a78-8ebe-460e62f5c3ec",
+            "accountCardBackgroundColor": "#ffffff",
+            "accountCardHeaderColor": "#23282e",
+            "accountCardInnerBorderColor": "#e7eef4",
+            "accountCardInputBackgroundColor": "#ffffff",
+            "accountCardInputBorderColor": "#c0c9d5",
+            "accountCardInputFocusBorderColor": "#324054",
+            "accountCardInputLabelColor": "#5e6d82",
+            "accountCardInputSelectColor": "#e4f4fd",
+            "accountCardInputSelectHoverColor": "#f6f8fa",
+            "accountCardInputTextColor": "#23282e",
+            "accountCardOuterBorderColor": "#e7eef4",
+            "accountCardShadow": 3,
+            "accountCardTabActiveBorderColor": "#109cf1",
+            "accountCardTabActiveColor": "#e4f4fd",
+            "accountCardTextColor": "#5e6d82",
+            "accountFooter": "<div class=\"d-flex justify-content-center py-4 w-100\"><span class=\"pr-1\">© 2021</span>\n<a href=\"#\" target=\"_blank\" class=\"text-body\">My Company, Inc</a><a href=\"#\" target=\"_blank\" style=\"color: #0000ee\" class=\"pl-3 text-body\">Privacy Policy</a><a href=\"#\" target=\"_blank\" style=\"color: #0000ee\" class=\"pl-3 text-body\">Terms & Conditions</a></div>",
+            "accountFooterEnabled": false,
+            "accountFooterScriptTag": "",
+            "accountFooterScriptTagEnabled": false,
+            "accountNavigationBackgroundColor": "#ffffff",
+            "accountNavigationTextColor": "#455469",
+            "accountNavigationToggleBorderColor": "#e7eef4",
+            "accountPageSections": {
+              "accountControls": {
+                "enabled": false
+              },
+              "accountSecurity": {
+                "enabled": true,
+                "subsections": {
+                  "password": {
+                    "enabled": true
+                  },
+                  "securityQuestions": {
+                    "enabled": false
+                  },
+                  "twoStepVerification": {
+                    "enabled": true
+                  },
+                  "username": {
+                    "enabled": true
+                  }
+                }
+              },
+              "consent": {
+                "enabled": false
+              },
+              "oauthApplications": {
+                "enabled": false
+              },
+              "personalInformation": {
+                "enabled": true
+              },
+              "preferences": {
+                "enabled": false
+              },
+              "social": {
+                "enabled": false
+              },
+              "trustedDevices": {
+                "enabled": true
+              }
+            },
+            "accountTableRowHoverColor": "#f6f8fa",
+            "backgroundColor": "#324054",
+            "backgroundImage": "",
+            "bodyText": "#23282e",
+            "boldLinks": false,
+            "buttonRounded": 5,
+            "dangerColor": "#f7685b",
+            "favicon": "",
+            "fontFamily": "Open Sans",
+            "isDefault": false,
+            "journeyA11yAddFallbackErrorHeading": true,
+            "journeyCardBackgroundColor": "#ffffff",
+            "journeyCardBorderRadius": 4,
+            "journeyCardHeaderBackgroundColor": "#ffffff",
+            "journeyCardShadow": 3,
+            "journeyCardTextColor": "#5e6d82",
+            "journeyCardTitleColor": "#23282e",
+            "journeyFloatingLabels": true,
+            "journeyFocusElement": "header",
+            "journeyFocusFirstFocusableItemEnabled": false,
+            "journeyFooter": "<div class=\"d-flex justify-content-center py-4 w-100\"><span class=\"pr-1\">© 2021</span>\n<a href=\"#\" target=\"_blank\" class=\"text-body\">My Company, Inc</a><a href=\"#\" target=\"_blank\" style=\"color: #0000ee\" class=\"pl-3 text-body\">Privacy Policy</a><a href=\"#\" target=\"_blank\" style=\"color: #0000ee\" class=\"pl-3 text-body\">Terms & Conditions</a></div>",
+            "journeyFooterEnabled": false,
+            "journeyFooterScriptTag": "<!-- Main and partner logo concatenation -->\n<script type=\"text/javascript\">\n  // The base logo that will show up in this configuration. This is likely the parent company, the product owner, or the main brand.\n  var BASE_ID_LOGO_URL = \"https://upload.wikimedia.org/wikipedia/en/0/01/PingIdentity_logo.png\";\n\n  // Example CSS\n  // Since hosted pages override at the element level, you may need to use !important\n  // OR (better) create and add custom classes to elements.\n  var CSS = `\\\n  .logo-wrapper {\\\n    display: flex;\\\n    justify-content: center;\\\n    align-items: center;\\\n  }\\\n  \\\n  .logo-wrapper img {\\\n    padding: 0.5em;\\\n    border-right: 3px solid #000000;\\\n    align-self: center;\n  }\\\n  \\\n  .logo-wrapper img:last-child {\\\n    border: none; /* remove border  */\\\n  }\\\n  `;\n\n  var createLogo = function(id, src, alt) {\n    var logo = document.createElement('img');\n    logo.id = id;\n    logo.src = src;\n    logo.alt = alt;\n    logo.classList.add('ping-logo');\n    logo.classList.add('mb-4');\n    logo.classList.add('mt-2');\n\n    return logo;\n  }\n\n  var addLogos = function() {\n    var header = document.getElementsByClassName(\"login-header\")[0].childNodes[0];\n    \n    var fragment = document.createDocumentFragment();\n    // Containers\n    var logoContainer = document.createElement('div');\n    logoContainer.classList.add('logo-wrapper');\n    logoContainer.id = \"partnerLogoWrapper\";\n\n    // logos\n    var mainLogo = createLogo('mainLogo', BASE_ID_LOGO_URL, 'Main Logo');\n    \n    fragment.appendChild(mainLogo);\n  \n    logoContainer.appendChild(fragment);\n    header.prepend(logoContainer);\n    document.head.appendChild(document.createElement(\"style\")).innerHTML = `${CSS}`;\n  };\n  \n  // Adding HTML to the page\n  if (document.readyState === \"loading\") {\n    // loading hasn't finished yet\n    document.addEventListener(\"DOMContentLoaded\", addLogos);\n  } else {\n    // `DOMContentLoaded` has already fired\n    addLogos();\n  } \n</script>",
+            "journeyFooterScriptTagEnabled": true,
+            "journeyHeader": "<div class=\"d-flex justify-content-center py-4 flex-grow-1\">Header Content</div>",
+            "journeyHeaderEnabled": false,
+            "journeyHeaderSkipLinkEnabled": false,
+            "journeyInputBackgroundColor": "#ffffff",
+            "journeyInputBorderColor": "#c0c9d5",
+            "journeyInputFocusBorderColor": "#324054",
+            "journeyInputLabelColor": "#5e6d82",
+            "journeyInputSelectColor": "#e4f4fd",
+            "journeyInputSelectHoverColor": "#f6f8fa",
+            "journeyInputTextColor": "#23282e",
+            "journeyJustifiedContent": "",
+            "journeyJustifiedContentEnabled": false,
+            "journeyJustifiedContentMobileViewEnabled": false,
+            "journeyLayout": "card",
+            "journeyRememberMeEnabled": false,
+            "journeyRememberMeLabel": "",
+            "journeySignInButtonPosition": "flex-column",
+            "journeyTheaterMode": false,
+            "linkActiveColor": "#0c85cf",
+            "linkColor": "#109cf1",
+            "linkedTrees": [
+              "ChangeThemeCustomizationByOrg"
+            ],
+            "logo": "",
+            "logoAltText": "",
+            "logoEnabled": false,
+            "logoHeight": "40",
+            "logoProfile": "",
+            "logoProfileAltText": "",
+            "logoProfileCollapsed": "",
+            "logoProfileCollapsedAltText": "",
+            "logoProfileCollapsedHeight": "40",
+            "logoProfileHeight": "40",
+            "name": "Global",
+            "pageTitle": "#23282e",
+            "primaryColor": "#324054",
+            "primaryOffColor": "#242E3C",
+            "profileBackgroundColor": "#f6f8fa",
+            "profileMenuHighlightColor": "#f3f5f8",
+            "profileMenuHoverColor": "#324054",
+            "profileMenuHoverTextColor": "#ffffff",
+            "profileMenuTextHighlightColor": "#455469",
+            "secondaryColor": "#69788b",
+            "successColor": "#2ed47a",
+            "switchBackgroundColor": "#c0c9d5",
+            "textColor": "#ffffff",
+            "topBarBackgroundColor": "#ffffff",
+            "topBarBorderColor": "#e7eef4",
+            "topBarHeaderColor": "#23282e",
+            "topBarTextColor": "#69788b"
+          }
+        ],
+        "saml2Entities": {},
+        "circlesOfTrust": {}
+      }
+    }
+  }

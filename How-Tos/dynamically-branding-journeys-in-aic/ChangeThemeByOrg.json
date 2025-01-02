@@ -1,0 +1,458 @@
+{
+    "meta": {
+      "treesSelectedForExport": [
+        "ChangeThemeByOrg"
+      ],
+      "innerTreesIncluded": []
+    },
+    "trees": {
+      "ChangeThemeByOrg": {
+        "tree": {
+          "_id": "ChangeThemeByOrg",
+          "_rev": "-772897101",
+          "identityResource": "managed/alpha_user",
+          "uiConfig": {
+            "categories": "[\"Organizations\",\"Theming\"]"
+          },
+          "entryNodeId": "06243c92-1d3f-4943-a784-f65ceda486d3",
+          "innerTreeOnly": false,
+          "nodes": {
+            "0504569e-dc72-4251-92a4-8fbe8c8de2f9": {
+              "x": 734,
+              "y": 15.5,
+              "connections": {
+                "Error": "7e72fd77-9067-4224-92a0-91a4a2d7f0f0",
+                "Success": "7e72fd77-9067-4224-92a0-91a4a2d7f0f0"
+              },
+              "nodeType": "ScriptedDecisionNode",
+              "displayName": "Set Email(s)"
+            },
+            "06243c92-1d3f-4943-a784-f65ceda486d3": {
+              "x": 210,
+              "y": 125,
+              "connections": {
+                "Error": "e301438c-0bd0-429c-ab0c-66126501069a",
+                "Found": "7045a18d-8115-4b45-8276-dd962c1e77fd",
+                "Missing": "7045a18d-8115-4b45-8276-dd962c1e77fd"
+              },
+              "nodeType": "ScriptedDecisionNode",
+              "displayName": "Get Org ID from Query Param"
+            },
+            "7045a18d-8115-4b45-8276-dd962c1e77fd": {
+              "x": 628,
+              "y": 142.015625,
+              "connections": {
+                "Error": "7e72fd77-9067-4224-92a0-91a4a2d7f0f0",
+                "Success": "7e72fd77-9067-4224-92a0-91a4a2d7f0f0"
+              },
+              "nodeType": "ScriptedDecisionNode",
+              "displayName": "Set Theming"
+            },
+            "7e72fd77-9067-4224-92a0-91a4a2d7f0f0": {
+              "x": 974,
+              "y": 108,
+              "connections": {
+                "outcome": "9125eaf7-d932-491d-aa38-9f4da68ee1be"
+              },
+              "nodeType": "PageNode",
+              "displayName": "Page Node"
+            },
+            "9125eaf7-d932-491d-aa38-9f4da68ee1be": {
+              "x": 1189,
+              "y": 136.5,
+              "connections": {
+                "false": "e301438c-0bd0-429c-ab0c-66126501069a",
+                "true": "57c07335-80c6-4138-8271-bf01c160783c"
+              },
+              "nodeType": "DataStoreDecisionNode",
+              "displayName": "Data Store Decision"
+            },
+            "95693a47-f9f6-4a03-97d8-407710486f2f": {
+              "x": 513,
+              "y": 13.5,
+              "connections": {
+                "Error": "0504569e-dc72-4251-92a4-8fbe8c8de2f9",
+                "Success": "0504569e-dc72-4251-92a4-8fbe8c8de2f9"
+              },
+              "nodeType": "ScriptedDecisionNode",
+              "displayName": "Set Hosted Page"
+            },
+            "b87055e8-5c74-4308-8ac1-f06b7f4777dd": {
+              "x": 1672,
+              "y": 135.5,
+              "connections": {
+                "CONFIGURATION_FAILED": "e301438c-0bd0-429c-ab0c-66126501069a",
+                "outcome": "70e691a5-1e33-4ac3-a356-e7b6d60d92e0"
+              },
+              "nodeType": "ConfigProviderNode",
+              "displayName": "Email Suspend Config Provider"
+            },
+            "57c07335-80c6-4138-8271-bf01c160783c": {
+              "x": 1433,
+              "y": 134.015625,
+              "connections": {
+                "true": "b87055e8-5c74-4308-8ac1-f06b7f4777dd",
+                "false": "e301438c-0bd0-429c-ab0c-66126501069a"
+              },
+              "nodeType": "IdentifyExistingUserNode",
+              "displayName": "Identify Existing User"
+            }
+          },
+          "staticNodes": {
+            "startNode": {
+              "x": 70,
+              "y": 155
+            },
+            "70e691a5-1e33-4ac3-a356-e7b6d60d92e0": {
+              "x": 2001,
+              "y": 120
+            },
+            "e301438c-0bd0-429c-ab0c-66126501069a": {
+              "x": 2001,
+              "y": 278
+            }
+          },
+          "description": "An example journey showcasing how you can dynamically change the theme based on the metadata set on the Organization.",
+          "mustRun": false,
+          "enabled": true
+        },
+        "nodes": {
+          "0504569e-dc72-4251-92a4-8fbe8c8de2f9": {
+            "_id": "0504569e-dc72-4251-92a4-8fbe8c8de2f9",
+            "_rev": "-1252157360",
+            "script": "3f8f7f82-391f-401a-84c6-5c05fbfb757d",
+            "outcomes": [
+              "Success",
+              "Error"
+            ],
+            "outputs": [
+              "*"
+            ],
+            "inputs": [
+              "*"
+            ],
+            "_type": {
+              "_id": "ScriptedDecisionNode",
+              "name": "Scripted Decision",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "Success",
+                "displayName": "Success"
+              },
+              {
+                "id": "Error",
+                "displayName": "Error"
+              }
+            ]
+          },
+          "06243c92-1d3f-4943-a784-f65ceda486d3": {
+            "_id": "06243c92-1d3f-4943-a784-f65ceda486d3",
+            "_rev": "915137815",
+            "script": "384e42a0-8ae9-4847-8251-5c7ddd9d033e",
+            "outcomes": [
+              "Found",
+              "Missing",
+              "Error"
+            ],
+            "outputs": [
+              "*"
+            ],
+            "inputs": [
+              "*"
+            ],
+            "_type": {
+              "_id": "ScriptedDecisionNode",
+              "name": "Scripted Decision",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "Found",
+                "displayName": "Found"
+              },
+              {
+                "id": "Missing",
+                "displayName": "Missing"
+              },
+              {
+                "id": "Error",
+                "displayName": "Error"
+              }
+            ]
+          },
+          "7045a18d-8115-4b45-8276-dd962c1e77fd": {
+            "_id": "7045a18d-8115-4b45-8276-dd962c1e77fd",
+            "_rev": "-1932960133",
+            "script": "06755674-8cd3-4451-b064-3d1d3b4545cb",
+            "outcomes": [
+              "Success",
+              "Error"
+            ],
+            "outputs": [
+              "*"
+            ],
+            "inputs": [
+              "*"
+            ],
+            "_type": {
+              "_id": "ScriptedDecisionNode",
+              "name": "Scripted Decision",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "Success",
+                "displayName": "Success"
+              },
+              {
+                "id": "Error",
+                "displayName": "Error"
+              }
+            ]
+          },
+          "7e72fd77-9067-4224-92a0-91a4a2d7f0f0": {
+            "_id": "7e72fd77-9067-4224-92a0-91a4a2d7f0f0",
+            "_rev": "-1107180048",
+            "nodes": [
+              {
+                "_id": "4a89c81b-327d-44de-bdf4-678f2a4d7dc9",
+                "nodeType": "ValidatedUsernameNode",
+                "displayName": "Platform Username"
+              },
+              {
+                "_id": "0e58d777-34fe-4e5b-af2e-fc313be3ebf1",
+                "nodeType": "ValidatedPasswordNode",
+                "displayName": "Platform Password"
+              }
+            ],
+            "pageDescription": {
+              "en": "Log in to continue."
+            },
+            "pageHeader": {
+              "en": "Welcome"
+            },
+            "_type": {
+              "_id": "PageNode",
+              "name": "Page Node",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "outcome",
+                "displayName": "Outcome"
+              }
+            ]
+          },
+          "9125eaf7-d932-491d-aa38-9f4da68ee1be": {
+            "_id": "9125eaf7-d932-491d-aa38-9f4da68ee1be",
+            "_rev": "1858968196",
+            "_type": {
+              "_id": "DataStoreDecisionNode",
+              "name": "Data Store Decision",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "true",
+                "displayName": "True"
+              },
+              {
+                "id": "false",
+                "displayName": "False"
+              }
+            ]
+          },
+          "95693a47-f9f6-4a03-97d8-407710486f2f": {
+            "_id": "95693a47-f9f6-4a03-97d8-407710486f2f",
+            "_rev": "-1781735029",
+            "script": "39051bfa-c2c3-4937-b93d-f71c1bce3cb6",
+            "outcomes": [
+              "Success",
+              "Error"
+            ],
+            "outputs": [
+              "*"
+            ],
+            "inputs": [
+              "*"
+            ],
+            "_type": {
+              "_id": "ScriptedDecisionNode",
+              "name": "Scripted Decision",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "Success",
+                "displayName": "Success"
+              },
+              {
+                "id": "Error",
+                "displayName": "Error"
+              }
+            ]
+          },
+          "b87055e8-5c74-4308-8ac1-f06b7f4777dd": {
+            "_id": "b87055e8-5c74-4308-8ac1-f06b7f4777dd",
+            "_rev": "-1863282605",
+            "script": "3eaa74c1-a33e-423a-a42d-bf8b6932df7d",
+            "nodeType": "EmailSuspendNode",
+            "scriptInputs": [
+              "*"
+            ],
+            "_type": {
+              "_id": "ConfigProviderNode",
+              "name": "Configuration Provider",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "outcome",
+                "displayName": "Outcome"
+              },
+              {
+                "id": "CONFIGURATION_FAILED",
+                "displayName": "Configuration failure"
+              }
+            ]
+          },
+          "57c07335-80c6-4138-8271-bf01c160783c": {
+            "_id": "57c07335-80c6-4138-8271-bf01c160783c",
+            "_rev": "445406883",
+            "identityAttribute": "userName",
+            "identifier": "mail",
+            "_type": {
+              "_id": "IdentifyExistingUserNode",
+              "name": "Identify Existing User",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "true",
+                "displayName": "True"
+              },
+              {
+                "id": "false",
+                "displayName": "False"
+              }
+            ]
+          }
+        },
+        "innerNodes": {
+          "4a89c81b-327d-44de-bdf4-678f2a4d7dc9": {
+            "_id": "4a89c81b-327d-44de-bdf4-678f2a4d7dc9",
+            "_rev": "965433876",
+            "usernameAttribute": "userName",
+            "validateInput": false,
+            "_type": {
+              "_id": "ValidatedUsernameNode",
+              "name": "Platform Username",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "outcome",
+                "displayName": "Outcome"
+              }
+            ]
+          },
+          "0e58d777-34fe-4e5b-af2e-fc313be3ebf1": {
+            "_id": "0e58d777-34fe-4e5b-af2e-fc313be3ebf1",
+            "_rev": "809305051",
+            "passwordAttribute": "password",
+            "validateInput": false,
+            "_type": {
+              "_id": "ValidatedPasswordNode",
+              "name": "Platform Password",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "outcome",
+                "displayName": "Outcome"
+              }
+            ]
+          }
+        },
+        "scripts": {
+          "3f8f7f82-391f-401a-84c6-5c05fbfb757d": {
+            "_id": "3f8f7f82-391f-401a-84c6-5c05fbfb757d",
+            "name": "Set Email Overrides by Organization Metadata",
+            "description": "Utilizing the organization metadata provider, set the email(s)",
+            "script": "\"/*\\nUtilizing the organization metadata provided, set the email(s).\\nThis script does not need to be parametrized. It will work properly as is.\\n \\n The scripted decision node needs the following outcomes defined:\\n    - Success\\n    - Error\\n \\n Author: @gwizdala\\n */\\n\\n//// CONSTANTS\\nvar REALM = \\\"alpha\\\";\\nvar NodeOutcome = {\\n  SUCCESS: \\\"Success\\\",\\n  ERROR: \\\"Error\\\"\\n};\\n\\n//// DEFAULTS\\n// Email Configurations. These are pulled from themeOverrides -> \\\"email\\\" + {name of config}\\nvar EMAIL_CONFIGS = {\\n    Verification: { // Re-verifying an account after X days inactivity\\n        emailSuspendMessage: { // the localizable message shown to your users in your Journey\\n            en: \\\"An email has been sent to the address on file. Click the link in that email to verify your account.\\\"\\n        },\\n        emailTemplateName: \\\"registration\\\", // The default email template that will be sent\\n        identityAttribute: \\\"userName\\\",\\n        emailAttribute: \\\"mail\\\"\\n    }\\n};\\n\\n//// MAIN\\n(function () {\\n  outcome = NodeOutcome.SUCCESS;\\n\\n  try {\\n    var orgId = nodeState.get('orgId');\\n\\n    if (null != orgId) {\\n        var queryFilter = `_id eq \\\"${orgId}\\\"`;\\n        var fields = 'themeOverrides';\\n        \\n        var orgMetadata = openidm.query(`managed/${REALM}_organization`, { \\n          \\\"_queryFilter\\\": queryFilter,\\n          \\\"_fields\\\": fields\\n        }).result;\\n      \\n        if (null != orgMetadata && orgMetadata.length === 1) {\\n            var orgMetadataJson = JSON.parse(orgMetadata)[0];\\n            var themeOverrides = orgMetadataJson.themeOverrides;\\n            \\n            // Update email configs from Identity Object\\n            Object.keys(EMAIL_CONFIGS).forEach(function(emailConfigKey) {\\n                var emailConfig = EMAIL_CONFIGS[emailConfigKey];\\n                var emailTemplateName = (!!themeOverrides && themeOverrides[`email${emailConfigKey}`]) ? themeOverrides[`email${emailConfigKey}`] : null;\\n                if (emailTemplateName) {\\n                    emailConfig.emailTemplateName = emailTemplateName;\\n                    EMAIL_CONFIGS[emailConfigKey] = emailConfig;\\n                }\\n            });\\n        }\\n    }\\n\\n    // Set Email Configs in Shared State\\n    Object.keys(EMAIL_CONFIGS).forEach(function(emailConfigKey) {\\n        var emailConfig = EMAIL_CONFIGS[emailConfigKey];\\n        nodeState.putShared(`email${emailConfigKey}Config`, emailConfig);\\n    });\\n  } catch (e) {\\nlogger.error(e);\\n    \\taction.goTo(NodeOutcome.ERROR);\\n  }\\n}());\"",
+            "default": false,
+            "language": "JAVASCRIPT",
+            "context": "AUTHENTICATION_TREE_DECISION_NODE",
+            "createdBy": "id=7dcc118c-8283-4730-984b-b12327ad1744,ou=user,ou=am-config",
+            "creationDate": 1731446561550,
+            "lastModifiedBy": "id=7dcc118c-8283-4730-984b-b12327ad1744,ou=user,ou=am-config",
+            "lastModifiedDate": 1731712857022,
+            "evaluatorVersion": "2.0"
+          },
+          "384e42a0-8ae9-4847-8251-5c7ddd9d033e": {
+            "_id": "384e42a0-8ae9-4847-8251-5c7ddd9d033e",
+            "name": "Get Org ID by Query Parameter",
+            "description": "Capture the URL Query Param specified (orgId)",
+            "script": "\"/*\\n Capture the URL Query Param specified\\n \\n This script does not need to be parametrized. It will work properly as is.\\n \\n The scripted decision node needs the following outcomes defined:\\n - Found\\n - Missing\\n - Error\\n \\n Author: @gwizdala\\n */\\n//// CONSTANTS\\n// Change the query parameter below if you want to gather a different value.\\n// Ideally, this sort of functionality could be handled in a library script.\\nvar QUERY_PARAM = \\\"orgId\\\";\\nvar SHARED_STATE_KEY = \\\"orgId\\\";\\n// Request Params\\nvar HOST = requestHeaders.get(\\\"host\\\").get(0); // e.g. openam-example.forgeblocks.com\\n\\nvar NodeOutcome = {\\n    FOUND: \\\"Found\\\",\\n    MISSING: \\\"Missing\\\",\\n    ERROR: \\\"Error\\\"\\n};\\n\\n//// MAIN\\n(function () {\\n    try {  \\n      // Gather the Query Parameter & pass into shared state\\n      if (requestParameters.get(QUERY_PARAM)) {\\n        nodeState.putShared(SHARED_STATE_KEY, decodeURI(requestParameters.get(QUERY_PARAM).get(0)));\\n        outcome = NodeOutcome.FOUND;\\n      } else {\\n\\t\\toutcome = NodeOutcome.MISSING;\\n      }\\n    } catch (e) {\\n        logger.error(e);\\n        outcome = NodeOutcome.ERROR;\\n    }\\n    \\n    action.goTo(outcome);\\n}());\\n\"",
+            "default": false,
+            "language": "JAVASCRIPT",
+            "context": "AUTHENTICATION_TREE_DECISION_NODE",
+            "createdBy": "id=7dcc118c-8283-4730-984b-b12327ad1744,ou=user,ou=am-config",
+            "creationDate": 1731105769566,
+            "lastModifiedBy": "id=7dcc118c-8283-4730-984b-b12327ad1744,ou=user,ou=am-config",
+            "lastModifiedDate": 1731444681942,
+            "evaluatorVersion": "2.0"
+          },
+          "06755674-8cd3-4451-b064-3d1d3b4545cb": {
+            "_id": "06755674-8cd3-4451-b064-3d1d3b4545cb",
+            "name": "Set Theming Overrides by Organization Metadata",
+            "description": "Utilizing the organization metadata provided, set the hosted page and email theme",
+            "script": "\"/*\\nUtilizing the organization metadata provided, set the hosted page and email theme.\\nThis script does not need to be parametrized. It will work properly as is.\\n \\n The scripted decision node needs the following outcomes defined:\\n    - Success\\n    - Error\\n \\n Author: @gwizdala\\n */\\n\\n//// CONSTANTS\\nvar REALM = \\\"alpha\\\";\\nvar NodeOutcome = {\\n  SUCCESS: \\\"Success\\\",\\n  ERROR: \\\"Error\\\"\\n};\\n\\n//// DEFAULTS\\nvar HOSTED_CONFIG = 'Contrast';\\n// Email Configurations. These are pulled from themeOverrides -> \\\"email\\\" + {name of config}\\nvar EMAIL_CONFIGS = {\\n    Verification: { // Re-verifying an account after X days inactivity\\n        emailSuspendMessage: { // the localizable message shown to your users in your Journey\\n            en: \\\"An email has been sent to the address on file. Click the link in that email to verify your account.\\\"\\n        },\\n        emailTemplateName: \\\"registration\\\", // The default email template that will be sent\\n        identityAttribute: \\\"userName\\\",\\n        emailAttribute: \\\"mail\\\"\\n    }\\n};\\n\\n\\n//// MAIN\\n(function () {\\n  var callingFunction = \\\"main\\\";\\n  outcome = NodeOutcome.SUCCESS;\\n\\n  try {\\n    var orgId = nodeState.get('orgId');\\n\\n    if (null != orgId) {\\n        var queryFilter = `_id eq \\\"${orgId}\\\"`;\\n        var fields = 'themeOverrides';\\n        \\n        var orgMetadata = openidm.query(`managed/${REALM}_organization`, { \\n          \\\"_queryFilter\\\": queryFilter,\\n          \\\"_fields\\\": fields\\n        }).result;\\n      \\n        if (null != orgMetadata && orgMetadata.length === 1) {\\n            var orgMetadataJson = JSON.parse(orgMetadata)[0];\\n            var themeOverrides = orgMetadataJson.themeOverrides;\\n            \\n            // Get theme data\\n            if (null != themeOverrides && null != themeOverrides.themeName) {\\n                HOSTED_CONFIG = themeOverrides.themeName;\\n            }\\n\\n            // Update email configs from Identity Object\\n            Object.keys(EMAIL_CONFIGS).forEach(function(emailConfigKey) {\\n                var emailConfig = EMAIL_CONFIGS[emailConfigKey];\\n                var emailTemplateName = (!!themeOverrides && themeOverrides[`email${emailConfigKey}`]) ? themeOverrides[`email${emailConfigKey}`] : null;\\n                if (emailTemplateName) {\\n                    emailConfig.emailTemplateName = emailTemplateName;\\n                    EMAIL_CONFIGS[emailConfigKey] = emailConfig;\\n                }\\n            });\\n        }   \\n    }\\n\\n    // Set Email Configs in Shared State\\n    Object.keys(EMAIL_CONFIGS).forEach(function(emailConfigKey) {\\n        var emailConfig = EMAIL_CONFIGS[emailConfigKey];\\n        nodeState.putShared(`email${emailConfigKey}Config`, emailConfig);\\n    });\\n\\n    // Set Theme\\n    if (HOSTED_CONFIG && callbacks.isEmpty()) {\\n        var stage = \\\"themeId=\\\"+encodeURI(HOSTED_CONFIG);\\n        callbacksBuilder.pollingWaitCallback(\\\"100\\\", \\\"Please wait ...\\\");\\n        action.goTo(outcome).withStage(stage);\\n    } else {\\n        action.goTo(outcome);\\n    }\\n  } catch (e) {\\nlogger.error(e);\\n    \\taction.goTo(NodeOutcome.ERROR);\\n  }\\n}());\\n\"",
+            "default": false,
+            "language": "JAVASCRIPT",
+            "context": "AUTHENTICATION_TREE_DECISION_NODE",
+            "createdBy": "id=7dcc118c-8283-4730-984b-b12327ad1744,ou=user,ou=am-config",
+            "creationDate": 1731539540944,
+            "lastModifiedBy": "id=7dcc118c-8283-4730-984b-b12327ad1744,ou=user,ou=am-config",
+            "lastModifiedDate": 1731712864817,
+            "evaluatorVersion": "2.0"
+          },
+          "39051bfa-c2c3-4937-b93d-f71c1bce3cb6": {
+            "_id": "39051bfa-c2c3-4937-b93d-f71c1bce3cb6",
+            "name": "Set Hosted Page Overrides by Organization Metadata",
+            "description": "Utilizing the organization metadata provided, set the theme.",
+            "script": "\"/*\\nUtilizing the organization metadata provided, set the hosted page.\\nThis script does not need to be parametrized. It will work properly as is.\\n \\n The scripted decision node needs the following outcomes defined:\\n    - Success\\n    - Error\\n \\n Author: @gwizdala\\n */\\n\\n//// CONSTANTS\\nvar REALM = \\\"alpha\\\";\\nvar NodeOutcome = {\\n  SUCCESS: \\\"Success\\\",\\n  ERROR: \\\"Error\\\"\\n};\\n\\n//// DEFAULTS\\nvar HOSTED_CONFIG = 'Contrast';\\n\\n//// MAIN\\n(function () {\\n  var callingFunction = \\\"main\\\";\\n  outcome = NodeOutcome.SUCCESS;\\n\\n  try {\\n    var orgId = nodeState.get('orgId');\\n\\n    if (null != orgId) {\\n        var queryFilter = `_id eq \\\"${orgId}\\\"`;\\n        var fields = 'themeOverrides';\\n        \\n        var orgMetadata = openidm.query(`managed/${REALM}_organization`, { \\n          \\\"_queryFilter\\\": queryFilter,\\n          \\\"_fields\\\": fields\\n        }).result;\\n      \\n        if (null != orgMetadata && orgMetadata.length === 1) {\\n            var orgMetadataJson = JSON.parse(orgMetadata)[0];\\n            var themeOverrides = orgMetadataJson.themeOverrides;\\n            \\n            // Get theme data\\n            if (null != themeOverrides && null != themeOverrides.themeName) {\\n                HOSTED_CONFIG = themeOverrides.themeName;\\n            }\\n        }   \\n    }\\n\\n    // Set Theme\\n    if (HOSTED_CONFIG && callbacks.isEmpty()) {\\n        var stage = \\\"themeId=\\\"+encodeURI(HOSTED_CONFIG);\\n        callbacksBuilder.pollingWaitCallback(\\\"100\\\", \\\"Please wait ...\\\");\\n        action.goTo(outcome).withStage(stage);\\n    } else {\\n        action.goTo(outcome);\\n    }\\n  } catch (e) {\\nlogger.error(e);\\n    \\taction.goTo(NodeOutcome.ERROR);\\n  }\\n}());\\n\"",
+            "default": false,
+            "language": "JAVASCRIPT",
+            "context": "AUTHENTICATION_TREE_DECISION_NODE",
+            "createdBy": "id=7dcc118c-8283-4730-984b-b12327ad1744,ou=user,ou=am-config",
+            "creationDate": 1731019703397,
+            "lastModifiedBy": "id=7dcc118c-8283-4730-984b-b12327ad1744,ou=user,ou=am-config",
+            "lastModifiedDate": 1731449420150,
+            "evaluatorVersion": "2.0"
+          },
+          "3eaa74c1-a33e-423a-a42d-bf8b6932df7d": {
+            "_id": "3eaa74c1-a33e-423a-a42d-bf8b6932df7d",
+            "name": "Branded Verification Email",
+            "description": null,
+            "script": "\"config = nodeState.get(\\\"emailVerificationConfig\\\").asMap();\"",
+            "default": false,
+            "language": "JAVASCRIPT",
+            "context": "CONFIG_PROVIDER_NODE",
+            "createdBy": "id=7dcc118c-8283-4730-984b-b12327ad1744,ou=user,ou=am-config",
+            "creationDate": 1731446975294,
+            "lastModifiedBy": "id=7dcc118c-8283-4730-984b-b12327ad1744,ou=user,ou=am-config",
+            "lastModifiedDate": 1731446975294,
+            "evaluatorVersion": "1.0"
+          }
+        },
+        "emailTemplates": {},
+        "socialIdentityProviders": {},
+        "themes": [],
+        "saml2Entities": {},
+        "circlesOfTrust": {}
+      }
+    }
+  }

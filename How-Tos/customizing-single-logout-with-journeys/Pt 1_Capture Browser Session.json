@@ -1,0 +1,190 @@
+{
+  "meta": {},
+  "trees": {
+    "Pt 1_Capture Browser Session": {
+      "tree": {
+        "_id": "Pt 1_Capture Browser Session",
+        "_rev": "-425732123",
+        "identityResource": "managed/alpha_user",
+        "uiConfig": {
+          "categories": "[\"EX_Logout with Journeys\"]"
+        },
+        "entryNodeId": "7ab17ed0-dfb2-4759-bbf1-d528bf96cd25",
+        "innerTreeOnly": false,
+        "nodes": {
+          "16df077a-ee5c-459f-aa4c-b86f833617ba": {
+            "x": 386,
+            "y": 347.015625,
+            "connections": {
+              "false": "e301438c-0bd0-429c-ab0c-66126501069a",
+              "true": "e301438c-0bd0-429c-ab0c-66126501069a"
+            },
+            "nodeType": "MessageNode",
+            "displayName": "No Session Found"
+          },
+          "7ab17ed0-dfb2-4759-bbf1-d528bf96cd25": {
+            "x": 185,
+            "y": 234.015625,
+            "connections": {
+              "No Session Found": "16df077a-ee5c-459f-aa4c-b86f833617ba",
+              "Session Found": "cb692aad-b357-4f87-9448-79c6320f457f"
+            },
+            "nodeType": "ScriptedDecisionNode",
+            "displayName": "Get Session"
+          },
+          "cb692aad-b357-4f87-9448-79c6320f457f": {
+            "x": 389,
+            "y": 207.015625,
+            "connections": {
+              "CONFIGURATION_FAILED": "e301438c-0bd0-429c-ab0c-66126501069a",
+              "false": "e301438c-0bd0-429c-ab0c-66126501069a",
+              "true": "70e691a5-1e33-4ac3-a356-e7b6d60d92e0"
+            },
+            "nodeType": "ConfigProviderNode",
+            "displayName": "Display User Cookie"
+          }
+        },
+        "staticNodes": {
+          "startNode": {
+            "x": 50,
+            "y": 250
+          },
+          "70e691a5-1e33-4ac3-a356-e7b6d60d92e0": {
+            "x": 630,
+            "y": 221
+          },
+          "e301438c-0bd0-429c-ab0c-66126501069a": {
+            "x": 627,
+            "y": 347
+          }
+        },
+        "description": "Captures a User's Pre-existing Browser Session. Part 1 of 4 of Logging Out with Journeys",
+        "enabled": true
+      },
+      "nodes": {
+        "16df077a-ee5c-459f-aa4c-b86f833617ba": {
+          "_id": "16df077a-ee5c-459f-aa4c-b86f833617ba",
+          "_rev": "1851507341",
+          "messageYes": {
+            "en": "Continue"
+          },
+          "message": {
+            "en": "No Session Found"
+          },
+          "messageNo": {
+            "en": "Cancel"
+          },
+          "_type": {
+            "_id": "MessageNode",
+            "name": "Message Node",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "true",
+              "displayName": "True"
+            },
+            {
+              "id": "false",
+              "displayName": "False"
+            }
+          ]
+        },
+        "7ab17ed0-dfb2-4759-bbf1-d528bf96cd25": {
+          "_id": "7ab17ed0-dfb2-4759-bbf1-d528bf96cd25",
+          "_rev": "447245326",
+          "script": "5a2cb7bb-dde3-49e4-a5c7-4116c142730e",
+          "outcomes": [
+            "Session Found",
+            "No Session Found"
+          ],
+          "outputs": [
+            "*"
+          ],
+          "inputs": [
+            "*"
+          ],
+          "_type": {
+            "_id": "ScriptedDecisionNode",
+            "name": "Scripted Decision",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "Session Found",
+              "displayName": "Session Found"
+            },
+            {
+              "id": "No Session Found",
+              "displayName": "No Session Found"
+            }
+          ]
+        },
+        "cb692aad-b357-4f87-9448-79c6320f457f": {
+          "_id": "cb692aad-b357-4f87-9448-79c6320f457f",
+          "_rev": "-1820465560",
+          "script": "429345cf-0146-4643-ba68-fd28b8083e17",
+          "nodeType": "MessageNode",
+          "scriptInputs": [
+            "*"
+          ],
+          "_type": {
+            "_id": "ConfigProviderNode",
+            "name": "Configuration Provider",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "true",
+              "displayName": "True"
+            },
+            {
+              "id": "false",
+              "displayName": "False"
+            },
+            {
+              "id": "CONFIGURATION_FAILED",
+              "displayName": "Configuration failure"
+            }
+          ]
+        }
+      },
+      "innerNodes": {},
+      "scripts": {
+        "5a2cb7bb-dde3-49e4-a5c7-4116c142730e": {
+          "_id": "5a2cb7bb-dde3-49e4-a5c7-4116c142730e",
+          "name": "Get Session by Cookie",
+          "description": "Checks if the user has an existing session, and if so, stores it in shared state.",
+          "script": "\"/*\\nChecks if the user has an existing session, and if so, stores it in shared state.\\n \\n This script expects the following ESV to be set:\\n \\tesv.cookie - the cookie of the tenant (found in \\\"Tenant Settings\\\")\\n \\n The scripted decision node needs the following outcomes defined:\\n - Session Found\\n - No Session Found\\n \\n Author: se@forgerock.com\\n */\\n\\n// The tenant cookie. Found in Tenant Settings/Global Settings\\nvar TENANT_COOKIE = systemEnv.getProperty(\\\"esv.cookie\\\");\\n\\nvar OUTCOMES = {\\n  SESSION_FOUND: \\\"Session Found\\\",\\n  NO_SESSION_FOUND: \\\"No Session Found\\\"\\n};\\n\\n//// MAIN\\n(function () {\\n  // Default outcome\\n  outcome = OUTCOMES.NO_SESSION_FOUND;\\n  \\n  var sessionCookie = \\\"\\\";\\n  var userCookieString = requestHeaders.get(\\\"cookie\\\").get(0);\\n  // parse the cookies\\n  var userCookies = userCookieString.split(\\\"; \\\");\\n  // look for the right cookie\\n  var i = 0;\\n  while (i < userCookies.length && !sessionCookie) {\\n   \\tvar userCookieData = userCookies[i].split(\\\"=\\\");\\n    if (userCookieData[0] == TENANT_COOKIE) {\\n     sessionCookie = userCookieData[1];\\n     nodeState.putShared(\\\"sessionCookie\\\", sessionCookie);\\n    }\\n    i += 1;\\n  }\\n  \\n  if (sessionCookie) {\\n    outcome = OUTCOMES.SESSION_FOUND; \\n  }\\n  \\n  action.goTo(outcome);\\n}());\"",
+          "default": false,
+          "language": "JAVASCRIPT",
+          "context": "AUTHENTICATION_TREE_DECISION_NODE",
+          "createdBy": "null",
+          "creationDate": 0,
+          "lastModifiedBy": "null",
+          "lastModifiedDate": 0,
+          "evaluatorVersion": "2.0"
+        },
+        "429345cf-0146-4643-ba68-fd28b8083e17": {
+          "_id": "429345cf-0146-4643-ba68-fd28b8083e17",
+          "name": "Display User Cookie",
+          "description": "Displays the User's Cookie captured in NodeState",
+          "script": "\"/*\\n\\tDisplays the User's Cookie from \\\"sessionCookie\\\" stored in state.\\n*/\\n\\nvar sessionCookie = nodeState.get(\\\"sessionCookie\\\");\\n\\nconfig = {\\n  \\\"message\\\": {\\n    \\\"en\\\": `Captured User Cookie: ${sessionCookie ? sessionCookie : 'No session found'}`\\n  },\\n  \\\"messageYes\\\": {\\\"en\\\": \\\"Continue\\\"},\\n  \\\"messageNo\\\": {\\\"en\\\": \\\"Cancel\\\"},\\n}\"",
+          "default": false,
+          "language": "JAVASCRIPT",
+          "context": "CONFIG_PROVIDER_NODE",
+          "createdBy": "null",
+          "creationDate": 0,
+          "lastModifiedBy": "null",
+          "lastModifiedDate": 0,
+          "evaluatorVersion": "1.0"
+        }
+      },
+      "emailTemplates": {},
+      "socialIdentityProviders": {},
+      "themes": [],
+      "saml2Entities": {},
+      "circlesOfTrust": {}
+    }
+  }
+}

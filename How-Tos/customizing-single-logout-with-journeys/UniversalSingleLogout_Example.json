@@ -1,0 +1,837 @@
+{
+    "meta": {
+      "treesSelectedForExport": [
+        "UniversalSingleLogout_Example"
+      ],
+      "innerTreesIncluded": [
+        "Pt 2_Terminate Session with API Call",
+        "Pt 1_Capture Browser Session",
+        "Pt 4_Failure Redirect By Attribute"
+      ]
+    },
+    "trees": {
+      "Pt 4_Failure Redirect By Attribute": {
+        "tree": {
+          "_id": "Pt 4_Failure Redirect By Attribute",
+          "_rev": "-108331586",
+          "identityResource": "managed/alpha_user",
+          "uiConfig": {
+            "categories": "[\"EX_Logout with Journeys\"]"
+          },
+          "entryNodeId": "9c2ac2d3-d8ad-4bba-86e6-d40ffb462256",
+          "innerTreeOnly": false,
+          "nodes": {
+            "9c2ac2d3-d8ad-4bba-86e6-d40ffb462256": {
+              "x": 180,
+              "y": 172.015625,
+              "connections": {
+                "false": "81182873-156b-46de-8004-67bd4e444528",
+                "true": "5dde56b0-794f-4e6b-9756-775f28adddb2"
+              },
+              "nodeType": "IdentifyExistingUserNode",
+              "displayName": "Identify Existing User"
+            },
+            "5dde56b0-794f-4e6b-9756-775f28adddb2": {
+              "x": 379,
+              "y": 168.015625,
+              "connections": {
+                "Not Found": "81182873-156b-46de-8004-67bd4e444528",
+                "Found": "e301438c-0bd0-429c-ab0c-66126501069a"
+              },
+              "nodeType": "ScriptedDecisionNode",
+              "displayName": "Get Metadata"
+            },
+            "81182873-156b-46de-8004-67bd4e444528": {
+              "x": 578,
+              "y": 267.015625,
+              "connections": {
+                "outcome": "e301438c-0bd0-429c-ab0c-66126501069a"
+              },
+              "nodeType": "SetFailureUrlNode",
+              "displayName": "Failure URL"
+            }
+          },
+          "staticNodes": {
+            "startNode": {
+              "x": 70,
+              "y": 190
+            },
+            "70e691a5-1e33-4ac3-a356-e7b6d60d92e0": {
+              "x": 69,
+              "y": 334.3333333333333
+            },
+            "e301438c-0bd0-429c-ab0c-66126501069a": {
+              "x": 779,
+              "y": 197.66666666666663
+            }
+          },
+          "description": "Based on an attribute tied to the identity (such as an organization membership, user attribute), redirect the user accordingly. Part 4 of 4 of Logging Out with Journeys.",
+          "enabled": true
+        },
+        "nodes": {
+          "9c2ac2d3-d8ad-4bba-86e6-d40ffb462256": {
+            "_id": "9c2ac2d3-d8ad-4bba-86e6-d40ffb462256",
+            "_rev": "219592617",
+            "identityAttribute": "userName",
+            "identifier": "userName",
+            "_type": {
+              "_id": "IdentifyExistingUserNode",
+              "name": "Identify Existing User",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "true",
+                "displayName": "True"
+              },
+              {
+                "id": "false",
+                "displayName": "False"
+              }
+            ]
+          },
+          "5dde56b0-794f-4e6b-9756-775f28adddb2": {
+            "_id": "5dde56b0-794f-4e6b-9756-775f28adddb2",
+            "_rev": "-486873969",
+            "script": "e125d773-4f62-4013-b241-66f59f037bfa",
+            "outcomes": [
+              "Found",
+              "Not Found"
+            ],
+            "outputs": [
+              "*"
+            ],
+            "inputs": [
+              "*"
+            ],
+            "_type": {
+              "_id": "ScriptedDecisionNode",
+              "name": "Scripted Decision",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "Found",
+                "displayName": "Found"
+              },
+              {
+                "id": "Not Found",
+                "displayName": "Not Found"
+              }
+            ]
+          },
+          "81182873-156b-46de-8004-67bd4e444528": {
+            "_id": "81182873-156b-46de-8004-67bd4e444528",
+            "_rev": "-1465845529",
+            "failureUrl": "https://www.forgerock.com",
+            "_type": {
+              "_id": "SetFailureUrlNode",
+              "name": "Failure URL",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "outcome",
+                "displayName": "Outcome"
+              }
+            ]
+          }
+        },
+        "innerNodes": {},
+        "scripts": {
+          "e125d773-4f62-4013-b241-66f59f037bfa": {
+            "_id": "e125d773-4f62-4013-b241-66f59f037bfa",
+            "name": "Get Medatadata",
+            "description": "Pulls metadata from a user identity and sets in state.",
+            "script": "\"/*\\nPulls metadata from a user identity and sets in state.\\nThis example uses constants to determine what metadata is pulled and how it is set,\\nbut these type of actions lend well to Library Scripts where said values can be passed as function params.\\nIn a production instance, consider Library Scripts for greatest reusability.\\nDoc: https://backstage.forgerock.com/docs/idcloud/latest/am-scripting/library-scripts.html\\n\\nThis script expects the following ESV to be set:\\n- esv.admin.token - a long-lived access token.  You can use frodo to generate an OAuth2 client/secret and\\n  set the associated esv-admin-token, via the following command:\\n    frodo admin create-oauth2-client-with-admin-privileges --llt <your-tenant-name>\\n    \\nThe scripted decision node needs the following outcomes defined:\\n - Found\\n - Not Found\\n \\n Author: se@forgerock.com\\n */\\n\\n//// CONSTANTS\\n// Request Params\\nvar HOST = requestHeaders.get(\\\"host\\\").get(0);\\nvar IDM_BASE_URL = \\\"https://\\\" + HOST + \\\"/openidm/\\\";\\n// Long-Lived API Token\\nvar IDM_API_TOKEN = systemEnv.getProperty(\\\"esv.admin.token\\\");\\n\\nvar OUTCOMES = {\\n  FOUND: \\\"Found\\\",\\n  NOT_FOUND: \\\"Not Found\\\"\\n};\\n\\nvar IDENTITY_OPTIONS = {\\n  USER: \\\"user\\\",\\n  ORGANIZATION: \\\"organization\\\",\\n  ROLE: \\\"role\\\",\\n  GROUP: \\\"group\\\"\\n}\\n\\n/**\\nCONSTANT PARAMS - consider using these as parameters if converting into a Library Script\\n*/\\n// Where the value is stored\\nvar REALM = \\\"alpha\\\";\\nvar IDENTITY = \\\"user\\\"; // could be \\\"user\\\", \\\"organization\\\", \\\"role\\\", \\\"group\\\", etc.\\nvar ATTRIBUTE = \\\"fr-attr-str3\\\"; // could be an attribute on the user, an object reference in an org, etc.\\n// How to set the value in state\\nvar STATE_KEY = \\\"failureUrl\\\";\\n\\n//// HELPERS\\n/**\\n\\tReturns metadata from an organization, searching off of the user's uid\\n    This example will return the first instance of that attribute found.\\n    \\n    @param {string} uid the user id in which to find the organization\\n    @return {string} the organization metadata, stringified\\n*/\\nfunction getOrgMetadataByUID(uid, attribute) {\\n  var orgsMetadata = [{}];\\n   \\n  var userOrgMembership = openidm.query(`managed/${REALM}_user/${uid}/memberOfOrg`, { \\\"_queryFilter\\\": \\\"true\\\" });\\n  \\n  if (userOrgMembership && userOrgMembership.result && userOrgMembership.result.length > 0) {\\n    // Build the query filter to pull every organization result\\n    var queryFilter = \\\"\\\";\\n    var userOrgMembershipResult = userOrgMembership.result;\\n    for (var i = 0; i < userOrgMembershipResult.length; i++) {\\n      var org = userOrgMembershipResult[i];\\n      if (i > 0) {\\n       queryFilter += \\\" or \\\"; \\n      }\\n      queryFilter += `(_id eq \\\"${org._refResourceId}\\\")`;\\n    }\\n    \\n    orgsMetadata = openidm.query(`managed/${REALM}_organization`, { \\n      \\\"_queryFilter\\\": queryFilter,\\n      \\\"_fields\\\": attribute\\n    }).result;\\n  }\\n  \\n  for (var j = 0; j < orgsMetadata.length; j++) {\\n    var orgMetadata = orgsMetadata[j];\\n    // Check to see if there's an attribute value. If so, return that value.\\n    if (null != orgMetadata[attribute]) {\\n     return orgMetadata[attribute];\\n    }\\n  }\\n}\\n\\n\\n//// MAIN\\n(function () {\\n  var uid = nodeState.get(\\\"_id\\\");\\n  var stateValue = \\\"\\\";\\n  \\n  // Determine how to pull the defining attribute based on the passed identity\\n  switch(IDENTITY.toLowerCase()) {\\n   case(IDENTITY_OPTIONS.USER):\\n      var identity = idRepository.getIdentity(uid);\\n      var attribute = identity.getAttributeValues(ATTRIBUTE);\\n  \\t  if (attribute != '[]') {\\n      \\tstateValue = attribute[0]; // pulling the first value in the array\\n      }\\n      break;\\n   case(IDENTITY_OPTIONS.ORGANIZATION):\\n      stateValue = getOrgMetadataByUID(uid, ATTRIBUTE);\\n      break;\\n    default:\\n      stateValue = \\\"\\\";\\n  }\\n  \\n  if (stateValue) {\\n    nodeState.putShared(STATE_KEY, stateValue);\\n    outcome = OUTCOMES.FOUND;\\n  } else {\\n    outcome = OUTCOMES.NOT_FOUND;\\n  }\\n\\n  action.goTo(outcome);\\n}());\"",
+            "default": false,
+            "language": "JAVASCRIPT",
+            "context": "AUTHENTICATION_TREE_DECISION_NODE",
+            "createdBy": "null",
+            "creationDate": 0,
+            "lastModifiedBy": "null",
+            "lastModifiedDate": 0,
+            "evaluatorVersion": "2.0"
+          }
+        },
+        "emailTemplates": {},
+        "socialIdentityProviders": {},
+        "themes": [],
+        "saml2Entities": {},
+        "circlesOfTrust": {}
+      },
+      "Pt 1_Capture Browser Session": {
+        "tree": {
+          "_id": "Pt 1_Capture Browser Session",
+          "_rev": "-425732123",
+          "identityResource": "managed/alpha_user",
+          "uiConfig": {
+            "categories": "[\"EX_Logout with Journeys\"]"
+          },
+          "entryNodeId": "7ab17ed0-dfb2-4759-bbf1-d528bf96cd25",
+          "innerTreeOnly": false,
+          "nodes": {
+            "16df077a-ee5c-459f-aa4c-b86f833617ba": {
+              "x": 386,
+              "y": 347.015625,
+              "connections": {
+                "false": "e301438c-0bd0-429c-ab0c-66126501069a",
+                "true": "e301438c-0bd0-429c-ab0c-66126501069a"
+              },
+              "nodeType": "MessageNode",
+              "displayName": "No Session Found"
+            },
+            "7ab17ed0-dfb2-4759-bbf1-d528bf96cd25": {
+              "x": 185,
+              "y": 234.015625,
+              "connections": {
+                "No Session Found": "16df077a-ee5c-459f-aa4c-b86f833617ba",
+                "Session Found": "cb692aad-b357-4f87-9448-79c6320f457f"
+              },
+              "nodeType": "ScriptedDecisionNode",
+              "displayName": "Get Session"
+            },
+            "cb692aad-b357-4f87-9448-79c6320f457f": {
+              "x": 389,
+              "y": 207.015625,
+              "connections": {
+                "CONFIGURATION_FAILED": "e301438c-0bd0-429c-ab0c-66126501069a",
+                "false": "e301438c-0bd0-429c-ab0c-66126501069a",
+                "true": "70e691a5-1e33-4ac3-a356-e7b6d60d92e0"
+              },
+              "nodeType": "ConfigProviderNode",
+              "displayName": "Display User Cookie"
+            }
+          },
+          "staticNodes": {
+            "startNode": {
+              "x": 50,
+              "y": 250
+            },
+            "70e691a5-1e33-4ac3-a356-e7b6d60d92e0": {
+              "x": 630,
+              "y": 221
+            },
+            "e301438c-0bd0-429c-ab0c-66126501069a": {
+              "x": 627,
+              "y": 347
+            }
+          },
+          "description": "Captures a User's Pre-existing Browser Session. Part 1 of 4 of Logging Out with Journeys",
+          "enabled": true
+        },
+        "nodes": {
+          "16df077a-ee5c-459f-aa4c-b86f833617ba": {
+            "_id": "16df077a-ee5c-459f-aa4c-b86f833617ba",
+            "_rev": "1851507341",
+            "messageYes": {
+              "en": "Continue"
+            },
+            "message": {
+              "en": "No Session Found"
+            },
+            "messageNo": {
+              "en": "Cancel"
+            },
+            "_type": {
+              "_id": "MessageNode",
+              "name": "Message Node",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "true",
+                "displayName": "True"
+              },
+              {
+                "id": "false",
+                "displayName": "False"
+              }
+            ]
+          },
+          "7ab17ed0-dfb2-4759-bbf1-d528bf96cd25": {
+            "_id": "7ab17ed0-dfb2-4759-bbf1-d528bf96cd25",
+            "_rev": "447245326",
+            "script": "5a2cb7bb-dde3-49e4-a5c7-4116c142730e",
+            "outcomes": [
+              "Session Found",
+              "No Session Found"
+            ],
+            "outputs": [
+              "*"
+            ],
+            "inputs": [
+              "*"
+            ],
+            "_type": {
+              "_id": "ScriptedDecisionNode",
+              "name": "Scripted Decision",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "Session Found",
+                "displayName": "Session Found"
+              },
+              {
+                "id": "No Session Found",
+                "displayName": "No Session Found"
+              }
+            ]
+          },
+          "cb692aad-b357-4f87-9448-79c6320f457f": {
+            "_id": "cb692aad-b357-4f87-9448-79c6320f457f",
+            "_rev": "-1820465560",
+            "script": "429345cf-0146-4643-ba68-fd28b8083e17",
+            "nodeType": "MessageNode",
+            "scriptInputs": [
+              "*"
+            ],
+            "_type": {
+              "_id": "ConfigProviderNode",
+              "name": "Configuration Provider",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "true",
+                "displayName": "True"
+              },
+              {
+                "id": "false",
+                "displayName": "False"
+              },
+              {
+                "id": "CONFIGURATION_FAILED",
+                "displayName": "Configuration failure"
+              }
+            ]
+          }
+        },
+        "innerNodes": {},
+        "scripts": {
+          "5a2cb7bb-dde3-49e4-a5c7-4116c142730e": {
+            "_id": "5a2cb7bb-dde3-49e4-a5c7-4116c142730e",
+            "name": "Get Session by Cookie",
+            "description": "Checks if the user has an existing session, and if so, stores it in shared state.",
+            "script": "\"/*\\nChecks if the user has an existing session, and if so, stores it in shared state.\\n \\n This script expects the following ESV to be set:\\n \\tesv.cookie - the cookie of the tenant (found in \\\"Tenant Settings\\\")\\n \\n The scripted decision node needs the following outcomes defined:\\n - Session Found\\n - No Session Found\\n \\n Author: se@forgerock.com\\n */\\n\\n// The tenant cookie. Found in Tenant Settings/Global Settings\\nvar TENANT_COOKIE = systemEnv.getProperty(\\\"esv.cookie\\\");\\n\\nvar NodeOutcome = {\\n  SESSION_FOUND: \\\"Session Found\\\",\\n  NO_SESSION_FOUND: \\\"No Session Found\\\"\\n};\\n\\n//// MAIN\\n(function () {\\n  // Default outcome\\n  outcome = NodeOutcome.NO_SESSION_FOUND;\\n  \\n  var sessionCookie = \\\"\\\";\\n  var userCookieString = requestHeaders.get(\\\"cookie\\\").get(0);\\n  // parse the cookies\\n  var userCookies = userCookieString.split(\\\"; \\\");\\n  // look for the right cookie\\n  var i = 0;\\n  while (i < userCookies.length && !sessionCookie) {\\n   \\tvar userCookieData = userCookies[i].split(\\\"=\\\");\\n    if (userCookieData[0] == TENANT_COOKIE) {\\n     sessionCookie = userCookieData[1];\\n     nodeState.putShared(\\\"sessionCookie\\\", sessionCookie);\\n    }\\n    i += 1;\\n  }\\n  \\n  if (sessionCookie) {\\n    outcome = NodeOutcome.SESSION_FOUND; \\n  }\\n  \\n  action.goTo(outcome);\\n}());\"",
+            "default": false,
+            "language": "JAVASCRIPT",
+            "context": "AUTHENTICATION_TREE_DECISION_NODE",
+            "createdBy": "null",
+            "creationDate": 0,
+            "lastModifiedBy": "null",
+            "lastModifiedDate": 0,
+            "evaluatorVersion": "2.0"
+          },
+          "429345cf-0146-4643-ba68-fd28b8083e17": {
+            "_id": "429345cf-0146-4643-ba68-fd28b8083e17",
+            "name": "Display User Cookie",
+            "description": "Displays the User's Cookie captured in NodeState",
+            "script": "\"/*\\n\\tDisplays the User's Cookie from \\\"sessionCookie\\\" stored in state.\\n*/\\n\\nvar sessionCookie = nodeState.get(\\\"sessionCookie\\\");\\n\\nconfig = {\\n  \\\"message\\\": {\\n    \\\"en\\\": `Captured User Cookie: ${sessionCookie ? sessionCookie : 'No session found'}`\\n  },\\n  \\\"messageYes\\\": {\\\"en\\\": \\\"Continue\\\"},\\n  \\\"messageNo\\\": {\\\"en\\\": \\\"Cancel\\\"},\\n}\"",
+            "default": false,
+            "language": "JAVASCRIPT",
+            "context": "CONFIG_PROVIDER_NODE",
+            "createdBy": "null",
+            "creationDate": 0,
+            "lastModifiedBy": "null",
+            "lastModifiedDate": 0,
+            "evaluatorVersion": "1.0"
+          }
+        },
+        "emailTemplates": {},
+        "socialIdentityProviders": {},
+        "themes": [],
+        "saml2Entities": {},
+        "circlesOfTrust": {}
+      },
+      "Pt 2_Terminate Session with API Call": {
+        "tree": {
+          "_id": "Pt 2_Terminate Session with API Call",
+          "_rev": "-1461876306",
+          "identityResource": "managed/alpha_user",
+          "uiConfig": {
+            "categories": "[\"EX_Logout with Journeys\"]"
+          },
+          "entryNodeId": "43ee09ee-7f4c-434c-b265-3c0181cd75a1",
+          "innerTreeOnly": false,
+          "nodes": {
+            "095a3f97-ed71-4e44-bf40-6c4162eebb07": {
+              "x": 664,
+              "y": 530,
+              "connections": {
+                "false": "e301438c-0bd0-429c-ab0c-66126501069a",
+                "true": "e301438c-0bd0-429c-ab0c-66126501069a"
+              },
+              "nodeType": "MessageNode",
+              "displayName": "Error Message"
+            },
+            "3be434cf-f4f8-45aa-b6df-d73336582943": {
+              "x": 671,
+              "y": 273,
+              "connections": {
+                "CONFIGURATION_FAILED": "e301438c-0bd0-429c-ab0c-66126501069a",
+                "false": "e301438c-0bd0-429c-ab0c-66126501069a",
+                "true": "70e691a5-1e33-4ac3-a356-e7b6d60d92e0"
+              },
+              "nodeType": "ConfigProviderNode",
+              "displayName": "Display Termination Response"
+            },
+            "43ee09ee-7f4c-434c-b265-3c0181cd75a1": {
+              "x": 193,
+              "y": 294.015625,
+              "connections": {
+                "false": "d54941a2-f569-4b2b-b981-aacad209fd95",
+                "true": "d70e33da-5567-4c33-99b6-e24473427652"
+              },
+              "nodeType": "IdentifyExistingUserNode",
+              "displayName": "Identify Existing User"
+            },
+            "d54941a2-f569-4b2b-b981-aacad209fd95": {
+              "x": 670,
+              "y": 414,
+              "connections": {
+                "false": "e301438c-0bd0-429c-ab0c-66126501069a",
+                "true": "e301438c-0bd0-429c-ab0c-66126501069a"
+              },
+              "nodeType": "MessageNode",
+              "displayName": "No User Found"
+            },
+            "d70e33da-5567-4c33-99b6-e24473427652": {
+              "x": 428,
+              "y": 269,
+              "connections": {
+                "Error": "095a3f97-ed71-4e44-bf40-6c4162eebb07",
+                "Failure": "d54941a2-f569-4b2b-b981-aacad209fd95",
+                "Success": "3be434cf-f4f8-45aa-b6df-d73336582943"
+              },
+              "nodeType": "ScriptedDecisionNode",
+              "displayName": "Send Logout Request"
+            }
+          },
+          "staticNodes": {
+            "startNode": {
+              "x": 70,
+              "y": 295
+            },
+            "70e691a5-1e33-4ac3-a356-e7b6d60d92e0": {
+              "x": 998,
+              "y": 289.3333333333333
+            },
+            "e301438c-0bd0-429c-ab0c-66126501069a": {
+              "x": 988,
+              "y": 462.6666666666667
+            }
+          },
+          "description": "Use Identity information in ForgeRock Identity Cloud to terminate a user's external session. Part 2 of 4 of Logging Out with Journeys",
+          "enabled": true
+        },
+        "nodes": {
+          "095a3f97-ed71-4e44-bf40-6c4162eebb07": {
+            "_id": "095a3f97-ed71-4e44-bf40-6c4162eebb07",
+            "_rev": "729897350",
+            "messageYes": {
+              "en": "Continue"
+            },
+            "message": {
+              "en": "An Error Occurred. Please view the logs."
+            },
+            "messageNo": {
+              "en": "Cancel"
+            },
+            "_type": {
+              "_id": "MessageNode",
+              "name": "Message Node",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "true",
+                "displayName": "True"
+              },
+              {
+                "id": "false",
+                "displayName": "False"
+              }
+            ]
+          },
+          "3be434cf-f4f8-45aa-b6df-d73336582943": {
+            "_id": "3be434cf-f4f8-45aa-b6df-d73336582943",
+            "_rev": "1577222499",
+            "script": "d8adc3d9-dacc-4f92-9d71-3612cadcb07b",
+            "nodeType": "MessageNode",
+            "scriptInputs": [
+              "*"
+            ],
+            "_type": {
+              "_id": "ConfigProviderNode",
+              "name": "Configuration Provider",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "true",
+                "displayName": "True"
+              },
+              {
+                "id": "false",
+                "displayName": "False"
+              },
+              {
+                "id": "CONFIGURATION_FAILED",
+                "displayName": "Configuration failure"
+              }
+            ]
+          },
+          "43ee09ee-7f4c-434c-b265-3c0181cd75a1": {
+            "_id": "43ee09ee-7f4c-434c-b265-3c0181cd75a1",
+            "_rev": "-471543800",
+            "identityAttribute": "userName",
+            "identifier": "userName",
+            "_type": {
+              "_id": "IdentifyExistingUserNode",
+              "name": "Identify Existing User",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "true",
+                "displayName": "True"
+              },
+              {
+                "id": "false",
+                "displayName": "False"
+              }
+            ]
+          },
+          "d54941a2-f569-4b2b-b981-aacad209fd95": {
+            "_id": "d54941a2-f569-4b2b-b981-aacad209fd95",
+            "_rev": "-147313051",
+            "messageYes": {
+              "en": "Continue"
+            },
+            "message": {
+              "en": "No User Found"
+            },
+            "messageNo": {
+              "en": "Cancel"
+            },
+            "_type": {
+              "_id": "MessageNode",
+              "name": "Message Node",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "true",
+                "displayName": "True"
+              },
+              {
+                "id": "false",
+                "displayName": "False"
+              }
+            ]
+          },
+          "d70e33da-5567-4c33-99b6-e24473427652": {
+            "_id": "d70e33da-5567-4c33-99b6-e24473427652",
+            "_rev": "-1939850556",
+            "script": "8e98abdc-77c3-4973-9594-5d2a5da4cb16",
+            "outcomes": [
+              "Success",
+              "Failure",
+              "Error"
+            ],
+            "outputs": [
+              "*"
+            ],
+            "inputs": [
+              "*"
+            ],
+            "_type": {
+              "_id": "ScriptedDecisionNode",
+              "name": "Scripted Decision",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "Success",
+                "displayName": "Success"
+              },
+              {
+                "id": "Failure",
+                "displayName": "Failure"
+              },
+              {
+                "id": "Error",
+                "displayName": "Error"
+              }
+            ]
+          }
+        },
+        "innerNodes": {},
+        "scripts": {
+          "d8adc3d9-dacc-4f92-9d71-3612cadcb07b": {
+            "_id": "d8adc3d9-dacc-4f92-9d71-3612cadcb07b",
+            "name": "Display Termination Response",
+            "description": "Displays the external API request captured in NodeState",
+            "script": "\"/*\\n\\tDisplays the response from the external API request from \\\"terminationResponse\\\" stored in state.\\n*/\\n\\nvar terminationResponse = nodeState.get(\\\"terminationResponse\\\");\\n\\nconfig = {\\n  \\\"message\\\": {\\n    \\\"en\\\": `Termination Response: ${terminationResponse ? terminationResponse : 'No response data found'}`\\n  },\\n  \\\"messageYes\\\": {\\\"en\\\": \\\"Continue\\\"},\\n  \\\"messageNo\\\": {\\\"en\\\": \\\"Cancel\\\"},\\n}\\n\"",
+            "default": false,
+            "language": "JAVASCRIPT",
+            "context": "CONFIG_PROVIDER_NODE",
+            "createdBy": "null",
+            "creationDate": 0,
+            "lastModifiedBy": "null",
+            "lastModifiedDate": 0,
+            "evaluatorVersion": "1.0"
+          },
+          "8e98abdc-77c3-4973-9594-5d2a5da4cb16": {
+            "_id": "8e98abdc-77c3-4973-9594-5d2a5da4cb16",
+            "name": "Send Logout Request (Mock)",
+            "description": "Sends a logout request to an external API and stores in state.",
+            "script": "\"/*\\n Call an external API to terminate a session\\n \\n In a production instance, store credentials and routes in an ESV for security and reuse.\\n \\n The scripted decision node needs the following outcomes defined:\\n - Success\\n - Failure\\n - Error\\n \\n Author: se@forgerock.com\\n */\\n\\n//// CONSTANTS\\nvar BASE_URL = \\\"https://jsonplaceholder.typicode.com\\\";\\nvar USER_SSO_TOKEN = \\\"fr-attr-str2\\\";\\n\\nvar OUTCOMES = {\\n  SUCCESS: \\\"Success\\\",\\n  FAILURE: \\\"Failure\\\",\\n  ERROR: \\\"Error\\\"\\n}\\n\\n//// HELPERS\\n/**\\n\\tCalls an external endpoint to terminate a session \\n    \\n    @param {String} username the user's username\\n    @param {String} ssoToken the user's external ssoToken\\n    @return {object} the response from the API, or null. Throws an error if not 201\\n*/\\nfunction terminateSession(username, ssoToken) {\\n  var expectedStatus = 201;\\n  var options = {\\n    method: \\\"POST\\\",\\n    headers: {\\n      \\\"Content-Type\\\": \\\"application/json\\\"\\n    },\\n    // If you need to add a bearer token, use something like this: `token: bearerToken,`\\n    body: {\\n      \\\"username\\\": username,\\n      \\\"sso_token\\\": ssoToken\\n    }\\n  };\\n\\n  var requestURL = `${BASE_URL}/posts`;\\n  var response = httpClient.send(requestURL, options).get();\\n\\n  if (response.status === expectedStatus) {\\n    var payload = response.text();\\n    var jsonResult = JSON.parse(payload);\\n    return jsonResult;\\n  } else {\\n  \\tthrow(`Response is not ${expectedStatus}. Response: ${response.text}`); \\n  }\\n}\\n\\n//// MAIN\\n(function() {\\n  // We wrap our main in a try/catch for the following reasons:\\n  // - Since we are hitting exernal functions that could throw errors, like httpClient\\n  // - So that if a user isn't logged in, the sharedState retrieval fails gracefully.\\n  try {\\n    var username = nodeState.get(\\\"_id\\\");\\n    var attribute = USER_SSO_TOKEN;\\n    \\n    var identity = idRepository.getIdentity(username);\\n    // If no attribute by this name is found, the result is an empty array: []\\n    var ssoToken = identity.getAttributeValues(attribute);\\n    \\n    // If we found a username and ssotoken\\n    if (username && ssoToken != '[]') {\\n      \\tvar response = terminateSession(username, ssoToken);\\n      \\t// Store the response in shared state to review later\\n        // In this script, you could branch paths or perform actions based on the response data.\\n      \\tnodeState.putShared('terminationResponse', JSON.stringify(response));\\n    \\toutcome = OUTCOMES.SUCCESS;\\n    } else {\\n      \\tnodeState.putShared('terminationResponse', `username: ${username}, ssotoken: ${ssoToken}`);\\n    \\toutcome = OUTCOMES.FAILURE;\\n    }\\n  } catch(e) {\\n    logger.error(e);\\n    outcome = OUTCOMES.ERROR;\\n  }\\n}());\\n\"",
+            "default": false,
+            "language": "JAVASCRIPT",
+            "context": "AUTHENTICATION_TREE_DECISION_NODE",
+            "createdBy": "null",
+            "creationDate": 0,
+            "lastModifiedBy": "null",
+            "lastModifiedDate": 0,
+            "evaluatorVersion": "2.0"
+          }
+        },
+        "emailTemplates": {},
+        "socialIdentityProviders": {},
+        "themes": [],
+        "saml2Entities": {},
+        "circlesOfTrust": {}
+      },
+      "UniversalSingleLogout_Example": {
+        "tree": {
+          "_id": "UniversalSingleLogout_Example",
+          "_rev": "940637014",
+          "identityResource": "managed/alpha_user",
+          "uiConfig": {
+            "categories": "[\"EX_Logout with Journeys\"]"
+          },
+          "entryNodeId": "ecc47c30-6d1e-4fad-8bd5-971f859066d3",
+          "innerTreeOnly": false,
+          "nodes": {
+            "11b818be-573b-415e-8f64-da30d1b8d013": {
+              "x": 958,
+              "y": 309,
+              "connections": {
+                "false": "e301438c-0bd0-429c-ab0c-66126501069a",
+                "true": "e301438c-0bd0-429c-ab0c-66126501069a"
+              },
+              "nodeType": "MessageNode",
+              "displayName": "Error Message"
+            },
+            "5512b6d6-f439-4556-bd8d-c525fa147ef9": {
+              "x": 421,
+              "y": 188.5,
+              "connections": {
+                "false": "e301438c-0bd0-429c-ab0c-66126501069a",
+                "true": "e62461a6-6199-441b-aed8-a560eb780231"
+              },
+              "nodeType": "InnerTreeEvaluatorNode",
+              "displayName": "Terminate External Sessions"
+            },
+            "ecc47c30-6d1e-4fad-8bd5-971f859066d3": {
+              "x": 189,
+              "y": 190.5,
+              "connections": {
+                "false": "e301438c-0bd0-429c-ab0c-66126501069a",
+                "true": "5512b6d6-f439-4556-bd8d-c525fa147ef9"
+              },
+              "nodeType": "InnerTreeEvaluatorNode",
+              "displayName": "Capture Browser Session"
+            },
+            "e62461a6-6199-441b-aed8-a560eb780231": {
+              "x": 676,
+              "y": 187,
+              "connections": {
+                "Error": "11b818be-573b-415e-8f64-da30d1b8d013",
+                "Failure": "11b818be-573b-415e-8f64-da30d1b8d013",
+                "Success": "0896fafb-a963-4337-8130-f17ab971f633"
+              },
+              "nodeType": "ScriptedDecisionNode",
+              "displayName": "Terminate ForgeRock Sessions"
+            },
+            "0896fafb-a963-4337-8130-f17ab971f633": {
+              "x": 963,
+              "y": 173,
+              "connections": {
+                "false": "e301438c-0bd0-429c-ab0c-66126501069a",
+                "true": "11b818be-573b-415e-8f64-da30d1b8d013"
+              },
+              "nodeType": "InnerTreeEvaluatorNode",
+              "displayName": "Redirect by Metadata"
+            }
+          },
+          "staticNodes": {
+            "startNode": {
+              "x": 70,
+              "y": 190
+            },
+            "70e691a5-1e33-4ac3-a356-e7b6d60d92e0": {
+              "x": 68,
+              "y": 302.3333333333333
+            },
+            "e301438c-0bd0-429c-ab0c-66126501069a": {
+              "x": 1245,
+              "y": 311.66666666666663
+            }
+          },
+          "description": "Using the user's Cookie data, terminate their ForgeRock session and redirect to a custom URL. The complete example of Logging Out with Journeys",
+          "enabled": true
+        },
+        "nodes": {
+          "11b818be-573b-415e-8f64-da30d1b8d013": {
+            "_id": "11b818be-573b-415e-8f64-da30d1b8d013",
+            "_rev": "-1577301674",
+            "messageYes": {
+              "en": "Continue"
+            },
+            "message": {
+              "en": "An Error Occurred. Please view the logs."
+            },
+            "messageNo": {
+              "en": "Cancel"
+            },
+            "_type": {
+              "_id": "MessageNode",
+              "name": "Message Node",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "true",
+                "displayName": "True"
+              },
+              {
+                "id": "false",
+                "displayName": "False"
+              }
+            ]
+          },
+          "5512b6d6-f439-4556-bd8d-c525fa147ef9": {
+            "_id": "5512b6d6-f439-4556-bd8d-c525fa147ef9",
+            "_rev": "-307317714",
+            "tree": "Pt 2_Terminate Session with API Call",
+            "_type": {
+              "_id": "InnerTreeEvaluatorNode",
+              "name": "Inner Tree Evaluator",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "true",
+                "displayName": "True"
+              },
+              {
+                "id": "false",
+                "displayName": "False"
+              }
+            ]
+          },
+          "ecc47c30-6d1e-4fad-8bd5-971f859066d3": {
+            "_id": "ecc47c30-6d1e-4fad-8bd5-971f859066d3",
+            "_rev": "267098843",
+            "tree": "Pt 1_Capture Browser Session",
+            "_type": {
+              "_id": "InnerTreeEvaluatorNode",
+              "name": "Inner Tree Evaluator",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "true",
+                "displayName": "True"
+              },
+              {
+                "id": "false",
+                "displayName": "False"
+              }
+            ]
+          },
+          "e62461a6-6199-441b-aed8-a560eb780231": {
+            "_id": "e62461a6-6199-441b-aed8-a560eb780231",
+            "_rev": "2127929871",
+            "script": "19e858f7-28e9-4f51-b09f-2348279e4d80",
+            "outcomes": [
+              "Success",
+              "Failure",
+              "Error"
+            ],
+            "outputs": [
+              "*"
+            ],
+            "inputs": [
+              "*"
+            ],
+            "_type": {
+              "_id": "ScriptedDecisionNode",
+              "name": "Scripted Decision",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "Success",
+                "displayName": "Success"
+              },
+              {
+                "id": "Failure",
+                "displayName": "Failure"
+              },
+              {
+                "id": "Error",
+                "displayName": "Error"
+              }
+            ]
+          },
+          "0896fafb-a963-4337-8130-f17ab971f633": {
+            "_id": "0896fafb-a963-4337-8130-f17ab971f633",
+            "_rev": "410110639",
+            "tree": "Pt 4_Failure Redirect By Attribute",
+            "_type": {
+              "_id": "InnerTreeEvaluatorNode",
+              "name": "Inner Tree Evaluator",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "true",
+                "displayName": "True"
+              },
+              {
+                "id": "false",
+                "displayName": "False"
+              }
+            ]
+          }
+        },
+        "innerNodes": {},
+        "scripts": {
+          "19e858f7-28e9-4f51-b09f-2348279e4d80": {
+            "_id": "19e858f7-28e9-4f51-b09f-2348279e4d80",
+            "name": "End User's Session (Cookie in State)",
+            "description": "Checks if the user has an existing session, and if so, logs them out.\nThis script expects the user's cookie and _id to be stored in shared state.",
+            "script": "\"/*\\nChecks if the user has an existing session, and if so, logs them out.\\n \\n This script expects the user's cookie and _id to be stored in shared state.\\n\\n This script expects the following ESV to be set:\\n - esv.cookie - the cookie of the tenant (found in \\\"Tenant Settings\\\")\\n \\n The scripted decision node needs the following outcomes defined:\\n - Success\\n - Failure\\n - No Session\\n - Error\\n \\n Author: se@forgerock.com\\n */\\n\\n// Request Params\\nvar HOST = requestHeaders.get(\\\"host\\\").get(0);\\nvar AM_BASE_URL = \\\"https://\\\" + HOST + \\\"/am/\\\";\\n// Long-Lived API Token\\nvar TENANT_COOKIE = systemEnv.getProperty(\\\"esv.cookie\\\");\\n\\nvar OUTCOMES = {\\n  SUCCESS: \\\"Success\\\",\\n  FAILURE: \\\"Failure\\\",\\n  NO_SESSION: \\\"No Session\\\",\\n  ERROR: \\\"Error\\\"\\n};\\n\\n//// HELPERS\\n\\n/**\\n * Kills all of a user's sessions based on their identifier\\n * https://backstage.forgerock.com/docs/idcloud/latest/am-sessions/managing-sessions-REST.html#invalidate-sessions-user\\n * @param {string} sessionCookie the user's cookie containing their session authorization\\n * @param {string} uid the universal identifier of the user\\n * @returns {boolean} whether or not the invalidation was successful\\n */\\nfunction logoutByUser(sessionCookie, uid) {\\n  var wasLogoutSuccessful = false;\\n  \\n  var options = {\\n    method: 'POST',\\n    headers: {\\n      \\\"Content-Type\\\": \\\"application/json; charset=UTF-8\\\",\\n      \\\"Accept-API-Version\\\": \\\"resource=5.1, protocol=1.0\\\"\\n    },\\n    body: {\\n      username: uid\\n    }\\n  };\\n  options.headers[TENANT_COOKIE] = sessionCookie;\\n  \\n  var requestURL = `${AM_BASE_URL}json/realms/root/realms/alpha/sessions/?_action=logoutByUser`;\\n\\n  var response = httpClient.send(requestURL, options).get();\\n\\n  if (response.status === 200) {\\n    var payload = response.text();\\n    var jsonResult = JSON.parse(payload);\\n    wasLogoutSuccessful = jsonResult.result;\\n  }\\n  \\n  return wasLogoutSuccessful;\\n}\\n\\n//// MAIN\\n(function () {\\n  try {\\n    var sessionCookie = nodeState.get(\\\"sessionCookie\\\");\\n    var uid = nodeState.get(\\\"_id\\\");\\n\\n    if (!sessionCookie || !uid) {\\n      outcome = OUTCOMES.NO_SESSION; \\n    } else if (logoutByUser(sessionCookie, uid)) {\\n      outcome = OUTCOMES.SUCCESS;\\n    } else {\\n      outcome = OUTCOMES.FAILURE;\\n    }\\n  } catch(e) {\\n   logger.error(e);\\n   outcome = OUTCOMES.ERROR;\\n  }\\n}());\"",
+            "default": false,
+            "language": "JAVASCRIPT",
+            "context": "AUTHENTICATION_TREE_DECISION_NODE",
+            "createdBy": "null",
+            "creationDate": 0,
+            "lastModifiedBy": "null",
+            "lastModifiedDate": 0,
+            "evaluatorVersion": "2.0"
+          }
+        },
+        "emailTemplates": {},
+        "socialIdentityProviders": {},
+        "themes": [],
+        "saml2Entities": {},
+        "circlesOfTrust": {}
+      }
+    }
+  }

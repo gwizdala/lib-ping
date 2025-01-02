@@ -1,0 +1,295 @@
+{
+    "meta": {
+      "treesSelectedForExport": [
+        "UniversalSingleLogout"
+      ],
+      "innerTreesIncluded": []
+    },
+    "trees": {
+      "UniversalSingleLogout": {
+        "tree": {
+          "_id": "UniversalSingleLogout",
+          "_rev": "1123316166",
+          "identityResource": "managed/alpha_user",
+          "uiConfig": {
+            "categories": "[\"EX_Logout with Journeys\"]"
+          },
+          "entryNodeId": "54c8af18-5d71-4038-a3c1-2dbe325cd282",
+          "innerTreeOnly": false,
+          "nodes": {
+            "54c8af18-5d71-4038-a3c1-2dbe325cd282": {
+              "x": 173,
+              "y": 241.015625,
+              "connections": {
+                "false": "e301438c-0bd0-429c-ab0c-66126501069a",
+                "true": "52eb325b-7bc0-40a9-a271-c3d296ad4d45"
+              },
+              "nodeType": "IdentifyExistingUserNode",
+              "displayName": "Identify Existing User"
+            },
+            "52eb325b-7bc0-40a9-a271-c3d296ad4d45": {
+              "x": 378,
+              "y": 224.015625,
+              "connections": {
+                "Success": "73868083-a70a-4fea-846a-4dc97d44fbf8",
+                "No Session": "73868083-a70a-4fea-846a-4dc97d44fbf8",
+                "Failure": "d4774faa-842f-4b7e-9f69-8bfb472ae467",
+                "Error": "d4774faa-842f-4b7e-9f69-8bfb472ae467"
+              },
+              "nodeType": "ScriptedDecisionNode",
+              "displayName": "End A User's Session"
+            },
+            "125cc2a8-aaf8-495d-a2e6-909b5d67daeb": {
+              "x": 838,
+              "y": 283.015625,
+              "connections": {
+                "outcome": "e301438c-0bd0-429c-ab0c-66126501069a"
+              },
+              "nodeType": "SetFailureUrlNode",
+              "displayName": "Failure URL"
+            },
+            "73868083-a70a-4fea-846a-4dc97d44fbf8": {
+              "x": 646,
+              "y": 173.015625,
+              "connections": {
+                "Not Found": "125cc2a8-aaf8-495d-a2e6-909b5d67daeb",
+                "Found": "e301438c-0bd0-429c-ab0c-66126501069a"
+              },
+              "nodeType": "ScriptedDecisionNode",
+              "displayName": "Redirect by Metadata"
+            },
+            "d4774faa-842f-4b7e-9f69-8bfb472ae467": {
+              "x": 648,
+              "y": 346.015625,
+              "connections": {
+                "true": "70e691a5-1e33-4ac3-a356-e7b6d60d92e0"
+              },
+              "nodeType": "PageNode",
+              "displayName": "Page Node"
+            }
+          },
+          "staticNodes": {
+            "startNode": {
+              "x": 50,
+              "y": 250
+            },
+            "70e691a5-1e33-4ac3-a356-e7b6d60d92e0": {
+              "x": 1002,
+              "y": 368
+            },
+            "e301438c-0bd0-429c-ab0c-66126501069a": {
+              "x": 989,
+              "y": 204
+            }
+          },
+          "description": "Terminates a user's sessions and redirects them to a custom url",
+          "enabled": true
+        },
+        "nodes": {
+          "54c8af18-5d71-4038-a3c1-2dbe325cd282": {
+            "_id": "54c8af18-5d71-4038-a3c1-2dbe325cd282",
+            "_rev": "-667417336",
+            "identityAttribute": "userName",
+            "identifier": "userName",
+            "_type": {
+              "_id": "IdentifyExistingUserNode",
+              "name": "Identify Existing User",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "true",
+                "displayName": "True"
+              },
+              {
+                "id": "false",
+                "displayName": "False"
+              }
+            ]
+          },
+          "52eb325b-7bc0-40a9-a271-c3d296ad4d45": {
+            "_id": "52eb325b-7bc0-40a9-a271-c3d296ad4d45",
+            "_rev": "1344024769",
+            "script": "706e27bc-47f0-47f5-9536-2a9d7bed794b",
+            "outcomes": [
+              "Success",
+              "Failure",
+              "No Session",
+              "Error"
+            ],
+            "outputs": [
+              "*"
+            ],
+            "inputs": [
+              "*"
+            ],
+            "_type": {
+              "_id": "ScriptedDecisionNode",
+              "name": "Scripted Decision",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "Success",
+                "displayName": "Success"
+              },
+              {
+                "id": "Failure",
+                "displayName": "Failure"
+              },
+              {
+                "id": "No Session",
+                "displayName": "No Session"
+              },
+              {
+                "id": "Error",
+                "displayName": "Error"
+              }
+            ]
+          },
+          "125cc2a8-aaf8-495d-a2e6-909b5d67daeb": {
+            "_id": "125cc2a8-aaf8-495d-a2e6-909b5d67daeb",
+            "_rev": "340159225",
+            "failureUrl": "https://www.google.com",
+            "_type": {
+              "_id": "SetFailureUrlNode",
+              "name": "Failure URL",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "outcome",
+                "displayName": "Outcome"
+              }
+            ]
+          },
+          "73868083-a70a-4fea-846a-4dc97d44fbf8": {
+            "_id": "73868083-a70a-4fea-846a-4dc97d44fbf8",
+            "_rev": "900150874",
+            "script": "e125d773-4f62-4013-b241-66f59f037bfa",
+            "outcomes": [
+              "Found",
+              "Not Found"
+            ],
+            "outputs": [
+              "*"
+            ],
+            "inputs": [
+              "*"
+            ],
+            "_type": {
+              "_id": "ScriptedDecisionNode",
+              "name": "Scripted Decision",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "Found",
+                "displayName": "Found"
+              },
+              {
+                "id": "Not Found",
+                "displayName": "Not Found"
+              }
+            ]
+          },
+          "d4774faa-842f-4b7e-9f69-8bfb472ae467": {
+            "_id": "d4774faa-842f-4b7e-9f69-8bfb472ae467",
+            "_rev": "-1133602529",
+            "nodes": [
+              {
+                "_id": "cb6e8e31-72ca-4751-b765-af151bf94781",
+                "nodeType": "MessageNode",
+                "displayName": "Error Message"
+              }
+            ],
+            "stage": "{\"ConfirmationCallback\":[{\"id\":\"cb6e8e31-72ca-4751-b765-af151bf94781\",\"showOnlyPositiveAnswer\":true}]}",
+            "pageDescription": {
+              "en": "An error has occurred. Please contact your Administrator for further assistance."
+            },
+            "pageHeader": {
+              "en": "Logout Error"
+            },
+            "_type": {
+              "_id": "PageNode",
+              "name": "Page Node",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "true",
+                "displayName": "True"
+              },
+              {
+                "id": "false",
+                "displayName": "False"
+              }
+            ]
+          }
+        },
+        "innerNodes": {
+          "cb6e8e31-72ca-4751-b765-af151bf94781": {
+            "_id": "cb6e8e31-72ca-4751-b765-af151bf94781",
+            "_rev": "-942187774",
+            "messageYes": {
+              "en": "Return"
+            },
+            "message": {
+              "en": "In the meantime, you can log out from each application individually."
+            },
+            "messageNo": {},
+            "_type": {
+              "_id": "MessageNode",
+              "name": "Message Node",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "true",
+                "displayName": "True"
+              },
+              {
+                "id": "false",
+                "displayName": "False"
+              }
+            ]
+          }
+        },
+        "scripts": {
+          "706e27bc-47f0-47f5-9536-2a9d7bed794b": {
+            "_id": "706e27bc-47f0-47f5-9536-2a9d7bed794b",
+            "name": "End Session",
+            "description": "Checks if the user has an existing session, and if so, logs them out.",
+            "script": "\"/*\\nChecks if the user has an existing session, and if so, logs them out.\\n \\n This script expects the following ESV to be set:\\n \\tesv.cookie - the cookie of the tenant (found in \\\"Tenant Settings\\\")\\n \\n The scripted decision node needs the following outcomes defined:\\n - Success\\n - Failure\\n - No Session\\n - Error\\n \\n Author: se@forgerock.com\\n */\\n\\n//// CONSTANTS\\n// Request Params\\nvar HOST = requestHeaders.get(\\\"host\\\").get(0);\\nvar AM_BASE_URL = \\\"https://\\\" + HOST + \\\"/am/\\\";\\n// Long-Lived API Token\\nvar TENANT_COOKIE = systemEnv.getProperty(\\\"esv.cookie\\\");\\n\\n/**\\nWith Next Gen Scripting, you can import Library Scripts to reuse functionality without copy/pasting code\\nRather than writing external REST calls into functions like this, consider writing a utility script\\nAnd then importing it here.\\nDocs: https://backstage.forgerock.com/docs/idcloud/latest/am-scripting/library-scripts.html\\n*/\\n// var externalAPI = require('myExternalAPI');\\n\\nvar OUTCOMES = {\\n  SUCCESS: \\\"Success\\\",\\n  FAILURE: \\\"Failure\\\",\\n  NO_SESSION: \\\"No Session\\\",\\n  ERROR: \\\"Error\\\"\\n};\\n\\n//// HELPERS\\n/**\\n * Finds the user's session cookie, stored under the tenant cookie identifier\\n * @returns {string} The user's cookie, or null if not found\\n */\\nfunction getSessionCookie() {\\n  var userCookieString = requestHeaders.get(\\\"cookie\\\").get(0);\\n  // parse the cookies\\n  if (userCookieString) {\\n    var userCookies = userCookieString.split(\\\"; \\\");\\n    // look for the right cookie\\n    for (var i = 0; i < userCookies.length; i++) {\\n      var userCookieData = userCookies[i].split(\\\"=\\\");\\n      if (userCookieData[0] == TENANT_COOKIE) {\\n      \\treturn userCookieData[1]; \\n      }\\n    }\\n  }\\n}\\n\\n/**\\n * Kills all of a user's sessions based on their identifier\\n * https://backstage.forgerock.com/docs/idcloud/latest/am-sessions/managing-sessions-REST.html#invalidate-sessions-user\\n * @param {string} sessionCookie the user's cookie containing their session authorization\\n * @param {string} uid the universal identifier of the user\\n * @returns {boolean} whether or not the invalidation was successful\\n */\\nfunction logoutByUser(sessionCookie, uid) {\\n  var wasLogoutSuccessful = false;\\n  \\n  var options = {\\n    method: 'POST',\\n    headers: {\\n      \\\"Content-Type\\\": \\\"application/json; charset=UTF-8\\\",\\n      \\\"Accept-API-Version\\\": \\\"resource=5.1, protocol=1.0\\\"\\n    },\\n    body: {\\n      username: uid\\n    }\\n  };\\n  options.headers[TENANT_COOKIE] = sessionCookie;\\n  \\n  var requestURL = `${AM_BASE_URL}json/realms/root/realms/alpha/sessions/?_action=logoutByUser`;\\n\\n  var response = httpClient.send(requestURL, options).get();\\n\\n  if (response.status === 200) {\\n    var payload = response.text();\\n    var jsonResult = JSON.parse(payload);\\n    wasLogoutSuccessful = jsonResult.result;\\n  }\\n  \\n  return wasLogoutSuccessful;\\n}\\n\\n\\n//// MAIN\\n(function () {\\n  // Default outcome\\n  outcome = OUTCOMES.ERROR;\\n  \\n  var sessionCookie = getSessionCookie();\\n  var uid = nodeState.get(\\\"_id\\\").toString();\\n  \\n  if (!sessionCookie || !uid) {\\n    outcome = OUTCOMES.NO_SESSION; \\n  } else if (logoutByUser(sessionCookie, uid)) {\\n    // If you had an external REST API, you could call the library script here\\n    // e.g. externalAPI.logoutByUser(uid, ssoToken);\\n    outcome = OUTCOMES.SUCCESS;\\n  } else {\\n    outcome = OUTCOMES.FAILURE;\\n  }\\n  \\n  action.goTo(outcome);\\n}());\"",
+            "default": false,
+            "language": "JAVASCRIPT",
+            "context": "AUTHENTICATION_TREE_DECISION_NODE",
+            "createdBy": "null",
+            "creationDate": 0,
+            "lastModifiedBy": "null",
+            "lastModifiedDate": 0,
+            "evaluatorVersion": "2.0"
+          },
+          "e125d773-4f62-4013-b241-66f59f037bfa": {
+            "_id": "e125d773-4f62-4013-b241-66f59f037bfa",
+            "name": "Get Medatadata",
+            "description": "Pulls metadata from a user identity and sets in state.",
+            "script": "\"/*\\nPulls metadata from a user identity and sets in state.\\nThis example uses constants to determine what metadata is pulled and how it is set,\\nbut these type of actions lend well to Library Scripts where said values can be passed as function params.\\nIn a production instance, consider Library Scripts for greatest reusability.\\nDoc: https://backstage.forgerock.com/docs/idcloud/latest/am-scripting/library-scripts.html\\n\\nThis script expects the following ESV to be set:\\n- esv.admin.token - a long-lived access token.  You can use frodo to generate an OAuth2 client/secret and\\n  set the associated esv-admin-token, via the following command:\\n    frodo admin create-oauth2-client-with-admin-privileges --llt <your-tenant-name>\\n    \\nThe scripted decision node needs the following outcomes defined:\\n - Found\\n - Not Found\\n \\n Author: se@forgerock.com\\n */\\n\\n//// CONSTANTS\\n// Request Params\\nvar HOST = requestHeaders.get(\\\"host\\\").get(0);\\nvar IDM_BASE_URL = \\\"https://\\\" + HOST + \\\"/openidm/\\\";\\n// Long-Lived API Token\\nvar IDM_API_TOKEN = systemEnv.getProperty(\\\"esv.admin.token\\\");\\n\\nvar OUTCOMES = {\\n  FOUND: \\\"Found\\\",\\n  NOT_FOUND: \\\"Not Found\\\"\\n};\\n\\nvar IDENTITY_OPTIONS = {\\n  USER: \\\"user\\\",\\n  ORGANIZATION: \\\"organization\\\",\\n  ROLE: \\\"role\\\",\\n  GROUP: \\\"group\\\"\\n}\\n\\n/**\\nCONSTANT PARAMS - consider using these as parameters if converting into a Library Script\\n*/\\n// Where the value is stored\\nvar REALM = \\\"alpha\\\";\\nvar IDENTITY = \\\"user\\\"; // could be \\\"user\\\", \\\"organization\\\", \\\"role\\\", \\\"group\\\", etc.\\nvar ATTRIBUTE = \\\"fr-attr-str3\\\"; // could be an attribute on the user, an object reference in an org, etc.\\n// How to set the value in state\\nvar STATE_KEY = \\\"failureUrl\\\";\\n\\n//// HELPERS\\n/**\\n\\tReturns metadata from an organization, searching off of the user's uid\\n    This example will return the first instance of that attribute found.\\n    \\n    @param {string} uid the user id in which to find the organization\\n    @return {string} the organization metadata, stringified\\n*/\\nfunction getOrgMetadataByUID(uid, attribute) {\\n  var orgsMetadata = [{}];\\n   \\n  var userOrgMembership = openidm.query(`managed/${REALM}_user/${uid}/memberOfOrg`, { \\\"_queryFilter\\\": \\\"true\\\" });\\n  \\n  if (userOrgMembership && userOrgMembership.result && userOrgMembership.result.length > 0) {\\n    // Build the query filter to pull every organization result\\n    var queryFilter = \\\"\\\";\\n    var userOrgMembershipResult = userOrgMembership.result;\\n    for (var i = 0; i < userOrgMembershipResult.length; i++) {\\n      var org = userOrgMembershipResult[i];\\n      if (i > 0) {\\n       queryFilter += \\\" or \\\"; \\n      }\\n      queryFilter += `(_id eq \\\"${org._refResourceId}\\\")`;\\n    }\\n    \\n    orgsMetadata = openidm.query(`managed/${REALM}_organization`, { \\n      \\\"_queryFilter\\\": queryFilter,\\n      \\\"_fields\\\": attribute\\n    }).result;\\n  }\\n  \\n  for (var j = 0; j < orgsMetadata.length; j++) {\\n    var orgMetadata = orgsMetadata[j];\\n    // Check to see if there's an attribute value. If so, return that value.\\n    if (null != orgMetadata[attribute]) {\\n     return orgMetadata[attribute];\\n    }\\n  }\\n}\\n\\n\\n//// MAIN\\n(function () {\\n  var uid = nodeState.get(\\\"_id\\\");\\n  var stateValue = \\\"\\\";\\n  \\n  // Determine how to pull the defining attribute based on the passed identity\\n  switch(IDENTITY.toLowerCase()) {\\n   case(IDENTITY_OPTIONS.USER):\\n      var identity = idRepository.getIdentity(uid);\\n      var attribute = identity.getAttributeValues(ATTRIBUTE);\\n  \\t  if (attribute != '[]') {\\n      \\tstateValue = attribute[0]; // pulling the first value in the array\\n      }\\n      break;\\n   case(IDENTITY_OPTIONS.ORGANIZATION):\\n      stateValue = getOrgMetadataByUID(uid, ATTRIBUTE);\\n      break;\\n    default:\\n      stateValue = \\\"\\\";\\n  }\\n  \\n  if (stateValue) {\\n    nodeState.putShared(STATE_KEY, stateValue);\\n    outcome = OUTCOMES.FOUND;\\n  } else {\\n    outcome = OUTCOMES.NOT_FOUND;\\n  }\\n\\n  action.goTo(outcome);\\n}());\"",
+            "default": false,
+            "language": "JAVASCRIPT",
+            "context": "AUTHENTICATION_TREE_DECISION_NODE",
+            "createdBy": "null",
+            "creationDate": 0,
+            "lastModifiedBy": "null",
+            "lastModifiedDate": 0,
+            "evaluatorVersion": "2.0"
+          }
+        },
+        "emailTemplates": {},
+        "socialIdentityProviders": {},
+        "themes": [],
+        "saml2Entities": {},
+        "circlesOfTrust": {}
+      }
+    }
+  }

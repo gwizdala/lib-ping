@@ -1,0 +1,144 @@
+{
+    "trees": {
+      "AgentLogin": {
+        "tree": {
+          "_id": "AgentLogin",
+          "_rev": "-1892660011",
+          "identityResource": "managed/alpha_user",
+          "uiConfig": {
+            "categories": "[\"Utilities\"]"
+          },
+          "entryNodeId": "12cb6b58-26a6-486c-b130-406ff63271da",
+          "innerTreeOnly": false,
+          "nodes": {
+            "12cb6b58-26a6-486c-b130-406ff63271da": {
+              "connections": {
+                "outcome": "ec9d5702-80e1-4e8a-b13f-67f164be3b5e"
+              },
+              "displayName": "Page Node",
+              "nodeType": "PageNode",
+              "x": 210,
+              "y": 109
+            },
+            "ec9d5702-80e1-4e8a-b13f-67f164be3b5e": {
+              "connections": {
+                "false": "e301438c-0bd0-429c-ab0c-66126501069a",
+                "true": "70e691a5-1e33-4ac3-a356-e7b6d60d92e0"
+              },
+              "displayName": "Agent Data Store Decision",
+              "nodeType": "AgentDataStoreDecisionNode",
+              "x": 455,
+              "y": 137.5
+            }
+          },
+          "staticNodes": {
+            "70e691a5-1e33-4ac3-a356-e7b6d60d92e0": {
+              "x": 735,
+              "y": 80
+            },
+            "e301438c-0bd0-429c-ab0c-66126501069a": {
+              "x": 735,
+              "y": 230
+            },
+            "startNode": {
+              "x": 70,
+              "y": 155
+            }
+          },
+          "enabled": true
+        },
+        "nodes": {
+          "12cb6b58-26a6-486c-b130-406ff63271da": {
+            "_id": "12cb6b58-26a6-486c-b130-406ff63271da",
+            "_rev": "-1253681866",
+            "nodes": [
+              {
+                "_id": "5d1a14ab-ecdc-41dc-9024-b2c8286a9306",
+                "nodeType": "ValidatedUsernameNode",
+                "displayName": "Platform Username"
+              },
+              {
+                "_id": "09acc72c-e381-4fda-9e9d-b1221aa34c29",
+                "nodeType": "ValidatedPasswordNode",
+                "displayName": "Platform Password"
+              }
+            ],
+            "pageDescription": {},
+            "pageHeader": {},
+            "_type": {
+              "_id": "PageNode",
+              "name": "Page Node",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "outcome",
+                "displayName": "Outcome"
+              }
+            ]
+          },
+          "ec9d5702-80e1-4e8a-b13f-67f164be3b5e": {
+            "_id": "ec9d5702-80e1-4e8a-b13f-67f164be3b5e",
+            "_rev": "501052464",
+            "_type": {
+              "_id": "AgentDataStoreDecisionNode",
+              "name": "Agent Data Store Decision",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "true",
+                "displayName": "True"
+              },
+              {
+                "id": "false",
+                "displayName": "False"
+              }
+            ]
+          }
+        },
+        "innerNodes": {
+          "5d1a14ab-ecdc-41dc-9024-b2c8286a9306": {
+            "_id": "5d1a14ab-ecdc-41dc-9024-b2c8286a9306",
+            "_rev": "2052778665",
+            "usernameAttribute": "userName",
+            "validateInput": false,
+            "_type": {
+              "_id": "ValidatedUsernameNode",
+              "name": "Platform Username",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "outcome",
+                "displayName": "Outcome"
+              }
+            ]
+          },
+          "09acc72c-e381-4fda-9e9d-b1221aa34c29": {
+            "_id": "09acc72c-e381-4fda-9e9d-b1221aa34c29",
+            "_rev": "846740066",
+            "passwordAttribute": "password",
+            "validateInput": false,
+            "_type": {
+              "_id": "ValidatedPasswordNode",
+              "name": "Platform Password",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "outcome",
+                "displayName": "Outcome"
+              }
+            ]
+          }
+        },
+        "scripts": {},
+        "emailTemplates": {},
+        "socialIdentityProviders": {},
+        "themes": [],
+        "saml2Entities": {},
+        "circlesOfTrust": {}
+      }
+    }
+  }

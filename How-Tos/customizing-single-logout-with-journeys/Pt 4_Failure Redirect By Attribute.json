@@ -1,0 +1,159 @@
+{
+    "meta": {
+      "treesSelectedForExport": [
+        "Pt 4_Failure Redirect By Attribute"
+      ]
+    },
+    "trees": {
+      "Pt 4_Failure Redirect By Attribute": {
+        "tree": {
+          "_id": "Pt 4_Failure Redirect By Attribute",
+          "_rev": "-1329750019",
+          "identityResource": "managed/alpha_user",
+          "uiConfig": {
+            "categories": "[\"EX_Logout with Journeys\"]"
+          },
+          "entryNodeId": "9c2ac2d3-d8ad-4bba-86e6-d40ffb462256",
+          "innerTreeOnly": false,
+          "nodes": {
+            "9c2ac2d3-d8ad-4bba-86e6-d40ffb462256": {
+              "x": 180,
+              "y": 172.015625,
+              "connections": {
+                "false": "81182873-156b-46de-8004-67bd4e444528",
+                "true": "5dde56b0-794f-4e6b-9756-775f28adddb2"
+              },
+              "nodeType": "IdentifyExistingUserNode",
+              "displayName": "Identify Existing User"
+            },
+            "5dde56b0-794f-4e6b-9756-775f28adddb2": {
+              "x": 379,
+              "y": 168.015625,
+              "connections": {
+                "Not Found": "81182873-156b-46de-8004-67bd4e444528",
+                "Found": "e301438c-0bd0-429c-ab0c-66126501069a"
+              },
+              "nodeType": "ScriptedDecisionNode",
+              "displayName": "Get Metadata"
+            },
+            "81182873-156b-46de-8004-67bd4e444528": {
+              "x": 578,
+              "y": 267.015625,
+              "connections": {
+                "outcome": "e301438c-0bd0-429c-ab0c-66126501069a"
+              },
+              "nodeType": "SetFailureUrlNode",
+              "displayName": "Failure URL"
+            }
+          },
+          "staticNodes": {
+            "startNode": {
+              "x": 70,
+              "y": 190
+            },
+            "70e691a5-1e33-4ac3-a356-e7b6d60d92e0": {
+              "x": 69,
+              "y": 334.3333333333333
+            },
+            "e301438c-0bd0-429c-ab0c-66126501069a": {
+              "x": 779,
+              "y": 197.66666666666663
+            }
+          },
+          "description": "Based on an attribute tied to the identity (such as an organization membership, user attribute), redirect the user accordingly. Part 4 of 4 of Logging Out with Journeys.",
+          "enabled": true
+        },
+        "nodes": {
+          "9c2ac2d3-d8ad-4bba-86e6-d40ffb462256": {
+            "_id": "9c2ac2d3-d8ad-4bba-86e6-d40ffb462256",
+            "_rev": "219592617",
+            "identityAttribute": "userName",
+            "identifier": "userName",
+            "_type": {
+              "_id": "IdentifyExistingUserNode",
+              "name": "Identify Existing User",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "true",
+                "displayName": "True"
+              },
+              {
+                "id": "false",
+                "displayName": "False"
+              }
+            ]
+          },
+          "5dde56b0-794f-4e6b-9756-775f28adddb2": {
+            "_id": "5dde56b0-794f-4e6b-9756-775f28adddb2",
+            "_rev": "-486873969",
+            "script": "e125d773-4f62-4013-b241-66f59f037bfa",
+            "outcomes": [
+              "Found",
+              "Not Found"
+            ],
+            "outputs": [
+              "*"
+            ],
+            "inputs": [
+              "*"
+            ],
+            "_type": {
+              "_id": "ScriptedDecisionNode",
+              "name": "Scripted Decision",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "Found",
+                "displayName": "Found"
+              },
+              {
+                "id": "Not Found",
+                "displayName": "Not Found"
+              }
+            ]
+          },
+          "81182873-156b-46de-8004-67bd4e444528": {
+            "_id": "81182873-156b-46de-8004-67bd4e444528",
+            "_rev": "-1465845529",
+            "failureUrl": "https://www.forgerock.com",
+            "_type": {
+              "_id": "SetFailureUrlNode",
+              "name": "Failure URL",
+              "collection": true
+            },
+            "_outcomes": [
+              {
+                "id": "outcome",
+                "displayName": "Outcome"
+              }
+            ]
+          }
+        },
+        "innerNodes": {},
+        "scripts": {
+          "e125d773-4f62-4013-b241-66f59f037bfa": {
+            "_id": "e125d773-4f62-4013-b241-66f59f037bfa",
+            "name": "Get Medatadata",
+            "description": "Pulls metadata from a user identity and sets in state.",
+            "script": "\"/*\\nPulls metadata from a user identity and sets in state.\\nThis example uses constants to determine what metadata is pulled and how it is set,\\nbut these type of actions lend well to Library Scripts where said values can be passed as function params.\\nIn a production instance, consider Library Scripts for greatest reusability.\\nDoc: https://backstage.forgerock.com/docs/idcloud/latest/am-scripting/library-scripts.html\\n\\nThis script expects the following ESV to be set:\\n- esv.admin.token - a long-lived access token.  You can use frodo to generate an OAuth2 client/secret and\\n  set the associated esv-admin-token, via the following command:\\n    frodo admin create-oauth2-client-with-admin-privileges --llt <your-tenant-name>\\n    \\nThe scripted decision node needs the following outcomes defined:\\n - Found\\n - Not Found\\n \\n Author: se@forgerock.com\\n */\\n\\n//// CONSTANTS\\n// Request Params\\nvar HOST = requestHeaders.get(\\\"host\\\").get(0);\\nvar IDM_BASE_URL = \\\"https://\\\" + HOST + \\\"/openidm/\\\";\\n// Long-Lived API Token\\nvar IDM_API_TOKEN = systemEnv.getProperty(\\\"esv.admin.token\\\");\\n\\nvar OUTCOMES = {\\n  FOUND: \\\"Found\\\",\\n  NOT_FOUND: \\\"Not Found\\\"\\n};\\n\\nvar IDENTITY_OPTIONS = {\\n  USER: \\\"user\\\",\\n  ORGANIZATION: \\\"organization\\\",\\n  ROLE: \\\"role\\\",\\n  GROUP: \\\"group\\\"\\n}\\n\\n/**\\nCONSTANT PARAMS - consider using these as parameters if converting into a Library Script\\n*/\\n// Where the value is stored\\nvar REALM = \\\"alpha\\\";\\nvar IDENTITY = \\\"user\\\"; // could be \\\"user\\\", \\\"organization\\\", \\\"role\\\", \\\"group\\\", etc.\\nvar ATTRIBUTE = \\\"fr-attr-str3\\\"; // could be an attribute on the user, an object reference in an org, etc.\\n// How to set the value in state\\nvar STATE_KEY = \\\"failureUrl\\\";\\n\\n//// HELPERS\\n/**\\n\\tReturns metadata from an organization, searching off of the user's uid\\n    This example will return the first instance of that attribute found.\\n    \\n    @param {string} uid the user id in which to find the organization\\n    @return {string} the organization metadata, stringified\\n*/\\nfunction getOrgMetadataByUID(uid, attribute) {\\n  var orgsMetadata = [{}];\\n   \\n  var userOrgMembership = openidm.query(`managed/${REALM}_user/${uid}/memberOfOrg`, { \\\"_queryFilter\\\": \\\"true\\\" });\\n  \\n  if (userOrgMembership && userOrgMembership.result && userOrgMembership.result.length > 0) {\\n    // Build the query filter to pull every organization result\\n    var queryFilter = \\\"\\\";\\n    var userOrgMembershipResult = userOrgMembership.result;\\n    for (var i = 0; i < userOrgMembershipResult.length; i++) {\\n      var org = userOrgMembershipResult[i];\\n      if (i > 0) {\\n       queryFilter += \\\" or \\\"; \\n      }\\n      queryFilter += `(_id eq \\\"${org._refResourceId}\\\")`;\\n    }\\n    \\n    orgsMetadata = openidm.query(`managed/${REALM}_organization`, { \\n      \\\"_queryFilter\\\": queryFilter,\\n      \\\"_fields\\\": attribute\\n    }).result;\\n  }\\n  \\n  for (var j = 0; j < orgsMetadata.length; j++) {\\n    var orgMetadata = orgsMetadata[j];\\n    // Check to see if there's an attribute value. If so, return that value.\\n    if (null != orgMetadata[attribute]) {\\n     return orgMetadata[attribute];\\n    }\\n  }\\n}\\n\\n\\n//// MAIN\\n(function () {\\n  var uid = nodeState.get(\\\"_id\\\");\\n  var stateValue = \\\"\\\";\\n  \\n  // Determine how to pull the defining attribute based on the passed identity\\n  switch(IDENTITY.toLowerCase()) {\\n   case(IDENTITY_OPTIONS.USER):\\n      var identity = idRepository.getIdentity(uid);\\n      var attribute = identity.getAttributeValues(ATTRIBUTE);\\n  \\t  if (attribute != '[]') {\\n      \\tstateValue = attribute[0]; // pulling the first value in the array\\n      }\\n      break;\\n   case(IDENTITY_OPTIONS.ORGANIZATION):\\n      stateValue = getOrgMetadataByUID(uid, ATTRIBUTE);\\n      break;\\n    default:\\n      stateValue = \\\"\\\";\\n  }\\n  \\n  if (stateValue) {\\n    nodeState.putShared(STATE_KEY, stateValue);\\n    outcome = OUTCOMES.FOUND;\\n  } else {\\n    outcome = OUTCOMES.NOT_FOUND;\\n  }\\n\\n  action.goTo(outcome);\\n}());\"",
+            "default": false,
+            "language": "JAVASCRIPT",
+            "context": "AUTHENTICATION_TREE_DECISION_NODE",
+            "createdBy": "null",
+            "creationDate": 0,
+            "lastModifiedBy": "null",
+            "lastModifiedDate": 0,
+            "evaluatorVersion": "2.0"
+          }
+        },
+        "emailTemplates": {},
+        "socialIdentityProviders": {},
+        "themes": [],
+        "saml2Entities": {},
+        "circlesOfTrust": {}
+      }
+    }
+  }
