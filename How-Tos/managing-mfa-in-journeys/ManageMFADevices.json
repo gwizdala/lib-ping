@@ -1,1066 +1,1066 @@
 {
-    "meta": {
-      "treesSelectedForExport": [
-        "ManageMFADevices"
-      ],
-      "innerTreesIncluded": [
-        "RegisterMFADevices"
-      ]
-    },
-    "trees": {
-      "RegisterMFADevices": {
-        "tree": {
-          "_id": "RegisterMFADevices",
-          "_rev": "-1916113970",
-          "identityResource": "managed/alpha_user",
-          "uiConfig": {
-            "categories": "[\"MFA\"]"
-          },
-          "entryNodeId": "2ea70147-7adb-475e-8f04-1b60519b40cf",
-          "innerTreeOnly": true,
-          "nodes": {
-            "0a928756-f504-42ed-ad9e-1862daadbfa3": {
-              "x": 1382,
-              "y": 446.515625,
-              "connections": {
-                "false": "70e691a5-1e33-4ac3-a356-e7b6d60d92e0",
-                "true": "2ea70147-7adb-475e-8f04-1b60519b40cf"
-              },
-              "nodeType": "MessageNode",
-              "displayName": "Reg Unsuccessful"
-            },
-            "0be9ad77-3d7f-48af-9cc7-edc754756a54": {
-              "x": 742,
-              "y": 321.515625,
-              "connections": {
-                "outcome": "63430c2f-4a76-45e0-ad4e-31d7ae808418"
-              },
-              "nodeType": "SetStateNode",
-              "displayName": "Set State"
-            },
-            "2ea70147-7adb-475e-8f04-1b60519b40cf": {
-              "x": 210,
-              "y": 252.5,
-              "connections": {
-                "OATH": "d2e23e2b-4c97-4e3c-bb66-57722937d71e",
-                "Push": "a586068e-954d-443a-9694-c679f4913691",
-                "WebAuthN": "eb47cc10-04da-46cb-8aca-3856760f61a1"
-              },
-              "nodeType": "ChoiceCollectorNode",
-              "displayName": "MFA Registration Selection"
-            },
-            "375d6e32-36fc-420c-a4ad-198cddf66454": {
-              "x": 740,
-              "y": 488.515625,
-              "connections": {
-                "outcome": "63430c2f-4a76-45e0-ad4e-31d7ae808418"
-              },
-              "nodeType": "SetStateNode",
-              "displayName": "Set State"
-            },
-            "3d61df9d-73b4-4812-9ac7-468b7bbb87b8": {
-              "x": 1377,
-              "y": 239.83333333333331,
-              "connections": {
-                "false": "70e691a5-1e33-4ac3-a356-e7b6d60d92e0",
-                "true": "2ea70147-7adb-475e-8f04-1b60519b40cf"
-              },
-              "nodeType": "MessageNode",
-              "displayName": "Reg Successful"
-            },
-            "4531d646-be03-4ca5-856e-3c8a718b94ac": {
-              "x": 748,
-              "y": 167.515625,
-              "connections": {
-                "outcome": "63430c2f-4a76-45e0-ad4e-31d7ae808418"
-              },
-              "nodeType": "SetStateNode",
-              "displayName": "Set State"
-            },
-            "63430c2f-4a76-45e0-ad4e-31d7ae808418": {
-              "x": 947,
-              "y": 300.515625,
-              "connections": {
-                "Success": "2b66949b-57e0-4c02-b335-a4ec1783fb84",
-                "Error": "0a928756-f504-42ed-ad9e-1862daadbfa3"
-              },
-              "nodeType": "ScriptedDecisionNode",
-              "displayName": "Get Current Device Name"
-            },
-            "a586068e-954d-443a-9694-c679f4913691": {
-              "x": 484.5,
-              "y": 288.39453125,
-              "connections": {
-                "successOutcome": "0be9ad77-3d7f-48af-9cc7-edc754756a54",
-                "timeoutOutcome": "0a928756-f504-42ed-ad9e-1862daadbfa3",
-                "failureOutcome": "0a928756-f504-42ed-ad9e-1862daadbfa3"
-              },
-              "nodeType": "PushRegistrationNode",
-              "displayName": "Push Registration"
-            },
-            "d2e23e2b-4c97-4e3c-bb66-57722937d71e": {
-              "x": 484.25,
-              "y": 460.14453125,
-              "connections": {
-                "successOutcome": "375d6e32-36fc-420c-a4ad-198cddf66454",
-                "failureOutcome": "0a928756-f504-42ed-ad9e-1862daadbfa3"
-              },
-              "nodeType": "OathRegistrationNode",
-              "displayName": "OATH Registration"
-            },
-            "eb47cc10-04da-46cb-8aca-3856760f61a1": {
-              "x": 475,
-              "y": 106.515625,
-              "connections": {
-                "success": "4531d646-be03-4ca5-856e-3c8a718b94ac",
-                "failure": "0a928756-f504-42ed-ad9e-1862daadbfa3",
-                "error": "0a928756-f504-42ed-ad9e-1862daadbfa3",
-                "unsupported": "0a928756-f504-42ed-ad9e-1862daadbfa3"
-              },
-              "nodeType": "WebAuthnRegistrationNode",
-              "displayName": "WebAuthn Registration Node"
-            },
-            "2b66949b-57e0-4c02-b335-a4ec1783fb84": {
-              "x": 1184,
-              "y": 308.515625,
-              "connections": {
-                "Success": "3d61df9d-73b4-4812-9ac7-468b7bbb87b8",
-                "Error": "0a928756-f504-42ed-ad9e-1862daadbfa3"
-              },
-              "nodeType": "ScriptedDecisionNode",
-              "displayName": "Update Device Name"
-            }
-          },
-          "staticNodes": {
-            "startNode": {
-              "x": 70,
-              "y": 282.5
-            },
-            "70e691a5-1e33-4ac3-a356-e7b6d60d92e0": {
-              "x": 1616,
-              "y": 361.5
-            },
-            "e301438c-0bd0-429c-ab0c-66126501069a": {
-              "x": 70,
-              "y": 404
-            }
-          },
-          "description": "An example journey showcasing how you can create an MFA device with an assigned name.",
-          "mustRun": false,
-          "enabled": true
+  "meta": {
+    "treesSelectedForExport": [
+      "ManageMFADevices"
+    ],
+    "innerTreesIncluded": [
+      "RegisterMFADevices"
+    ]
+  },
+  "trees": {
+    "RegisterMFADevices": {
+      "tree": {
+        "_id": "RegisterMFADevices",
+        "_rev": "-1915540530",
+        "identityResource": "managed/alpha_user",
+        "uiConfig": {
+          "categories": "[\"MFA\"]"
         },
+        "entryNodeId": "2ea70147-7adb-475e-8f04-1b60519b40cf",
+        "innerTreeOnly": true,
         "nodes": {
           "0a928756-f504-42ed-ad9e-1862daadbfa3": {
-            "_id": "0a928756-f504-42ed-ad9e-1862daadbfa3",
-            "_rev": "-1983820619",
-            "messageYes": {
-              "en": "Select Another Device Type"
+            "x": 1382,
+            "y": 446.515625,
+            "connections": {
+              "false": "70e691a5-1e33-4ac3-a356-e7b6d60d92e0",
+              "true": "2ea70147-7adb-475e-8f04-1b60519b40cf"
             },
-            "message": {
-              "en": "MFA Registration Failed."
-            },
-            "messageNo": {
-              "en": "Select Another Action"
-            },
-            "_type": {
-              "_id": "MessageNode",
-              "name": "Message Node",
-              "collection": true
-            },
-            "_outcomes": [
-              {
-                "id": "true",
-                "displayName": "True"
-              },
-              {
-                "id": "false",
-                "displayName": "False"
-              }
-            ]
+            "nodeType": "MessageNode",
+            "displayName": "Reg Unsuccessful"
           },
           "0be9ad77-3d7f-48af-9cc7-edc754756a54": {
-            "_id": "0be9ad77-3d7f-48af-9cc7-edc754756a54",
-            "_rev": "220095036",
-            "attributes": {
-              "mfaDeviceType": "push"
+            "x": 742,
+            "y": 321.515625,
+            "connections": {
+              "outcome": "63430c2f-4a76-45e0-ad4e-31d7ae808418"
             },
-            "_type": {
-              "_id": "SetStateNode",
-              "name": "Set State",
-              "collection": true
-            },
-            "_outcomes": [
-              {
-                "id": "outcome",
-                "displayName": "Outcome"
-              }
-            ]
+            "nodeType": "SetStateNode",
+            "displayName": "Set State"
           },
           "2ea70147-7adb-475e-8f04-1b60519b40cf": {
-            "_id": "2ea70147-7adb-475e-8f04-1b60519b40cf",
-            "_rev": "478467267",
-            "defaultChoice": "WebAuthN",
-            "choices": [
-              "WebAuthN",
-              "Push",
-              "OATH"
-            ],
-            "prompt": "Select MFA Type",
-            "_type": {
-              "_id": "ChoiceCollectorNode",
-              "name": "Choice Collector",
-              "collection": true
+            "x": 210,
+            "y": 252.5,
+            "connections": {
+              "OATH": "d2e23e2b-4c97-4e3c-bb66-57722937d71e",
+              "Push": "a586068e-954d-443a-9694-c679f4913691",
+              "WebAuthN": "eb47cc10-04da-46cb-8aca-3856760f61a1"
             },
-            "_outcomes": [
-              {
-                "id": "WebAuthN",
-                "displayName": "WebAuthN"
-              },
-              {
-                "id": "Push",
-                "displayName": "Push"
-              },
-              {
-                "id": "OATH",
-                "displayName": "OATH"
-              }
-            ]
+            "nodeType": "ChoiceCollectorNode",
+            "displayName": "MFA Registration Selection"
           },
           "375d6e32-36fc-420c-a4ad-198cddf66454": {
-            "_id": "375d6e32-36fc-420c-a4ad-198cddf66454",
-            "_rev": "-2059413950",
-            "attributes": {
-              "mfaDeviceType": "oath"
+            "x": 740,
+            "y": 488.515625,
+            "connections": {
+              "outcome": "63430c2f-4a76-45e0-ad4e-31d7ae808418"
             },
-            "_type": {
-              "_id": "SetStateNode",
-              "name": "Set State",
-              "collection": true
-            },
-            "_outcomes": [
-              {
-                "id": "outcome",
-                "displayName": "Outcome"
-              }
-            ]
+            "nodeType": "SetStateNode",
+            "displayName": "Set State"
           },
           "3d61df9d-73b4-4812-9ac7-468b7bbb87b8": {
-            "_id": "3d61df9d-73b4-4812-9ac7-468b7bbb87b8",
-            "_rev": "1637481504",
-            "messageYes": {
-              "en": "Register Another Device"
+            "x": 1377,
+            "y": 239.83333333333331,
+            "connections": {
+              "false": "70e691a5-1e33-4ac3-a356-e7b6d60d92e0",
+              "true": "2ea70147-7adb-475e-8f04-1b60519b40cf"
             },
-            "message": {
-              "en": "MFA Registration Succeeded."
-            },
-            "messageNo": {
-              "en": "Select Another Action"
-            },
-            "_type": {
-              "_id": "MessageNode",
-              "name": "Message Node",
-              "collection": true
-            },
-            "_outcomes": [
-              {
-                "id": "true",
-                "displayName": "True"
-              },
-              {
-                "id": "false",
-                "displayName": "False"
-              }
-            ]
+            "nodeType": "MessageNode",
+            "displayName": "Reg Successful"
           },
           "4531d646-be03-4ca5-856e-3c8a718b94ac": {
-            "_id": "4531d646-be03-4ca5-856e-3c8a718b94ac",
-            "_rev": "370444756",
-            "attributes": {
-              "mfaDeviceType": "webauthn"
+            "x": 748,
+            "y": 167.515625,
+            "connections": {
+              "outcome": "63430c2f-4a76-45e0-ad4e-31d7ae808418"
             },
-            "_type": {
-              "_id": "SetStateNode",
-              "name": "Set State",
-              "collection": true
-            },
-            "_outcomes": [
-              {
-                "id": "outcome",
-                "displayName": "Outcome"
-              }
-            ]
+            "nodeType": "SetStateNode",
+            "displayName": "Set State"
           },
           "63430c2f-4a76-45e0-ad4e-31d7ae808418": {
-            "_id": "63430c2f-4a76-45e0-ad4e-31d7ae808418",
-            "_rev": "1139048025",
-            "script": "9691e523-409e-498d-922d-b218369b9e9d",
-            "outcomes": [
-              "Success",
-              "Error"
-            ],
-            "outputs": [
-              "*"
-            ],
-            "inputs": [
-              "*"
-            ],
-            "_type": {
-              "_id": "ScriptedDecisionNode",
-              "name": "Scripted Decision",
-              "collection": true
+            "x": 947,
+            "y": 300.515625,
+            "connections": {
+              "Success": "2b66949b-57e0-4c02-b335-a4ec1783fb84",
+              "Error": "0a928756-f504-42ed-ad9e-1862daadbfa3"
             },
-            "_outcomes": [
-              {
-                "id": "Success",
-                "displayName": "Success"
-              },
-              {
-                "id": "Error",
-                "displayName": "Error"
-              }
-            ]
+            "nodeType": "ScriptedDecisionNode",
+            "displayName": "Get Current Device Name"
           },
           "a586068e-954d-443a-9694-c679f4913691": {
-            "_id": "a586068e-954d-443a-9694-c679f4913691",
-            "_rev": "-1392780330",
-            "bgColor": "032b75",
-            "generateRecoveryCodes": true,
-            "scanQRCodeMessage": {},
-            "accountName": "USERNAME",
-            "issuer": "ForgeRock",
-            "timeout": 60,
-            "_type": {
-              "_id": "PushRegistrationNode",
-              "name": "Push Registration",
-              "collection": true
+            "x": 484.5,
+            "y": 288.39453125,
+            "connections": {
+              "successOutcome": "0be9ad77-3d7f-48af-9cc7-edc754756a54",
+              "timeoutOutcome": "0a928756-f504-42ed-ad9e-1862daadbfa3",
+              "failureOutcome": "0a928756-f504-42ed-ad9e-1862daadbfa3"
             },
-            "_outcomes": [
-              {
-                "id": "successOutcome",
-                "displayName": "Success"
-              },
-              {
-                "id": "failureOutcome",
-                "displayName": "Failure"
-              },
-              {
-                "id": "timeoutOutcome",
-                "displayName": "Time Out"
-              }
-            ]
+            "nodeType": "PushRegistrationNode",
+            "displayName": "Push Registration"
           },
           "d2e23e2b-4c97-4e3c-bb66-57722937d71e": {
-            "_id": "d2e23e2b-4c97-4e3c-bb66-57722937d71e",
-            "_rev": "1802281302",
-            "addChecksum": false,
-            "bgColor": "032b75",
-            "generateRecoveryCodes": true,
-            "truncationOffset": -1,
-            "algorithm": "TOTP",
-            "postponeDeviceProfileStorage": false,
-            "passwordLength": "SIX_DIGITS",
-            "totpTimeInterval": 30,
-            "scanQRCodeMessage": {},
-            "accountName": "USERNAME",
-            "issuer": "ForgeRock",
-            "minSharedSecretLength": 32,
-            "totpHashAlgorithm": "HMAC_SHA1",
-            "_type": {
-              "_id": "OathRegistrationNode",
-              "name": "OATH Registration",
-              "collection": true
+            "x": 484.25,
+            "y": 460.14453125,
+            "connections": {
+              "successOutcome": "375d6e32-36fc-420c-a4ad-198cddf66454",
+              "failureOutcome": "0a928756-f504-42ed-ad9e-1862daadbfa3"
             },
-            "_outcomes": [
-              {
-                "id": "successOutcome",
-                "displayName": "Success"
-              },
-              {
-                "id": "failureOutcome",
-                "displayName": "Failure"
-              }
-            ]
+            "nodeType": "OathRegistrationNode",
+            "displayName": "OATH Registration"
           },
           "eb47cc10-04da-46cb-8aca-3856760f61a1": {
-            "_id": "eb47cc10-04da-46cb-8aca-3856760f61a1",
-            "_rev": "886928041",
-            "trustStoreAlias": "trustalias",
-            "fidoCertificationLevel": "OFF",
-            "relyingPartyName": "ForgeRock",
-            "maxSavedDevices": 0,
-            "generateRecoveryCodes": true,
-            "storeAttestationDataInTransientState": false,
-            "origins": [],
-            "userVerificationRequirement": "PREFERRED",
-            "postponeDeviceProfileStorage": false,
-            "excludeCredentials": false,
-            "requiresResidentKey": false,
-            "authenticatorAttachment": "UNSPECIFIED",
-            "asScript": true,
-            "validateFidoU2fAaguid": true,
-            "acceptedSigningAlgorithms": [
-              "ES256",
-              "RS256"
-            ],
-            "attestationPreference": "NONE",
-            "enforceRevocationCheck": false,
-            "timeout": 60,
-            "_type": {
-              "_id": "WebAuthnRegistrationNode",
-              "name": "WebAuthn Registration Node",
-              "collection": true
+            "x": 475,
+            "y": 105.515625,
+            "connections": {
+              "success": "4531d646-be03-4ca5-856e-3c8a718b94ac",
+              "failure": "0a928756-f504-42ed-ad9e-1862daadbfa3",
+              "error": "0a928756-f504-42ed-ad9e-1862daadbfa3",
+              "unsupported": "0a928756-f504-42ed-ad9e-1862daadbfa3"
             },
-            "_outcomes": [
-              {
-                "id": "unsupported",
-                "displayName": "Unsupported"
-              },
-              {
-                "id": "success",
-                "displayName": "Success"
-              },
-              {
-                "id": "failure",
-                "displayName": "Failure"
-              },
-              {
-                "id": "error",
-                "displayName": "Client Error"
-              }
-            ]
+            "nodeType": "WebAuthnRegistrationNode",
+            "displayName": "WebAuthn Registration Node"
           },
           "2b66949b-57e0-4c02-b335-a4ec1783fb84": {
-            "_id": "2b66949b-57e0-4c02-b335-a4ec1783fb84",
-            "_rev": "-1480517505",
-            "script": "bd3ba057-7f62-4096-ac1a-d966842c2299",
-            "outcomes": [
-              "Success",
-              "Error"
-            ],
-            "outputs": [
-              "*"
-            ],
-            "inputs": [
-              "*"
-            ],
-            "_type": {
-              "_id": "ScriptedDecisionNode",
-              "name": "Scripted Decision",
-              "collection": true
+            "x": 1184,
+            "y": 308.515625,
+            "connections": {
+              "Success": "3d61df9d-73b4-4812-9ac7-468b7bbb87b8",
+              "Error": "0a928756-f504-42ed-ad9e-1862daadbfa3"
             },
-            "_outcomes": [
-              {
-                "id": "Success",
-                "displayName": "Success"
-              },
-              {
-                "id": "Error",
-                "displayName": "Error"
-              }
-            ]
+            "nodeType": "ScriptedDecisionNode",
+            "displayName": "Update Device Name"
           }
         },
-        "innerNodes": {},
-        "scripts": {
-          "9691e523-409e-498d-922d-b218369b9e9d": {
-            "_id": "9691e523-409e-498d-922d-b218369b9e9d",
-            "name": "Get Current Device Name",
-            "description": "Retrieve the Current Device Name from Transient State and populate it in Shared State for use in a Next-Gen script.",
-            "script": "\"/*\\nRetrieve the Current Device Name from Transient State and populate it in Shared State for use in a Next-Gen script.\\n\\nThis script does not need to be parametrized. It will work properly as is.\\nThis script expects a recoveryCodeDeviceName stored in transient state.\\n \\n The scripted decision node needs the following outcomes defined:\\n    - Success      // name found and stored in state\\n    - Error        // An error has occured. Please consult the logs.\\n \\n Author: @gwizdala\\n */\\n\\n//// IMPORTS\\nvar fr = JavaImporter(org.forgerock.openam.auth.node.api.Action);\\n\\n//// CONSTANTS\\nvar SHARED_STATE_KEY = 'mfaDeviceName';\\nvar NodeOutcome = {\\n    SUCCESS: \\\"Success\\\",\\n    ERROR: \\\"Error\\\"\\n};\\n\\n//// MAIN\\n(function() {\\n    try {\\n        var currentDeviceName = nodeState.get('recoveryCodeDeviceName');\\n\\n        if (!currentDeviceName) {\\n            throw('No recovery device name found');\\n        } else {\\n            sharedState.put(SHARED_STATE_KEY, currentDeviceName);\\n        }\\n        \\n        outcome = NodeOutcome.SUCCESS;\\n    } catch(e) {\\n        logger.error(e);\\n        outcome = NodeOutcome.ERROR;\\n    }\\n\\n    action = fr.Action.goTo(outcome).build();\\n})();\"",
-            "default": false,
-            "language": "JAVASCRIPT",
-            "context": "AUTHENTICATION_TREE_DECISION_NODE",
-            "createdBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
-            "creationDate": 1735683038211,
-            "lastModifiedBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
-            "lastModifiedDate": 1735849869367,
-            "evaluatorVersion": "1.0"
+        "staticNodes": {
+          "startNode": {
+            "x": 70,
+            "y": 282.5
           },
-          "bd3ba057-7f62-4096-ac1a-d966842c2299": {
-            "_id": "bd3ba057-7f62-4096-ac1a-d966842c2299",
-            "name": "Update MFA Device Name",
-            "description": "Takes the nodeState deviceKey object, prompts the user for a user-friendly name of the device and then saves that device using that name.",
-            "script": "\"/*\\nBased on the device type and name stored in state, prompts the user for a user-friendly name of the device,\\nand then saves that device using that name.\\n\\nThis script does not need to be parametrized. It will work properly as is.\\nThis script expects a user to be loaded in state.\\nThis script expects the following to be stored in shared state:\\n    - mfaDeviceType  // The type of device, e.g. webauth, push, oath\\n    - mfaDeviceName  // The current name of the device, e.g. \\\"New Security Key\\\"\\n    - [optional] mfaDeviceProfile // The full profile of the device.\\n\\nIf the mfaDeviceProfile is stored in state, the uuid will be used to match the device\\nIf the mfaDeviceProfile is not stored in state, the mfaDeviceName will be used to match the device.\\nThis means that if the mfaDeviceName is used, the FIRST instance (newest) of a device with a name found is updated\\n    (Consider using the mfaDeviceName ONLY during registration to ensure a new name each time)\\n \\n The scripted decision node needs the following outcomes defined:\\n    - Success      // An input has been provided and stored on the deviceKey object\\n    - Error        // An error has occured. Please consult the logs.\\n \\n Author: @gwizdala\\n */\\n\\n//// CONSTANTS\\nvar MFA_DEVICE_TYPE = 'mfaDeviceType';\\nvar MFA_DEVICE_NAME = 'mfaDeviceName';\\nvar MFA_DEVICE_PROFILE = 'mfaDeviceProfile';\\nvar DEVICE_KEY = 'DeviceProfiles';\\nvar NodeOutcome = {\\n    SUCCESS: \\\"Success\\\",\\n    ERROR: \\\"Error\\\"\\n};\\n\\nvar config = {\\n    INPUTS: [\\n        {\\n            name: 'Device Name',\\n            id: 'deviceName',\\n            type: 'text',\\n            required: true,\\n            deviceKey: DEVICE_KEY\\n        }\\n    ],\\n    BUTTONS: [\\\"Continue\\\"],\\n    CONTINUE_ACTION_PRESSED: 0\\n};\\n\\n//// HELPERS\\n/**\\n * Formats the provided input type given the values provided\\n * @param name The name of the NameCallback, used to target the element\\n * @param id The ID to assign to the input\\n * @param type The HTML input type (e.g. text, tel, email, number)\\n * @param required The HTML tag indicating the input is required\\n * @returns A formatted JS string to be used in a ScriptTextOutputCallback\\n */\\nfunction formatInput(name, id, type, required) {\\n    return `\\\\\\n      var input = document.querySelector('*[data-vv-as=\\\"${name}\\\"]');\\\\\\n        input.id = \\\"${id}\\\";\\\\\\n        input.type = \\\"${type}\\\";\\\\\\n        input.required = ${!!required};\\\\\\n    `;\\n  }\\n\\n//// MAIN\\n(function() {\\n    try {\\n        var uid = nodeState.get('_id');\\n        var mfaDeviceType = nodeState.get(MFA_DEVICE_TYPE);\\n        var mfaDeviceName = nodeState.get(MFA_DEVICE_NAME);\\n        var mfaDeviceProfile = JSON.parse(nodeState.get(MFA_DEVICE_PROFILE));\\n        outcome = NodeOutcome.SUCCESS;\\n\\n        if (!uid) {\\n            throw('Missing User context in shared state');\\n        }\\n        \\n        if (!mfaDeviceType) {\\n            throw('Missing mfaDeviceType in Shared State');\\n        }\\n\\n        if (!mfaDeviceName && !mfaDeviceProfile) {\\n            throw('Missing mfaDeviceName AND mfaDeviceProfile in Shared State - you need one to successfully update the MFA device name.');\\n        }\\n\\n        if (callbacks.isEmpty()) {\\n            // Interactive callbacks: https://backstage.forgerock.com/docs/idcloud/latest/am-authentication/authn-interactive-callbacks.html\\n            var inputScript = '';\\n            config.INPUTS.forEach(function(input) {\\n                callbacksBuilder.nameCallback(input.name);\\n                inputScript += formatInput(input.name, input.id, input.type, input.required); // Create Input(s)\\n            });\\n            callbacksBuilder.scriptTextOutputCallback(String(inputScript)); // Invoke JavaScript\\n            callbacksBuilder.confirmationCallback(0, config.BUTTONS, 0); // Create Confirmation Button(s)\\n        } else {\\n            var userSelection = callbacks.getConfirmationCallbacks().get(0);\\n            if (userSelection == config.CONTINUE_ACTION_PRESSED) {\\n                // Gather input(s)\\n                var nameCallbacks = callbacks.getNameCallbacks();\\n                for (var i = 0; i < nameCallbacks.length; i++) {\\n                    if (config.INPUTS[i].deviceKey) {\\n                        // Collect the Input\\n                        var newDeviceName = nameCallbacks.get(i) ? nameCallbacks.get(i) : `My ${mfaDeviceType.toUpperCase()} Device`;\\n                        var deviceKey = `${mfaDeviceType.toLowerCase()}${config.INPUTS[i].deviceKey}`;\\n\\n                        // check if this device is already set in this profile type.\\n                        var identity = idRepository.getIdentity(uid);\\n                        var deviceProfiles = identity.getAttributeValues(deviceKey);\\n                        var foundProfile = false;\\n                        var profileIndex = 0;\\n\\n                        var comparator = { \\n                            key: mfaDeviceProfile ? 'uuid' : 'deviceName', \\n                            value: mfaDeviceProfile ? mfaDeviceProfile.uuid : mfaDeviceName \\n                        };\\n\\n                        while (!foundProfile && profileIndex < deviceProfiles.length) {\\n                            var deviceProfile = JSON.parse(deviceProfiles[profileIndex]);\\n                            \\n                            if (deviceProfile[comparator.key] == comparator.value) {\\n                                // Index found. Update existing device\\n                                deviceProfile.deviceName = newDeviceName;\\n                                deviceProfiles[profileIndex] = JSON.stringify(deviceProfile);\\n                                foundProfile = true;\\n                            }\\n\\n                            profileIndex += 1;\\n                        }\\n\\n                        if (!foundProfile) {\\n                            // Index not found. Throw error\\n                            throw(`Device not found.`);\\n                        } else {\\n                            // Save the changes on the Identity\\n                            identity.setAttribute(deviceKey, deviceProfiles);\\n                            identity.store();\\n\\n                            // Update shared state to reflect the new name\\n                            nodeState.putShared(MFA_DEVICE_NAME, newDeviceName);\\n                        }\\n                    }\\n                    // If you have extra inputs, process them here.\\n                }\\n            }\\n        }\\n    } catch(e) {\\n        logger.error(e);\\n        outcome = NodeOutcome.ERROR;\\n    }\\n\\n    action.goTo(outcome);\\n})();\"",
-            "default": false,
-            "language": "JAVASCRIPT",
-            "context": "AUTHENTICATION_TREE_DECISION_NODE",
-            "createdBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
-            "creationDate": 1735662700669,
-            "lastModifiedBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
-            "lastModifiedDate": 1735851122477,
-            "evaluatorVersion": "2.0"
+          "70e691a5-1e33-4ac3-a356-e7b6d60d92e0": {
+            "x": 1616,
+            "y": 361.5
+          },
+          "e301438c-0bd0-429c-ab0c-66126501069a": {
+            "x": 70,
+            "y": 404
           }
         },
-        "emailTemplates": {},
-        "socialIdentityProviders": {},
-        "themes": [],
-        "saml2Entities": {},
-        "circlesOfTrust": {}
+        "description": "An example journey showcasing how you can create an MFA device with an assigned name.",
+        "mustRun": false,
+        "enabled": true
       },
-      "ManageMFADevices": {
-        "tree": {
-          "_id": "ManageMFADevices",
-          "_rev": "199147416",
-          "identityResource": "managed/alpha_user",
-          "uiConfig": {
-            "categories": "[\"MFA\"]"
+      "nodes": {
+        "0a928756-f504-42ed-ad9e-1862daadbfa3": {
+          "_id": "0a928756-f504-42ed-ad9e-1862daadbfa3",
+          "_rev": "-1983820619",
+          "messageYes": {
+            "en": "Select Another Device Type"
           },
-          "entryNodeId": "fbd3b05d-4598-4cc6-864a-8302bab36be8",
-          "innerTreeOnly": false,
-          "nodes": {
-            "c71abf86-df5a-4c02-a120-2867f415fae7": {
-              "x": 346,
-              "y": 236.015625,
-              "connections": {
-                "false": "e301438c-0bd0-429c-ab0c-66126501069a",
-                "true": "716190b9-6a46-400d-ad13-217a6b4bae21"
-              },
-              "nodeType": "IdentifyExistingUserNode",
-              "displayName": "Identify Existing User"
+          "message": {
+            "en": "MFA Registration Failed."
+          },
+          "messageNo": {
+            "en": "Select Another Action"
+          },
+          "_type": {
+            "_id": "MessageNode",
+            "name": "Message Node",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "true",
+              "displayName": "True"
             },
-            "fbd3b05d-4598-4cc6-864a-8302bab36be8": {
-              "x": 150,
-              "y": 263.515625,
-              "connections": {
-                "outcome": "c71abf86-df5a-4c02-a120-2867f415fae7"
-              },
-              "nodeType": "ValidatedUsernameNode",
-              "displayName": "Platform Username"
-            },
-            "716190b9-6a46-400d-ad13-217a6b4bae21": {
-              "x": 574,
-              "y": 189.515625,
-              "connections": {
-                "No Devices": "efa688c6-93a0-41e5-b3d1-9021a9086a18",
-                "Selected": "175b837d-cfed-4000-8b37-1a357daae99a",
-                "Error": "e301438c-0bd0-429c-ab0c-66126501069a"
-              },
-              "nodeType": "ScriptedDecisionNode",
-              "displayName": "Select MFA Device"
-            },
-            "efa688c6-93a0-41e5-b3d1-9021a9086a18": {
-              "x": 800,
-              "y": 134.015625,
-              "connections": {
-                "true": "3f961d13-81ff-48b1-b529-ce6856e0e99a",
-                "false": "e301438c-0bd0-429c-ab0c-66126501069a"
-              },
-              "nodeType": "MessageNode",
-              "displayName": "Register MFA"
-            },
-            "175b837d-cfed-4000-8b37-1a357daae99a": {
-              "x": 790,
-              "y": 257.515625,
-              "connections": {
-                "Rename": "59df9c69-9174-4d6b-9abe-fa546b5ef101",
-                "Remove": "25f6354a-8925-48ac-a5bc-8a5c76ff2fc1",
-                "Select Another Device": "716190b9-6a46-400d-ad13-217a6b4bae21"
-              },
-              "nodeType": "PageNode",
-              "displayName": "MFA Actions"
-            },
-            "59df9c69-9174-4d6b-9abe-fa546b5ef101": {
-              "x": 1031,
-              "y": 355.515625,
-              "connections": {
-                "Success": "23e5afc6-3481-4c13-a607-d0ab2b7206da",
-                "Error": "cef95746-6738-41c1-a2af-c464feeace97"
-              },
-              "nodeType": "ScriptedDecisionNode",
-              "displayName": "Rename"
-            },
-            "23e5afc6-3481-4c13-a607-d0ab2b7206da": {
-              "x": 1237,
-              "y": 255.515625,
-              "connections": {
-                "true": "175b837d-cfed-4000-8b37-1a357daae99a",
-                "false": "716190b9-6a46-400d-ad13-217a6b4bae21"
-              },
-              "nodeType": "MessageNode",
-              "displayName": "MFA Action Successful"
-            },
-            "cef95746-6738-41c1-a2af-c464feeace97": {
-              "x": 1251,
-              "y": 563.515625,
-              "connections": {
-                "true": "175b837d-cfed-4000-8b37-1a357daae99a",
-                "false": "716190b9-6a46-400d-ad13-217a6b4bae21"
-              },
-              "nodeType": "MessageNode",
-              "displayName": "MFA Action Unsuccessful"
-            },
-            "3f961d13-81ff-48b1-b529-ce6856e0e99a": {
-              "x": 1023,
-              "y": 131.515625,
-              "connections": {
-                "true": "175b837d-cfed-4000-8b37-1a357daae99a"
-              },
-              "nodeType": "InnerTreeEvaluatorNode",
-              "displayName": "MFA Registration"
-            },
-            "25f6354a-8925-48ac-a5bc-8a5c76ff2fc1": {
-              "x": 1028,
-              "y": 487.515625,
-              "connections": {
-                "Success": "90155930-a955-4262-80af-c86f48f5ccff",
-                "Error": "cef95746-6738-41c1-a2af-c464feeace97"
-              },
-              "nodeType": "ScriptedDecisionNode",
-              "displayName": "Remove"
-            },
-            "90155930-a955-4262-80af-c86f48f5ccff": {
-              "x": 1257,
-              "y": 419.515625,
-              "connections": {
-                "true": "3f961d13-81ff-48b1-b529-ce6856e0e99a",
-                "false": "716190b9-6a46-400d-ad13-217a6b4bae21"
-              },
-              "nodeType": "MessageNode",
-              "displayName": "Removal Successful"
+            {
+              "id": "false",
+              "displayName": "False"
             }
-          },
-          "staticNodes": {
-            "startNode": {
-              "x": 50,
-              "y": 250
-            },
-            "70e691a5-1e33-4ac3-a356-e7b6d60d92e0": {
-              "x": 49,
-              "y": 368
-            },
-            "e301438c-0bd0-429c-ab0c-66126501069a": {
-              "x": 1241,
-              "y": 690
-            }
-          },
-          "description": "An example journey showcasing how you can enable a user to List, Add, Rename, and Remove MFA devices.",
-          "mustRun": false,
-          "enabled": true
+          ]
         },
+        "0be9ad77-3d7f-48af-9cc7-edc754756a54": {
+          "_id": "0be9ad77-3d7f-48af-9cc7-edc754756a54",
+          "_rev": "220095036",
+          "attributes": {
+            "mfaDeviceType": "push"
+          },
+          "_type": {
+            "_id": "SetStateNode",
+            "name": "Set State",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "outcome",
+              "displayName": "Outcome"
+            }
+          ]
+        },
+        "2ea70147-7adb-475e-8f04-1b60519b40cf": {
+          "_id": "2ea70147-7adb-475e-8f04-1b60519b40cf",
+          "_rev": "478467267",
+          "defaultChoice": "WebAuthN",
+          "choices": [
+            "WebAuthN",
+            "Push",
+            "OATH"
+          ],
+          "prompt": "Select MFA Type",
+          "_type": {
+            "_id": "ChoiceCollectorNode",
+            "name": "Choice Collector",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "WebAuthN",
+              "displayName": "WebAuthN"
+            },
+            {
+              "id": "Push",
+              "displayName": "Push"
+            },
+            {
+              "id": "OATH",
+              "displayName": "OATH"
+            }
+          ]
+        },
+        "375d6e32-36fc-420c-a4ad-198cddf66454": {
+          "_id": "375d6e32-36fc-420c-a4ad-198cddf66454",
+          "_rev": "-2059413950",
+          "attributes": {
+            "mfaDeviceType": "oath"
+          },
+          "_type": {
+            "_id": "SetStateNode",
+            "name": "Set State",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "outcome",
+              "displayName": "Outcome"
+            }
+          ]
+        },
+        "3d61df9d-73b4-4812-9ac7-468b7bbb87b8": {
+          "_id": "3d61df9d-73b4-4812-9ac7-468b7bbb87b8",
+          "_rev": "1637481504",
+          "messageYes": {
+            "en": "Register Another Device"
+          },
+          "message": {
+            "en": "MFA Registration Succeeded."
+          },
+          "messageNo": {
+            "en": "Select Another Action"
+          },
+          "_type": {
+            "_id": "MessageNode",
+            "name": "Message Node",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "true",
+              "displayName": "True"
+            },
+            {
+              "id": "false",
+              "displayName": "False"
+            }
+          ]
+        },
+        "4531d646-be03-4ca5-856e-3c8a718b94ac": {
+          "_id": "4531d646-be03-4ca5-856e-3c8a718b94ac",
+          "_rev": "370444756",
+          "attributes": {
+            "mfaDeviceType": "webauthn"
+          },
+          "_type": {
+            "_id": "SetStateNode",
+            "name": "Set State",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "outcome",
+              "displayName": "Outcome"
+            }
+          ]
+        },
+        "63430c2f-4a76-45e0-ad4e-31d7ae808418": {
+          "_id": "63430c2f-4a76-45e0-ad4e-31d7ae808418",
+          "_rev": "1139048025",
+          "script": "9691e523-409e-498d-922d-b218369b9e9d",
+          "outcomes": [
+            "Success",
+            "Error"
+          ],
+          "outputs": [
+            "*"
+          ],
+          "inputs": [
+            "*"
+          ],
+          "_type": {
+            "_id": "ScriptedDecisionNode",
+            "name": "Scripted Decision",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "Success",
+              "displayName": "Success"
+            },
+            {
+              "id": "Error",
+              "displayName": "Error"
+            }
+          ]
+        },
+        "a586068e-954d-443a-9694-c679f4913691": {
+          "_id": "a586068e-954d-443a-9694-c679f4913691",
+          "_rev": "-1392780330",
+          "bgColor": "032b75",
+          "generateRecoveryCodes": true,
+          "scanQRCodeMessage": {},
+          "accountName": "USERNAME",
+          "issuer": "ForgeRock",
+          "timeout": 60,
+          "_type": {
+            "_id": "PushRegistrationNode",
+            "name": "Push Registration",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "successOutcome",
+              "displayName": "Success"
+            },
+            {
+              "id": "failureOutcome",
+              "displayName": "Failure"
+            },
+            {
+              "id": "timeoutOutcome",
+              "displayName": "Time Out"
+            }
+          ]
+        },
+        "d2e23e2b-4c97-4e3c-bb66-57722937d71e": {
+          "_id": "d2e23e2b-4c97-4e3c-bb66-57722937d71e",
+          "_rev": "1802281302",
+          "addChecksum": false,
+          "bgColor": "032b75",
+          "generateRecoveryCodes": true,
+          "truncationOffset": -1,
+          "algorithm": "TOTP",
+          "postponeDeviceProfileStorage": false,
+          "passwordLength": "SIX_DIGITS",
+          "totpTimeInterval": 30,
+          "scanQRCodeMessage": {},
+          "accountName": "USERNAME",
+          "issuer": "ForgeRock",
+          "minSharedSecretLength": 32,
+          "totpHashAlgorithm": "HMAC_SHA1",
+          "_type": {
+            "_id": "OathRegistrationNode",
+            "name": "OATH Registration",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "successOutcome",
+              "displayName": "Success"
+            },
+            {
+              "id": "failureOutcome",
+              "displayName": "Failure"
+            }
+          ]
+        },
+        "eb47cc10-04da-46cb-8aca-3856760f61a1": {
+          "_id": "eb47cc10-04da-46cb-8aca-3856760f61a1",
+          "_rev": "886928041",
+          "trustStoreAlias": "trustalias",
+          "fidoCertificationLevel": "OFF",
+          "relyingPartyName": "ForgeRock",
+          "maxSavedDevices": 0,
+          "generateRecoveryCodes": true,
+          "storeAttestationDataInTransientState": false,
+          "origins": [],
+          "userVerificationRequirement": "PREFERRED",
+          "postponeDeviceProfileStorage": false,
+          "excludeCredentials": false,
+          "requiresResidentKey": false,
+          "authenticatorAttachment": "UNSPECIFIED",
+          "asScript": true,
+          "validateFidoU2fAaguid": true,
+          "acceptedSigningAlgorithms": [
+            "ES256",
+            "RS256"
+          ],
+          "attestationPreference": "NONE",
+          "enforceRevocationCheck": false,
+          "timeout": 60,
+          "_type": {
+            "_id": "WebAuthnRegistrationNode",
+            "name": "WebAuthn Registration Node",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "unsupported",
+              "displayName": "Unsupported"
+            },
+            {
+              "id": "success",
+              "displayName": "Success"
+            },
+            {
+              "id": "failure",
+              "displayName": "Failure"
+            },
+            {
+              "id": "error",
+              "displayName": "Client Error"
+            }
+          ]
+        },
+        "2b66949b-57e0-4c02-b335-a4ec1783fb84": {
+          "_id": "2b66949b-57e0-4c02-b335-a4ec1783fb84",
+          "_rev": "-1480517505",
+          "script": "bd3ba057-7f62-4096-ac1a-d966842c2299",
+          "outcomes": [
+            "Success",
+            "Error"
+          ],
+          "outputs": [
+            "*"
+          ],
+          "inputs": [
+            "*"
+          ],
+          "_type": {
+            "_id": "ScriptedDecisionNode",
+            "name": "Scripted Decision",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "Success",
+              "displayName": "Success"
+            },
+            {
+              "id": "Error",
+              "displayName": "Error"
+            }
+          ]
+        }
+      },
+      "innerNodes": {},
+      "scripts": {
+        "9691e523-409e-498d-922d-b218369b9e9d": {
+          "_id": "9691e523-409e-498d-922d-b218369b9e9d",
+          "name": "Get Current Device Name",
+          "description": "Retrieve the Current Device Name from Transient State and populate it in Shared State for use in a Next-Gen script.",
+          "script": "\"/*\\nRetrieve the Current Device Name from Transient State and populate it in Shared State for use in a Next-Gen script.\\n\\nThis script does not need to be parametrized. It will work properly as is.\\nThis script expects a recoveryCodeDeviceName stored in transient state.\\n \\n The scripted decision node needs the following outcomes defined:\\n    - Success      // name found and stored in state\\n    - Error        // An error has occured. Please consult the logs.\\n \\n Author: @gwizdala\\n */\\n\\n//// IMPORTS\\nvar fr = JavaImporter(org.forgerock.openam.auth.node.api.Action);\\n\\n//// CONSTANTS\\nvar SHARED_STATE_KEY = 'mfaDeviceName';\\nvar NodeOutcome = {\\n    SUCCESS: \\\"Success\\\",\\n    ERROR: \\\"Error\\\"\\n};\\n\\n//// MAIN\\n(function() {\\n    try {\\n        var currentDeviceName = nodeState.get('recoveryCodeDeviceName');\\n\\n        if (!currentDeviceName) {\\n            throw('No recovery device name found');\\n        } else {\\n            sharedState.put(SHARED_STATE_KEY, currentDeviceName);\\n        }\\n        \\n        outcome = NodeOutcome.SUCCESS;\\n    } catch(e) {\\n        logger.error(e);\\n        outcome = NodeOutcome.ERROR;\\n    }\\n\\n    action = fr.Action.goTo(outcome).build();\\n})();\"",
+          "default": false,
+          "language": "JAVASCRIPT",
+          "context": "AUTHENTICATION_TREE_DECISION_NODE",
+          "createdBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
+          "creationDate": 1735683038211,
+          "lastModifiedBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
+          "lastModifiedDate": 1735849869367,
+          "evaluatorVersion": "1.0"
+        },
+        "bd3ba057-7f62-4096-ac1a-d966842c2299": {
+          "_id": "bd3ba057-7f62-4096-ac1a-d966842c2299",
+          "name": "Update MFA Device Name",
+          "description": "Takes the nodeState deviceKey object, prompts the user for a user-friendly name of the device and then saves that device using that name.",
+          "script": "\"/*\\nBased on the device type and name stored in state, prompts the user for a user-friendly name of the device,\\nand then saves that device using that name.\\n\\nThis script does not need to be parametrized. It will work properly as is.\\nThis script expects a user to be loaded in state.\\nThis script expects the following to be stored in shared state:\\n    - mfaDeviceType  // The type of device, e.g. webauth, push, oath\\n    - mfaDeviceName  // The current name of the device, e.g. \\\"New Security Key\\\"\\n    - [optional] mfaDeviceProfile // The full profile of the device.\\n\\nIf the mfaDeviceProfile is stored in state, the uuid will be used to match the device\\nIf the mfaDeviceProfile is not stored in state, the mfaDeviceName will be used to match the device.\\nThis means that if the mfaDeviceName is used, the FIRST instance (newest) of a device with a name found is updated\\n    (Consider using the mfaDeviceName ONLY during registration to ensure a new name each time)\\n \\n The scripted decision node needs the following outcomes defined:\\n    - Success      // An input has been provided and stored on the deviceKey object\\n    - Error        // An error has occured. Please consult the logs.\\n \\n Author: @gwizdala\\n */\\n\\n//// CONSTANTS\\nvar MFA_DEVICE_TYPE = 'mfaDeviceType';\\nvar MFA_DEVICE_NAME = 'mfaDeviceName';\\nvar MFA_DEVICE_PROFILE = 'mfaDeviceProfile';\\nvar DEVICE_KEY = 'DeviceProfiles';\\nvar NodeOutcome = {\\n    SUCCESS: \\\"Success\\\",\\n    ERROR: \\\"Error\\\"\\n};\\n\\nvar config = {\\n    INPUTS: [\\n        {\\n            name: 'Device Name',\\n            id: 'deviceName',\\n            type: 'text',\\n            required: true,\\n            deviceKey: DEVICE_KEY\\n        }\\n    ],\\n    BUTTONS: [\\\"Continue\\\"],\\n    CONTINUE_ACTION_PRESSED: 0\\n};\\n\\n//// HELPERS\\n/**\\n * Formats the provided input type given the values provided\\n * @param name The name of the NameCallback, used to target the element\\n * @param id The ID to assign to the input\\n * @param type The HTML input type (e.g. text, tel, email, number)\\n * @param required The HTML tag indicating the input is required\\n * @returns A formatted JS string to be used in a ScriptTextOutputCallback\\n */\\nfunction formatInput(name, id, type, required) {\\n    return `\\\\\\n      var input = document.querySelector('*[data-vv-as=\\\"${name}\\\"]');\\\\\\n        input.id = \\\"${id}\\\";\\\\\\n        input.type = \\\"${type}\\\";\\\\\\n        input.required = ${!!required};\\\\\\n    `;\\n  }\\n\\n//// MAIN\\n(function() {\\n    try {\\n        var uid = nodeState.get('_id');\\n        var mfaDeviceType = nodeState.get(MFA_DEVICE_TYPE);\\n        var mfaDeviceName = nodeState.get(MFA_DEVICE_NAME);\\n        var mfaDeviceProfile = JSON.parse(nodeState.get(MFA_DEVICE_PROFILE));\\n        outcome = NodeOutcome.SUCCESS;\\n\\n        if (!uid) {\\n            throw('Missing User context in shared state');\\n        }\\n        \\n        if (!mfaDeviceType) {\\n            throw('Missing mfaDeviceType in Shared State');\\n        }\\n\\n        if (!mfaDeviceName && !mfaDeviceProfile) {\\n            throw('Missing mfaDeviceName AND mfaDeviceProfile in Shared State - you need one to successfully update the MFA device name.');\\n        }\\n\\n        if (callbacks.isEmpty()) {\\n            // Interactive callbacks: https://backstage.forgerock.com/docs/idcloud/latest/am-authentication/authn-interactive-callbacks.html\\n            var inputScript = '';\\n            config.INPUTS.forEach(function(input) {\\n                callbacksBuilder.nameCallback(input.name);\\n                inputScript += formatInput(input.name, input.id, input.type, input.required); // Create Input(s)\\n            });\\n            callbacksBuilder.scriptTextOutputCallback(String(inputScript)); // Invoke JavaScript\\n            callbacksBuilder.confirmationCallback(0, config.BUTTONS, 0); // Create Confirmation Button(s)\\n        } else {\\n            var userSelection = callbacks.getConfirmationCallbacks().get(0);\\n            if (userSelection == config.CONTINUE_ACTION_PRESSED) {\\n                // Gather input(s)\\n                var nameCallbacks = callbacks.getNameCallbacks();\\n                for (var i = 0; i < nameCallbacks.length; i++) {\\n                    if (config.INPUTS[i].deviceKey) {\\n                        // Collect the Input\\n                        var newDeviceName = nameCallbacks.get(i) ? nameCallbacks.get(i) : `My ${mfaDeviceType.toUpperCase()} Device`;\\n                        var deviceKey = `${mfaDeviceType.toLowerCase()}${config.INPUTS[i].deviceKey}`;\\n\\n                        // check if this device is already set in this profile type.\\n                        var identity = idRepository.getIdentity(uid);\\n                        var deviceProfiles = identity.getAttributeValues(deviceKey);\\n                        var updatedDeviceProfile = {};\\n                        var foundProfile = false;\\n                        var profileIndex = 0;\\n\\n                        var comparator = { \\n                            key: mfaDeviceProfile ? 'uuid' : 'deviceName', \\n                            value: mfaDeviceProfile ? mfaDeviceProfile.uuid : mfaDeviceName \\n                        };\\n\\n                        while (!foundProfile && profileIndex < deviceProfiles.length) {\\n                            var deviceProfile = JSON.parse(deviceProfiles[profileIndex]);\\n                            \\n                            if (deviceProfile[comparator.key] == comparator.value) {\\n                                // Index found. Update existing device\\n                                updatedDeviceProfile = deviceProfile;\\n                                updatedDeviceProfile.deviceName = newDeviceName;\\n                                deviceProfiles[profileIndex] = JSON.stringify(updatedDeviceProfile);\\n                                foundProfile = true;\\n                            }\\n\\n                            profileIndex += 1;\\n                        }\\n\\n                        if (!foundProfile) {\\n                            // Index not found. Throw error\\n                            throw(`Device not found.`);\\n                        } else {\\n                            // Save the changes on the Identity\\n                            identity.setAttribute(deviceKey, deviceProfiles);\\n                            identity.store();\\n\\n                            // Update shared state to reflect the new name\\n                            nodeState.putShared(MFA_DEVICE_NAME, newDeviceName);\\n                            nodeState.putShared(MFA_DEVICE_PROFILE, updatedDeviceProfile);\\n                        }\\n                    }\\n                    // If you have extra inputs, process them here.\\n                }\\n            }\\n        }\\n    } catch(e) {\\n        logger.error(e);\\n        outcome = NodeOutcome.ERROR;\\n    }\\n\\n    action.goTo(outcome);\\n})();\"",
+          "default": false,
+          "language": "JAVASCRIPT",
+          "context": "AUTHENTICATION_TREE_DECISION_NODE",
+          "createdBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
+          "creationDate": 1735662700669,
+          "lastModifiedBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
+          "lastModifiedDate": 1735925282279,
+          "evaluatorVersion": "2.0"
+        }
+      },
+      "emailTemplates": {},
+      "socialIdentityProviders": {},
+      "themes": [],
+      "saml2Entities": {},
+      "circlesOfTrust": {}
+    },
+    "ManageMFADevices": {
+      "tree": {
+        "_id": "ManageMFADevices",
+        "_rev": "199147416",
+        "identityResource": "managed/alpha_user",
+        "uiConfig": {
+          "categories": "[\"MFA\"]"
+        },
+        "entryNodeId": "fbd3b05d-4598-4cc6-864a-8302bab36be8",
+        "innerTreeOnly": false,
         "nodes": {
           "c71abf86-df5a-4c02-a120-2867f415fae7": {
-            "_id": "c71abf86-df5a-4c02-a120-2867f415fae7",
-            "_rev": "518533227",
-            "identityAttribute": "userName",
-            "identifier": "userName",
-            "_type": {
-              "_id": "IdentifyExistingUserNode",
-              "name": "Identify Existing User",
-              "collection": true
+            "x": 346,
+            "y": 236.015625,
+            "connections": {
+              "false": "e301438c-0bd0-429c-ab0c-66126501069a",
+              "true": "716190b9-6a46-400d-ad13-217a6b4bae21"
             },
-            "_outcomes": [
-              {
-                "id": "true",
-                "displayName": "True"
-              },
-              {
-                "id": "false",
-                "displayName": "False"
-              }
-            ]
+            "nodeType": "IdentifyExistingUserNode",
+            "displayName": "Identify Existing User"
           },
           "fbd3b05d-4598-4cc6-864a-8302bab36be8": {
-            "_id": "fbd3b05d-4598-4cc6-864a-8302bab36be8",
-            "_rev": "-891958891",
-            "usernameAttribute": "userName",
-            "validateInput": false,
-            "_type": {
-              "_id": "ValidatedUsernameNode",
-              "name": "Platform Username",
-              "collection": true
+            "x": 150,
+            "y": 263.515625,
+            "connections": {
+              "outcome": "c71abf86-df5a-4c02-a120-2867f415fae7"
             },
-            "_outcomes": [
-              {
-                "id": "outcome",
-                "displayName": "Outcome"
-              }
-            ]
+            "nodeType": "ValidatedUsernameNode",
+            "displayName": "Platform Username"
           },
           "716190b9-6a46-400d-ad13-217a6b4bae21": {
-            "_id": "716190b9-6a46-400d-ad13-217a6b4bae21",
-            "_rev": "-1247398541",
-            "script": "c65bf565-adc0-45cd-82b9-368499a5eeae",
-            "outcomes": [
-              "No Devices",
-              "Selected",
-              "Error"
-            ],
-            "outputs": [
-              "*"
-            ],
-            "inputs": [
-              "*"
-            ],
-            "_type": {
-              "_id": "ScriptedDecisionNode",
-              "name": "Scripted Decision",
-              "collection": true
+            "x": 574,
+            "y": 189.515625,
+            "connections": {
+              "No Devices": "efa688c6-93a0-41e5-b3d1-9021a9086a18",
+              "Selected": "175b837d-cfed-4000-8b37-1a357daae99a",
+              "Error": "e301438c-0bd0-429c-ab0c-66126501069a"
             },
-            "_outcomes": [
-              {
-                "id": "No Devices",
-                "displayName": "No Devices"
-              },
-              {
-                "id": "Selected",
-                "displayName": "Selected"
-              },
-              {
-                "id": "Error",
-                "displayName": "Error"
-              }
-            ]
+            "nodeType": "ScriptedDecisionNode",
+            "displayName": "Select MFA Device"
           },
           "efa688c6-93a0-41e5-b3d1-9021a9086a18": {
-            "_id": "efa688c6-93a0-41e5-b3d1-9021a9086a18",
-            "_rev": "1275765239",
-            "messageYes": {},
-            "message": {
-              "en": "No MFA devices found. Would you like to register a new one?"
+            "x": 800,
+            "y": 134.015625,
+            "connections": {
+              "true": "3f961d13-81ff-48b1-b529-ce6856e0e99a",
+              "false": "e301438c-0bd0-429c-ab0c-66126501069a"
             },
-            "messageNo": {},
-            "_type": {
-              "_id": "MessageNode",
-              "name": "Message Node",
-              "collection": true
-            },
-            "_outcomes": [
-              {
-                "id": "true",
-                "displayName": "True"
-              },
-              {
-                "id": "false",
-                "displayName": "False"
-              }
-            ]
+            "nodeType": "MessageNode",
+            "displayName": "Register MFA"
           },
           "175b837d-cfed-4000-8b37-1a357daae99a": {
-            "_id": "175b837d-cfed-4000-8b37-1a357daae99a",
-            "_rev": "1759037806",
-            "nodes": [
-              {
-                "_id": "6344bfdd-ccc5-4e12-8cb1-082517e745b1",
-                "nodeType": "ScriptedDecisionNode",
-                "displayName": "Display Device"
-              },
-              {
-                "_id": "f364647b-88da-48aa-ba3e-616a9c9ef688",
-                "nodeType": "ChoiceCollectorNode",
-                "displayName": "Select MFA Action"
-              }
-            ],
-            "pageDescription": {
-              "en": "Select what action you’d like to perform on your MFA device."
+            "x": 790,
+            "y": 257.515625,
+            "connections": {
+              "Rename": "59df9c69-9174-4d6b-9abe-fa546b5ef101",
+              "Remove": "25f6354a-8925-48ac-a5bc-8a5c76ff2fc1",
+              "Select Another Device": "716190b9-6a46-400d-ad13-217a6b4bae21"
             },
-            "pageHeader": {
-              "en": "MFA Actions"
-            },
-            "_type": {
-              "_id": "PageNode",
-              "name": "Page Node",
-              "collection": true
-            },
-            "_outcomes": [
-              {
-                "id": "Rename",
-                "displayName": "Rename"
-              },
-              {
-                "id": "Remove",
-                "displayName": "Remove"
-              },
-              {
-                "id": "Select Another Device",
-                "displayName": "Select Another Device"
-              }
-            ]
+            "nodeType": "PageNode",
+            "displayName": "MFA Actions"
           },
           "59df9c69-9174-4d6b-9abe-fa546b5ef101": {
-            "_id": "59df9c69-9174-4d6b-9abe-fa546b5ef101",
-            "_rev": "346132853",
-            "script": "bd3ba057-7f62-4096-ac1a-d966842c2299",
-            "outcomes": [
-              "Success",
-              "Error"
-            ],
-            "outputs": [
-              "*"
-            ],
-            "inputs": [
-              "*"
-            ],
-            "_type": {
-              "_id": "ScriptedDecisionNode",
-              "name": "Scripted Decision",
-              "collection": true
+            "x": 1031,
+            "y": 355.515625,
+            "connections": {
+              "Success": "23e5afc6-3481-4c13-a607-d0ab2b7206da",
+              "Error": "cef95746-6738-41c1-a2af-c464feeace97"
             },
-            "_outcomes": [
-              {
-                "id": "Success",
-                "displayName": "Success"
-              },
-              {
-                "id": "Error",
-                "displayName": "Error"
-              }
-            ]
+            "nodeType": "ScriptedDecisionNode",
+            "displayName": "Rename"
           },
           "23e5afc6-3481-4c13-a607-d0ab2b7206da": {
-            "_id": "23e5afc6-3481-4c13-a607-d0ab2b7206da",
-            "_rev": "156292189",
-            "messageYes": {
-              "en": "Perform Another Action"
+            "x": 1237,
+            "y": 255.515625,
+            "connections": {
+              "true": "175b837d-cfed-4000-8b37-1a357daae99a",
+              "false": "716190b9-6a46-400d-ad13-217a6b4bae21"
             },
-            "message": {
-              "en": "MFA Action Successful"
-            },
-            "messageNo": {
-              "en": "Select Another Device"
-            },
-            "_type": {
-              "_id": "MessageNode",
-              "name": "Message Node",
-              "collection": true
-            },
-            "_outcomes": [
-              {
-                "id": "true",
-                "displayName": "True"
-              },
-              {
-                "id": "false",
-                "displayName": "False"
-              }
-            ]
+            "nodeType": "MessageNode",
+            "displayName": "MFA Action Successful"
           },
           "cef95746-6738-41c1-a2af-c464feeace97": {
-            "_id": "cef95746-6738-41c1-a2af-c464feeace97",
-            "_rev": "303907497",
-            "messageYes": {
-              "en": "Perform Another Action"
+            "x": 1251,
+            "y": 563.515625,
+            "connections": {
+              "true": "175b837d-cfed-4000-8b37-1a357daae99a",
+              "false": "716190b9-6a46-400d-ad13-217a6b4bae21"
             },
-            "message": {
-              "en": "MFA Action Unsuccessful"
-            },
-            "messageNo": {
-              "en": "Select Another Device"
-            },
-            "_type": {
-              "_id": "MessageNode",
-              "name": "Message Node",
-              "collection": true
-            },
-            "_outcomes": [
-              {
-                "id": "true",
-                "displayName": "True"
-              },
-              {
-                "id": "false",
-                "displayName": "False"
-              }
-            ]
+            "nodeType": "MessageNode",
+            "displayName": "MFA Action Unsuccessful"
           },
           "3f961d13-81ff-48b1-b529-ce6856e0e99a": {
-            "_id": "3f961d13-81ff-48b1-b529-ce6856e0e99a",
-            "_rev": "-651347124",
-            "tree": "RegisterMFADevices",
-            "_type": {
-              "_id": "InnerTreeEvaluatorNode",
-              "name": "Inner Tree Evaluator",
-              "collection": true
+            "x": 1023,
+            "y": 131.515625,
+            "connections": {
+              "true": "175b837d-cfed-4000-8b37-1a357daae99a"
             },
-            "_outcomes": [
-              {
-                "id": "true",
-                "displayName": "True"
-              },
-              {
-                "id": "false",
-                "displayName": "False"
-              }
-            ]
+            "nodeType": "InnerTreeEvaluatorNode",
+            "displayName": "MFA Registration"
           },
           "25f6354a-8925-48ac-a5bc-8a5c76ff2fc1": {
-            "_id": "25f6354a-8925-48ac-a5bc-8a5c76ff2fc1",
-            "_rev": "-2134077157",
-            "script": "41f886d4-402e-4e04-96d0-b0180b3dd11f",
-            "outcomes": [
-              "Success",
-              "Error"
-            ],
-            "outputs": [
-              "*"
-            ],
-            "inputs": [
-              "*"
-            ],
-            "_type": {
-              "_id": "ScriptedDecisionNode",
-              "name": "Scripted Decision",
-              "collection": true
+            "x": 1028,
+            "y": 487.515625,
+            "connections": {
+              "Success": "90155930-a955-4262-80af-c86f48f5ccff",
+              "Error": "cef95746-6738-41c1-a2af-c464feeace97"
             },
-            "_outcomes": [
-              {
-                "id": "Success",
-                "displayName": "Success"
-              },
-              {
-                "id": "Error",
-                "displayName": "Error"
-              }
-            ]
+            "nodeType": "ScriptedDecisionNode",
+            "displayName": "Remove"
           },
           "90155930-a955-4262-80af-c86f48f5ccff": {
-            "_id": "90155930-a955-4262-80af-c86f48f5ccff",
-            "_rev": "847617849",
-            "messageYes": {
-              "en": "Register A New Device"
+            "x": 1257,
+            "y": 419.515625,
+            "connections": {
+              "true": "3f961d13-81ff-48b1-b529-ce6856e0e99a",
+              "false": "716190b9-6a46-400d-ad13-217a6b4bae21"
             },
-            "message": {
-              "en": "MFA Device Removed"
-            },
-            "messageNo": {
-              "en": "Select Another Device"
-            },
-            "_type": {
-              "_id": "MessageNode",
-              "name": "Message Node",
-              "collection": true
-            },
-            "_outcomes": [
-              {
-                "id": "true",
-                "displayName": "True"
-              },
-              {
-                "id": "false",
-                "displayName": "False"
-              }
-            ]
+            "nodeType": "MessageNode",
+            "displayName": "Removal Successful"
           }
         },
-        "innerNodes": {
-          "6344bfdd-ccc5-4e12-8cb1-082517e745b1": {
-            "_id": "6344bfdd-ccc5-4e12-8cb1-082517e745b1",
-            "_rev": "-1476512559",
-            "script": "0896d82f-40ff-481b-9cae-3910235f2a1b",
-            "outcomes": [
-              "Success"
-            ],
-            "outputs": [
-              "*"
-            ],
-            "inputs": [
-              "*"
-            ],
-            "_type": {
-              "_id": "ScriptedDecisionNode",
-              "name": "Scripted Decision",
-              "collection": true
-            },
-            "_outcomes": [
-              {
-                "id": "Success",
-                "displayName": "Success"
-              }
-            ]
+        "staticNodes": {
+          "startNode": {
+            "x": 50,
+            "y": 250
           },
-          "f364647b-88da-48aa-ba3e-616a9c9ef688": {
-            "_id": "f364647b-88da-48aa-ba3e-616a9c9ef688",
-            "_rev": "1356784001",
-            "defaultChoice": "Rename",
-            "choices": [
-              "Rename",
-              "Remove",
-              "Select Another Device"
-            ],
-            "prompt": "Select MFA Action",
-            "_type": {
-              "_id": "ChoiceCollectorNode",
-              "name": "Choice Collector",
-              "collection": true
-            },
-            "_outcomes": [
-              {
-                "id": "Rename",
-                "displayName": "Rename"
-              },
-              {
-                "id": "Remove",
-                "displayName": "Remove"
-              },
-              {
-                "id": "Select Another Device",
-                "displayName": "Select Another Device"
-              }
-            ]
+          "70e691a5-1e33-4ac3-a356-e7b6d60d92e0": {
+            "x": 49,
+            "y": 368
+          },
+          "e301438c-0bd0-429c-ab0c-66126501069a": {
+            "x": 1241,
+            "y": 690
           }
         },
-        "scripts": {
-          "c65bf565-adc0-45cd-82b9-368499a5eeae": {
-            "_id": "c65bf565-adc0-45cd-82b9-368499a5eeae",
-            "name": "Select MFA Device",
-            "description": "Given an existing user, allow them to select from a list of their existing MFA devices.",
-            "script": "\"/*\\nRenders a multiselect where the user can select from a list of MFA devices (e.g. WebAuthN, Push, OATH).\\nOnce selected, add the selected MFA into the shared state.\\n\\nThis script does not need to be parametrized. It will work properly as is.\\nThis script expects a user to be loaded in state.\\n \\n The scripted decision node needs the following outcomes defined:\\n  - No Devices    // The user doesn't have any stored MFA devices\\n  - Selected      // The user has seleced a device\\n  - Error         // An error has occurred. Please consult the logs\\n \\n Author: @gwizdala\\n */\\n\\n//// CONSTANTS\\nvar MFA_DEVICE_TYPES = [\\\"webauthn\\\", \\\"push\\\", \\\"oath\\\"];\\nvar MFA_DEVICE_PROFILE = 'DeviceProfiles';\\n\\nvar NodeOutcome = {\\n  NO_DEVICES: \\\"No Devices\\\",\\n  SELECTED: \\\"Selected\\\",\\n  ERROR: \\\"Error\\\"\\n};\\n\\n//// HELPERS\\n/**\\n\\tReturns a list of MFA metadata, keyed by the username.\\n    \\n    @param {string} uid the _id of the user\\n    @return {object[]} the mfa metadata, keyed to type\\n*/\\nfunction getMFADevices(uid) {\\n  var out = [];\\n  var identity = idRepository.getIdentity(uid);\\n\\n  MFA_DEVICE_TYPES.forEach(function(deviceType) {\\n    var deviceProfiles = identity.getAttributeValues(`${deviceType}${MFA_DEVICE_PROFILE}`);\\n    deviceProfiles.forEach(function(deviceProfile) {\\n      // e.g. { deviceType: webauthn, deviceProfile: {...} }\\n      out.push({\\n        deviceType: deviceType,\\n        deviceProfile: JSON.parse(deviceProfile)\\n      });\\n    });\\n  });\\n\\n  return out;\\n}\\n\\n//// MAIN\\n(function () {\\n  try {\\n    outcome = NodeOutcome.NO_DEVICES; // default\\n    var uid = nodeState.get(\\\"_id\\\");\\n    var mfaMethods = getMFADevices(uid);\\n\\n    if (mfaMethods.length > 0) {\\n      // Construct the Choice options for the dropdown selector\\n      var choices = [];\\n      mfaMethods.forEach(function(mfaMethod) {\\n        // e.g. \\\"push - My Push Authenticator\\\"\\n        choices.push(mfaMethod.deviceType + \\\" - \\\" + mfaMethod.deviceProfile.deviceName);\\n      });\\n\\n      // Render the Callback\\n      if (callbacks.isEmpty()) {\\n        // Interactive callbacks: https://backstage.forgerock.com/docs/idcloud/latest/am-authentication/authn-interactive-callbacks.html\\n        callbacksBuilder.choiceCallback(\\n          \\\"Select MFA method\\\",\\n          choices,\\n          0,\\n          false\\n        );\\n      } else {\\n        var choiceIndex = callbacks.getChoiceCallbacks().get(0)[0];\\n\\n        // Device Selected - put the info in state\\n        var mfaMethod = mfaMethods[choiceIndex];\\n        nodeState.putShared(\\\"mfaDeviceType\\\", mfaMethod.deviceType);\\n        nodeState.putShared(\\\"mfaDeviceName\\\", mfaMethod.deviceProfile.deviceName);\\n        nodeState.putShared(\\\"mfaDeviceProfile\\\", JSON.stringify(mfaMethod.deviceProfile));\\n\\n        outcome = NodeOutcome.SELECTED;\\n      }\\n    }\\n  } catch(e) {\\n    logger.error(e);\\n    outcome = NodeOutcome.ERROR;\\n  }\\n\\n  action.goTo(outcome);\\n}());\"",
-            "default": false,
-            "language": "JAVASCRIPT",
-            "context": "AUTHENTICATION_TREE_DECISION_NODE",
-            "createdBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
-            "creationDate": 1735836568999,
-            "lastModifiedBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
-            "lastModifiedDate": 1735838785147,
-            "evaluatorVersion": "2.0"
+        "description": "An example journey showcasing how you can enable a user to List, Add, Rename, and Remove MFA devices.",
+        "mustRun": false,
+        "enabled": true
+      },
+      "nodes": {
+        "c71abf86-df5a-4c02-a120-2867f415fae7": {
+          "_id": "c71abf86-df5a-4c02-a120-2867f415fae7",
+          "_rev": "518533227",
+          "identityAttribute": "userName",
+          "identifier": "userName",
+          "_type": {
+            "_id": "IdentifyExistingUserNode",
+            "name": "Identify Existing User",
+            "collection": true
           },
-          "bd3ba057-7f62-4096-ac1a-d966842c2299": {
-            "_id": "bd3ba057-7f62-4096-ac1a-d966842c2299",
-            "name": "Update MFA Device Name",
-            "description": "Takes the nodeState deviceKey object, prompts the user for a user-friendly name of the device and then saves that device using that name.",
-            "script": "\"/*\\nBased on the device type and name stored in state, prompts the user for a user-friendly name of the device,\\nand then saves that device using that name.\\n\\nThis script does not need to be parametrized. It will work properly as is.\\nThis script expects a user to be loaded in state.\\nThis script expects the following to be stored in shared state:\\n    - mfaDeviceType  // The type of device, e.g. webauth, push, oath\\n    - mfaDeviceName  // The current name of the device, e.g. \\\"New Security Key\\\"\\n    - [optional] mfaDeviceProfile // The full profile of the device.\\n\\nIf the mfaDeviceProfile is stored in state, the uuid will be used to match the device\\nIf the mfaDeviceProfile is not stored in state, the mfaDeviceName will be used to match the device.\\nThis means that if the mfaDeviceName is used, the FIRST instance (newest) of a device with a name found is updated\\n    (Consider using the mfaDeviceName ONLY during registration to ensure a new name each time)\\n \\n The scripted decision node needs the following outcomes defined:\\n    - Success      // An input has been provided and stored on the deviceKey object\\n    - Error        // An error has occured. Please consult the logs.\\n \\n Author: @gwizdala\\n */\\n\\n//// CONSTANTS\\nvar MFA_DEVICE_TYPE = 'mfaDeviceType';\\nvar MFA_DEVICE_NAME = 'mfaDeviceName';\\nvar MFA_DEVICE_PROFILE = 'mfaDeviceProfile';\\nvar DEVICE_KEY = 'DeviceProfiles';\\nvar NodeOutcome = {\\n    SUCCESS: \\\"Success\\\",\\n    ERROR: \\\"Error\\\"\\n};\\n\\nvar config = {\\n    INPUTS: [\\n        {\\n            name: 'Device Name',\\n            id: 'deviceName',\\n            type: 'text',\\n            required: true,\\n            deviceKey: DEVICE_KEY\\n        }\\n    ],\\n    BUTTONS: [\\\"Continue\\\"],\\n    CONTINUE_ACTION_PRESSED: 0\\n};\\n\\n//// HELPERS\\n/**\\n * Formats the provided input type given the values provided\\n * @param name The name of the NameCallback, used to target the element\\n * @param id The ID to assign to the input\\n * @param type The HTML input type (e.g. text, tel, email, number)\\n * @param required The HTML tag indicating the input is required\\n * @returns A formatted JS string to be used in a ScriptTextOutputCallback\\n */\\nfunction formatInput(name, id, type, required) {\\n    return `\\\\\\n      var input = document.querySelector('*[data-vv-as=\\\"${name}\\\"]');\\\\\\n        input.id = \\\"${id}\\\";\\\\\\n        input.type = \\\"${type}\\\";\\\\\\n        input.required = ${!!required};\\\\\\n    `;\\n  }\\n\\n//// MAIN\\n(function() {\\n    try {\\n        var uid = nodeState.get('_id');\\n        var mfaDeviceType = nodeState.get(MFA_DEVICE_TYPE);\\n        var mfaDeviceName = nodeState.get(MFA_DEVICE_NAME);\\n        var mfaDeviceProfile = JSON.parse(nodeState.get(MFA_DEVICE_PROFILE));\\n        outcome = NodeOutcome.SUCCESS;\\n\\n        if (!uid) {\\n            throw('Missing User context in shared state');\\n        }\\n        \\n        if (!mfaDeviceType) {\\n            throw('Missing mfaDeviceType in Shared State');\\n        }\\n\\n        if (!mfaDeviceName && !mfaDeviceProfile) {\\n            throw('Missing mfaDeviceName AND mfaDeviceProfile in Shared State - you need one to successfully update the MFA device name.');\\n        }\\n\\n        if (callbacks.isEmpty()) {\\n            // Interactive callbacks: https://backstage.forgerock.com/docs/idcloud/latest/am-authentication/authn-interactive-callbacks.html\\n            var inputScript = '';\\n            config.INPUTS.forEach(function(input) {\\n                callbacksBuilder.nameCallback(input.name);\\n                inputScript += formatInput(input.name, input.id, input.type, input.required); // Create Input(s)\\n            });\\n            callbacksBuilder.scriptTextOutputCallback(String(inputScript)); // Invoke JavaScript\\n            callbacksBuilder.confirmationCallback(0, config.BUTTONS, 0); // Create Confirmation Button(s)\\n        } else {\\n            var userSelection = callbacks.getConfirmationCallbacks().get(0);\\n            if (userSelection == config.CONTINUE_ACTION_PRESSED) {\\n                // Gather input(s)\\n                var nameCallbacks = callbacks.getNameCallbacks();\\n                for (var i = 0; i < nameCallbacks.length; i++) {\\n                    if (config.INPUTS[i].deviceKey) {\\n                        // Collect the Input\\n                        var newDeviceName = nameCallbacks.get(i) ? nameCallbacks.get(i) : `My ${mfaDeviceType.toUpperCase()} Device`;\\n                        var deviceKey = `${mfaDeviceType.toLowerCase()}${config.INPUTS[i].deviceKey}`;\\n\\n                        // check if this device is already set in this profile type.\\n                        var identity = idRepository.getIdentity(uid);\\n                        var deviceProfiles = identity.getAttributeValues(deviceKey);\\n                        var foundProfile = false;\\n                        var profileIndex = 0;\\n\\n                        var comparator = { \\n                            key: mfaDeviceProfile ? 'uuid' : 'deviceName', \\n                            value: mfaDeviceProfile ? mfaDeviceProfile.uuid : mfaDeviceName \\n                        };\\n\\n                        while (!foundProfile && profileIndex < deviceProfiles.length) {\\n                            var deviceProfile = JSON.parse(deviceProfiles[profileIndex]);\\n                            \\n                            if (deviceProfile[comparator.key] == comparator.value) {\\n                                // Index found. Update existing device\\n                                deviceProfile.deviceName = newDeviceName;\\n                                deviceProfiles[profileIndex] = JSON.stringify(deviceProfile);\\n                                foundProfile = true;\\n                            }\\n\\n                            profileIndex += 1;\\n                        }\\n\\n                        if (!foundProfile) {\\n                            // Index not found. Throw error\\n                            throw(`Device not found.`);\\n                        } else {\\n                            // Save the changes on the Identity\\n                            identity.setAttribute(deviceKey, deviceProfiles);\\n                            identity.store();\\n\\n                            // Update shared state to reflect the new name\\n                            nodeState.putShared(MFA_DEVICE_NAME, newDeviceName);\\n                        }\\n                    }\\n                    // If you have extra inputs, process them here.\\n                }\\n            }\\n        }\\n    } catch(e) {\\n        logger.error(e);\\n        outcome = NodeOutcome.ERROR;\\n    }\\n\\n    action.goTo(outcome);\\n})();\"",
-            "default": false,
-            "language": "JAVASCRIPT",
-            "context": "AUTHENTICATION_TREE_DECISION_NODE",
-            "createdBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
-            "creationDate": 1735662700669,
-            "lastModifiedBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
-            "lastModifiedDate": 1735851122477,
-            "evaluatorVersion": "2.0"
-          },
-          "41f886d4-402e-4e04-96d0-b0180b3dd11f": {
-            "_id": "41f886d4-402e-4e04-96d0-b0180b3dd11f",
-            "name": "Remove MFA Device",
-            "description": "Given the Selected MFA Device, remove that device from the user's profile.",
-            "script": "\"/*\\nGiven the Selected MFA Device, remove that device from the user's profile.\\n\\nThis script does not need to be parametrized. It will work properly as is.\\nThis script expects a user to be loaded in state.\\nThis script expects the following to be stored in shared state:\\n    - mfaDeviceType  // The type of device, e.g. webauth, push, oath\\n    - mfaDeviceProfile // The full profile of the device.\\n \\n The scripted decision node needs the following outcomes defined:\\n\\t- Success\\n    - Error\\n \\n Author: @gwizdala\\n */\\n//// CONSTANTS\\nvar MFA_DEVICE_TYPE = 'mfaDeviceType';\\nvar MFA_DEVICE_PROFILE = 'mfaDeviceProfile';\\nvar DEVICE_KEY = 'DeviceProfiles';\\nvar NodeOutcome = {\\n    SUCCESS: \\\"Success\\\",\\n    ERROR: \\\"Error\\\"\\n};\\n\\n//// MAIN\\n(function () {\\n  try {\\n    var uid = nodeState.get('_id');\\n    var mfaDeviceType = nodeState.get(MFA_DEVICE_TYPE);\\n    var mfaDeviceProfile = JSON.parse(nodeState.get(MFA_DEVICE_PROFILE)); \\n    outcome = NodeOutcome.SUCCESS;\\n\\n    if (!uid) {\\n      throw('Missing User context in shared state');\\n    }\\n    \\n    if (!mfaDeviceType) {\\n        throw('Missing mfaDeviceType in Shared State');\\n    }\\n\\n    if (!mfaDeviceProfile) {\\n        throw('Missing mfaDeviceProfile in Shared State');\\n    }\\n\\n    var deviceKey = `${mfaDeviceType.toLowerCase()}${DEVICE_KEY}`;\\n\\n    var identity = idRepository.getIdentity(uid);\\n    var deviceProfiles = identity.getAttributeValues(deviceKey);\\n    var newDeviceProfiles = [];\\n    var foundProfile = false;\\n\\n    deviceProfiles.forEach(function(deviceProfileString) {\\n      var deviceProfile = JSON.parse(deviceProfileString);\\n\\n      if (deviceProfile['uuid'] == mfaDeviceProfile.uuid) {\\n        // Index found. Don't push this value\\n        foundProfile = true;\\n      } else {\\n        newDeviceProfiles.push(deviceProfileString);\\n      }\\n    });\\n\\n    if (!foundProfile) {\\n        // Index not found. Throw error\\n        throw(`Device not found.`);\\n    } else {\\n        // Save the changes on the Identity\\n        identity.setAttribute(deviceKey, newDeviceProfiles);\\n        identity.store();\\n\\n        // Wipe shared state - this device doesn't exist anymore\\n        nodeState.putShared(MFA_DEVICE_TYPE, null);\\n        nodeState.putShared(MFA_DEVICE_PROFILE, null);\\n    }\\n\\n\\n  } catch(e) {\\n    logger.error(e);\\n    outcome = NodeOutcome.ERROR;\\n  }  \\n\\n  action.goTo(outcome);\\n}());\"",
-            "default": false,
-            "language": "JAVASCRIPT",
-            "context": "AUTHENTICATION_TREE_DECISION_NODE",
-            "createdBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
-            "creationDate": 1735852948669,
-            "lastModifiedBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
-            "lastModifiedDate": 1735852948669,
-            "evaluatorVersion": "2.0"
-          },
-          "0896d82f-40ff-481b-9cae-3910235f2a1b": {
-            "_id": "0896d82f-40ff-481b-9cae-3910235f2a1b",
-            "name": "Display MFA Device Selection Message",
-            "description": "Displays an Information message to the user indicating what MFA device they have selected.",
-            "script": "\"/*\\nDisplays an Information message to the user indicating what MFA device they have selected.\\nIf no data has been stored in shared state, or an error has occurred, the script will not display a message.\\n\\nThis script does not need to be parametrized. It will work properly as is.\\nThis script expects to be placed inside of a Page Node.\\nThis script expects the following to be loaded in shared state:\\n  - mfaDeviceType\\n  - mfaDeviceName\\n \\n The scripted decision node needs the following outcomes defined:\\n\\t- Success \\n \\n Author: @gwizdala\\n */\\n\\n//// CONSTANTS\\nvar MFA_DEVICE_TYPE = \\\"mfaDeviceType\\\";\\nvar MFA_DEVICE_NAME = \\\"mfaDeviceName\\\";\\nvar MESSAGE_LEVEL = 0; // 0: Info, 1: Warning, 2: Error\\n\\nvar NodeOutcome = {\\n  SUCCESS: \\\"Success\\\"\\n};\\n\\n//// MAIN\\n(function () {\\n  outcome = NodeOutcome.SUCCESS;\\n\\n  try {\\n    var mfaDeviceType = nodeState.get(MFA_DEVICE_TYPE);\\n    var mfaDeviceName = nodeState.get(MFA_DEVICE_NAME);\\n\\n    if (!!mfaDeviceType && !!mfaDeviceName) {\\n      // Render the Callback\\n      if (callbacks.isEmpty()) {\\n        // Read-Only callbacks: https://docs.pingidentity.com/pingoneaic/latest/am-authentication/callbacks-read-only.html#textoutputcallback\\n        callbacksBuilder.textOutputCallback(\\n          MESSAGE_LEVEL,\\n          `MFA Device Selected: ${mfaDeviceType} - ${mfaDeviceName}`\\n        );\\n      }\\n    }\\n  } catch(e) {\\n    logger.error(e);\\n  }\\n\\n  action.goTo(outcome);\\n}());\"",
-            "default": false,
-            "language": "JAVASCRIPT",
-            "context": "AUTHENTICATION_TREE_DECISION_NODE",
-            "createdBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
-            "creationDate": 1735840474956,
-            "lastModifiedBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
-            "lastModifiedDate": 1735843726996,
-            "evaluatorVersion": "2.0"
-          }
+          "_outcomes": [
+            {
+              "id": "true",
+              "displayName": "True"
+            },
+            {
+              "id": "false",
+              "displayName": "False"
+            }
+          ]
         },
-        "emailTemplates": {},
-        "socialIdentityProviders": {},
-        "themes": [],
-        "saml2Entities": {},
-        "circlesOfTrust": {}
-      }
+        "fbd3b05d-4598-4cc6-864a-8302bab36be8": {
+          "_id": "fbd3b05d-4598-4cc6-864a-8302bab36be8",
+          "_rev": "-891958891",
+          "usernameAttribute": "userName",
+          "validateInput": false,
+          "_type": {
+            "_id": "ValidatedUsernameNode",
+            "name": "Platform Username",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "outcome",
+              "displayName": "Outcome"
+            }
+          ]
+        },
+        "716190b9-6a46-400d-ad13-217a6b4bae21": {
+          "_id": "716190b9-6a46-400d-ad13-217a6b4bae21",
+          "_rev": "-1247398541",
+          "script": "c65bf565-adc0-45cd-82b9-368499a5eeae",
+          "outcomes": [
+            "No Devices",
+            "Selected",
+            "Error"
+          ],
+          "outputs": [
+            "*"
+          ],
+          "inputs": [
+            "*"
+          ],
+          "_type": {
+            "_id": "ScriptedDecisionNode",
+            "name": "Scripted Decision",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "No Devices",
+              "displayName": "No Devices"
+            },
+            {
+              "id": "Selected",
+              "displayName": "Selected"
+            },
+            {
+              "id": "Error",
+              "displayName": "Error"
+            }
+          ]
+        },
+        "efa688c6-93a0-41e5-b3d1-9021a9086a18": {
+          "_id": "efa688c6-93a0-41e5-b3d1-9021a9086a18",
+          "_rev": "1275765239",
+          "messageYes": {},
+          "message": {
+            "en": "No MFA devices found. Would you like to register a new one?"
+          },
+          "messageNo": {},
+          "_type": {
+            "_id": "MessageNode",
+            "name": "Message Node",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "true",
+              "displayName": "True"
+            },
+            {
+              "id": "false",
+              "displayName": "False"
+            }
+          ]
+        },
+        "175b837d-cfed-4000-8b37-1a357daae99a": {
+          "_id": "175b837d-cfed-4000-8b37-1a357daae99a",
+          "_rev": "1759037806",
+          "nodes": [
+            {
+              "_id": "6344bfdd-ccc5-4e12-8cb1-082517e745b1",
+              "nodeType": "ScriptedDecisionNode",
+              "displayName": "Display Device"
+            },
+            {
+              "_id": "f364647b-88da-48aa-ba3e-616a9c9ef688",
+              "nodeType": "ChoiceCollectorNode",
+              "displayName": "Select MFA Action"
+            }
+          ],
+          "pageDescription": {
+            "en": "Select what action you’d like to perform on your MFA device."
+          },
+          "pageHeader": {
+            "en": "MFA Actions"
+          },
+          "_type": {
+            "_id": "PageNode",
+            "name": "Page Node",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "Rename",
+              "displayName": "Rename"
+            },
+            {
+              "id": "Remove",
+              "displayName": "Remove"
+            },
+            {
+              "id": "Select Another Device",
+              "displayName": "Select Another Device"
+            }
+          ]
+        },
+        "59df9c69-9174-4d6b-9abe-fa546b5ef101": {
+          "_id": "59df9c69-9174-4d6b-9abe-fa546b5ef101",
+          "_rev": "346132853",
+          "script": "bd3ba057-7f62-4096-ac1a-d966842c2299",
+          "outcomes": [
+            "Success",
+            "Error"
+          ],
+          "outputs": [
+            "*"
+          ],
+          "inputs": [
+            "*"
+          ],
+          "_type": {
+            "_id": "ScriptedDecisionNode",
+            "name": "Scripted Decision",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "Success",
+              "displayName": "Success"
+            },
+            {
+              "id": "Error",
+              "displayName": "Error"
+            }
+          ]
+        },
+        "23e5afc6-3481-4c13-a607-d0ab2b7206da": {
+          "_id": "23e5afc6-3481-4c13-a607-d0ab2b7206da",
+          "_rev": "156292189",
+          "messageYes": {
+            "en": "Perform Another Action"
+          },
+          "message": {
+            "en": "MFA Action Successful"
+          },
+          "messageNo": {
+            "en": "Select Another Device"
+          },
+          "_type": {
+            "_id": "MessageNode",
+            "name": "Message Node",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "true",
+              "displayName": "True"
+            },
+            {
+              "id": "false",
+              "displayName": "False"
+            }
+          ]
+        },
+        "cef95746-6738-41c1-a2af-c464feeace97": {
+          "_id": "cef95746-6738-41c1-a2af-c464feeace97",
+          "_rev": "303907497",
+          "messageYes": {
+            "en": "Perform Another Action"
+          },
+          "message": {
+            "en": "MFA Action Unsuccessful"
+          },
+          "messageNo": {
+            "en": "Select Another Device"
+          },
+          "_type": {
+            "_id": "MessageNode",
+            "name": "Message Node",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "true",
+              "displayName": "True"
+            },
+            {
+              "id": "false",
+              "displayName": "False"
+            }
+          ]
+        },
+        "3f961d13-81ff-48b1-b529-ce6856e0e99a": {
+          "_id": "3f961d13-81ff-48b1-b529-ce6856e0e99a",
+          "_rev": "-651347124",
+          "tree": "RegisterMFADevices",
+          "_type": {
+            "_id": "InnerTreeEvaluatorNode",
+            "name": "Inner Tree Evaluator",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "true",
+              "displayName": "True"
+            },
+            {
+              "id": "false",
+              "displayName": "False"
+            }
+          ]
+        },
+        "25f6354a-8925-48ac-a5bc-8a5c76ff2fc1": {
+          "_id": "25f6354a-8925-48ac-a5bc-8a5c76ff2fc1",
+          "_rev": "-2134077157",
+          "script": "41f886d4-402e-4e04-96d0-b0180b3dd11f",
+          "outcomes": [
+            "Success",
+            "Error"
+          ],
+          "outputs": [
+            "*"
+          ],
+          "inputs": [
+            "*"
+          ],
+          "_type": {
+            "_id": "ScriptedDecisionNode",
+            "name": "Scripted Decision",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "Success",
+              "displayName": "Success"
+            },
+            {
+              "id": "Error",
+              "displayName": "Error"
+            }
+          ]
+        },
+        "90155930-a955-4262-80af-c86f48f5ccff": {
+          "_id": "90155930-a955-4262-80af-c86f48f5ccff",
+          "_rev": "847617849",
+          "messageYes": {
+            "en": "Register A New Device"
+          },
+          "message": {
+            "en": "MFA Device Removed"
+          },
+          "messageNo": {
+            "en": "Select Another Device"
+          },
+          "_type": {
+            "_id": "MessageNode",
+            "name": "Message Node",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "true",
+              "displayName": "True"
+            },
+            {
+              "id": "false",
+              "displayName": "False"
+            }
+          ]
+        }
+      },
+      "innerNodes": {
+        "6344bfdd-ccc5-4e12-8cb1-082517e745b1": {
+          "_id": "6344bfdd-ccc5-4e12-8cb1-082517e745b1",
+          "_rev": "-1476512559",
+          "script": "0896d82f-40ff-481b-9cae-3910235f2a1b",
+          "outcomes": [
+            "Success"
+          ],
+          "outputs": [
+            "*"
+          ],
+          "inputs": [
+            "*"
+          ],
+          "_type": {
+            "_id": "ScriptedDecisionNode",
+            "name": "Scripted Decision",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "Success",
+              "displayName": "Success"
+            }
+          ]
+        },
+        "f364647b-88da-48aa-ba3e-616a9c9ef688": {
+          "_id": "f364647b-88da-48aa-ba3e-616a9c9ef688",
+          "_rev": "1356784001",
+          "defaultChoice": "Rename",
+          "choices": [
+            "Rename",
+            "Remove",
+            "Select Another Device"
+          ],
+          "prompt": "Select MFA Action",
+          "_type": {
+            "_id": "ChoiceCollectorNode",
+            "name": "Choice Collector",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "Rename",
+              "displayName": "Rename"
+            },
+            {
+              "id": "Remove",
+              "displayName": "Remove"
+            },
+            {
+              "id": "Select Another Device",
+              "displayName": "Select Another Device"
+            }
+          ]
+        }
+      },
+      "scripts": {
+        "c65bf565-adc0-45cd-82b9-368499a5eeae": {
+          "_id": "c65bf565-adc0-45cd-82b9-368499a5eeae",
+          "name": "Select MFA Device",
+          "description": "Given an existing user, allow them to select from a list of their existing MFA devices.",
+          "script": "\"/*\\nRenders a multiselect where the user can select from a list of MFA devices (e.g. WebAuthN, Push, OATH).\\nOnce selected, add the selected MFA into the shared state.\\n\\nThis script does not need to be parametrized. It will work properly as is.\\nThis script expects a user to be loaded in state.\\n \\n The scripted decision node needs the following outcomes defined:\\n  - No Devices    // The user doesn't have any stored MFA devices\\n  - Selected      // The user has seleced a device\\n  - Error         // An error has occurred. Please consult the logs\\n \\n Author: @gwizdala\\n */\\n\\n//// CONSTANTS\\nvar MFA_DEVICE_TYPES = [\\\"webauthn\\\", \\\"push\\\", \\\"oath\\\"];\\nvar MFA_DEVICE_PROFILE = 'DeviceProfiles';\\n\\nvar NodeOutcome = {\\n  NO_DEVICES: \\\"No Devices\\\",\\n  SELECTED: \\\"Selected\\\",\\n  ERROR: \\\"Error\\\"\\n};\\n\\n//// HELPERS\\n/**\\n\\tReturns a list of MFA metadata, keyed by the username.\\n    \\n    @param {string} uid the _id of the user\\n    @return {object[]} the mfa metadata, keyed to type\\n*/\\nfunction getMFADevices(uid) {\\n  var out = [];\\n  var identity = idRepository.getIdentity(uid);\\n\\n  MFA_DEVICE_TYPES.forEach(function(deviceType) {\\n    var deviceProfiles = identity.getAttributeValues(`${deviceType}${MFA_DEVICE_PROFILE}`);\\n    deviceProfiles.forEach(function(deviceProfile) {\\n      // e.g. { deviceType: webauthn, deviceProfile: {...} }\\n      out.push({\\n        deviceType: deviceType,\\n        deviceProfile: JSON.parse(deviceProfile)\\n      });\\n    });\\n  });\\n\\n  return out;\\n}\\n\\n//// MAIN\\n(function () {\\n  try {\\n    outcome = NodeOutcome.NO_DEVICES; // default\\n    var uid = nodeState.get(\\\"_id\\\");\\n    var mfaMethods = getMFADevices(uid);\\n\\n    if (mfaMethods.length > 0) {\\n      // Construct the Choice options for the dropdown selector\\n      var choices = [];\\n      mfaMethods.forEach(function(mfaMethod) {\\n        // e.g. \\\"push - My Push Authenticator\\\"\\n        choices.push(mfaMethod.deviceType + \\\" - \\\" + mfaMethod.deviceProfile.deviceName);\\n      });\\n\\n      // Render the Callback\\n      if (callbacks.isEmpty()) {\\n        // Interactive callbacks: https://backstage.forgerock.com/docs/idcloud/latest/am-authentication/authn-interactive-callbacks.html\\n        callbacksBuilder.choiceCallback(\\n          \\\"Select MFA method\\\",\\n          choices,\\n          0,\\n          false\\n        );\\n      } else {\\n        var choiceIndex = callbacks.getChoiceCallbacks().get(0)[0];\\n\\n        // Device Selected - put the info in state\\n        var mfaMethod = mfaMethods[choiceIndex];\\n        nodeState.putShared(\\\"mfaDeviceType\\\", mfaMethod.deviceType);\\n        nodeState.putShared(\\\"mfaDeviceName\\\", mfaMethod.deviceProfile.deviceName);\\n        nodeState.putShared(\\\"mfaDeviceProfile\\\", JSON.stringify(mfaMethod.deviceProfile));\\n\\n        outcome = NodeOutcome.SELECTED;\\n      }\\n    }\\n  } catch(e) {\\n    logger.error(e);\\n    outcome = NodeOutcome.ERROR;\\n  }\\n\\n  action.goTo(outcome);\\n}());\"",
+          "default": false,
+          "language": "JAVASCRIPT",
+          "context": "AUTHENTICATION_TREE_DECISION_NODE",
+          "createdBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
+          "creationDate": 1735836568999,
+          "lastModifiedBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
+          "lastModifiedDate": 1735838785147,
+          "evaluatorVersion": "2.0"
+        },
+        "bd3ba057-7f62-4096-ac1a-d966842c2299": {
+          "_id": "bd3ba057-7f62-4096-ac1a-d966842c2299",
+          "name": "Update MFA Device Name",
+          "description": "Takes the nodeState deviceKey object, prompts the user for a user-friendly name of the device and then saves that device using that name.",
+          "script": "\"/*\\nBased on the device type and name stored in state, prompts the user for a user-friendly name of the device,\\nand then saves that device using that name.\\n\\nThis script does not need to be parametrized. It will work properly as is.\\nThis script expects a user to be loaded in state.\\nThis script expects the following to be stored in shared state:\\n    - mfaDeviceType  // The type of device, e.g. webauth, push, oath\\n    - mfaDeviceName  // The current name of the device, e.g. \\\"New Security Key\\\"\\n    - [optional] mfaDeviceProfile // The full profile of the device.\\n\\nIf the mfaDeviceProfile is stored in state, the uuid will be used to match the device\\nIf the mfaDeviceProfile is not stored in state, the mfaDeviceName will be used to match the device.\\nThis means that if the mfaDeviceName is used, the FIRST instance (newest) of a device with a name found is updated\\n    (Consider using the mfaDeviceName ONLY during registration to ensure a new name each time)\\n \\n The scripted decision node needs the following outcomes defined:\\n    - Success      // An input has been provided and stored on the deviceKey object\\n    - Error        // An error has occured. Please consult the logs.\\n \\n Author: @gwizdala\\n */\\n\\n//// CONSTANTS\\nvar MFA_DEVICE_TYPE = 'mfaDeviceType';\\nvar MFA_DEVICE_NAME = 'mfaDeviceName';\\nvar MFA_DEVICE_PROFILE = 'mfaDeviceProfile';\\nvar DEVICE_KEY = 'DeviceProfiles';\\nvar NodeOutcome = {\\n    SUCCESS: \\\"Success\\\",\\n    ERROR: \\\"Error\\\"\\n};\\n\\nvar config = {\\n    INPUTS: [\\n        {\\n            name: 'Device Name',\\n            id: 'deviceName',\\n            type: 'text',\\n            required: true,\\n            deviceKey: DEVICE_KEY\\n        }\\n    ],\\n    BUTTONS: [\\\"Continue\\\"],\\n    CONTINUE_ACTION_PRESSED: 0\\n};\\n\\n//// HELPERS\\n/**\\n * Formats the provided input type given the values provided\\n * @param name The name of the NameCallback, used to target the element\\n * @param id The ID to assign to the input\\n * @param type The HTML input type (e.g. text, tel, email, number)\\n * @param required The HTML tag indicating the input is required\\n * @returns A formatted JS string to be used in a ScriptTextOutputCallback\\n */\\nfunction formatInput(name, id, type, required) {\\n    return `\\\\\\n      var input = document.querySelector('*[data-vv-as=\\\"${name}\\\"]');\\\\\\n        input.id = \\\"${id}\\\";\\\\\\n        input.type = \\\"${type}\\\";\\\\\\n        input.required = ${!!required};\\\\\\n    `;\\n  }\\n\\n//// MAIN\\n(function() {\\n    try {\\n        var uid = nodeState.get('_id');\\n        var mfaDeviceType = nodeState.get(MFA_DEVICE_TYPE);\\n        var mfaDeviceName = nodeState.get(MFA_DEVICE_NAME);\\n        var mfaDeviceProfile = JSON.parse(nodeState.get(MFA_DEVICE_PROFILE));\\n        outcome = NodeOutcome.SUCCESS;\\n\\n        if (!uid) {\\n            throw('Missing User context in shared state');\\n        }\\n        \\n        if (!mfaDeviceType) {\\n            throw('Missing mfaDeviceType in Shared State');\\n        }\\n\\n        if (!mfaDeviceName && !mfaDeviceProfile) {\\n            throw('Missing mfaDeviceName AND mfaDeviceProfile in Shared State - you need one to successfully update the MFA device name.');\\n        }\\n\\n        if (callbacks.isEmpty()) {\\n            // Interactive callbacks: https://backstage.forgerock.com/docs/idcloud/latest/am-authentication/authn-interactive-callbacks.html\\n            var inputScript = '';\\n            config.INPUTS.forEach(function(input) {\\n                callbacksBuilder.nameCallback(input.name);\\n                inputScript += formatInput(input.name, input.id, input.type, input.required); // Create Input(s)\\n            });\\n            callbacksBuilder.scriptTextOutputCallback(String(inputScript)); // Invoke JavaScript\\n            callbacksBuilder.confirmationCallback(0, config.BUTTONS, 0); // Create Confirmation Button(s)\\n        } else {\\n            var userSelection = callbacks.getConfirmationCallbacks().get(0);\\n            if (userSelection == config.CONTINUE_ACTION_PRESSED) {\\n                // Gather input(s)\\n                var nameCallbacks = callbacks.getNameCallbacks();\\n                for (var i = 0; i < nameCallbacks.length; i++) {\\n                    if (config.INPUTS[i].deviceKey) {\\n                        // Collect the Input\\n                        var newDeviceName = nameCallbacks.get(i) ? nameCallbacks.get(i) : `My ${mfaDeviceType.toUpperCase()} Device`;\\n                        var deviceKey = `${mfaDeviceType.toLowerCase()}${config.INPUTS[i].deviceKey}`;\\n\\n                        // check if this device is already set in this profile type.\\n                        var identity = idRepository.getIdentity(uid);\\n                        var deviceProfiles = identity.getAttributeValues(deviceKey);\\n                        var updatedDeviceProfile = {};\\n                        var foundProfile = false;\\n                        var profileIndex = 0;\\n\\n                        var comparator = { \\n                            key: mfaDeviceProfile ? 'uuid' : 'deviceName', \\n                            value: mfaDeviceProfile ? mfaDeviceProfile.uuid : mfaDeviceName \\n                        };\\n\\n                        while (!foundProfile && profileIndex < deviceProfiles.length) {\\n                            var deviceProfile = JSON.parse(deviceProfiles[profileIndex]);\\n                            \\n                            if (deviceProfile[comparator.key] == comparator.value) {\\n                                // Index found. Update existing device\\n                                updatedDeviceProfile = deviceProfile;\\n                                updatedDeviceProfile.deviceName = newDeviceName;\\n                                deviceProfiles[profileIndex] = JSON.stringify(updatedDeviceProfile);\\n                                foundProfile = true;\\n                            }\\n\\n                            profileIndex += 1;\\n                        }\\n\\n                        if (!foundProfile) {\\n                            // Index not found. Throw error\\n                            throw(`Device not found.`);\\n                        } else {\\n                            // Save the changes on the Identity\\n                            identity.setAttribute(deviceKey, deviceProfiles);\\n                            identity.store();\\n\\n                            // Update shared state to reflect the new name\\n                            nodeState.putShared(MFA_DEVICE_NAME, newDeviceName);\\n                            nodeState.putShared(MFA_DEVICE_PROFILE, updatedDeviceProfile);\\n                        }\\n                    }\\n                    // If you have extra inputs, process them here.\\n                }\\n            }\\n        }\\n    } catch(e) {\\n        logger.error(e);\\n        outcome = NodeOutcome.ERROR;\\n    }\\n\\n    action.goTo(outcome);\\n})();\"",
+          "default": false,
+          "language": "JAVASCRIPT",
+          "context": "AUTHENTICATION_TREE_DECISION_NODE",
+          "createdBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
+          "creationDate": 1735662700669,
+          "lastModifiedBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
+          "lastModifiedDate": 1735925282279,
+          "evaluatorVersion": "2.0"
+        },
+        "41f886d4-402e-4e04-96d0-b0180b3dd11f": {
+          "_id": "41f886d4-402e-4e04-96d0-b0180b3dd11f",
+          "name": "Remove MFA Device",
+          "description": "Given the Selected MFA Device, remove that device from the user's profile.",
+          "script": "\"/*\\nGiven the Selected MFA Device, remove that device from the user's profile.\\n\\nThis script does not need to be parametrized. It will work properly as is.\\nThis script expects a user to be loaded in state.\\nThis script expects the following to be stored in shared state:\\n    - mfaDeviceType  // The type of device, e.g. webauth, push, oath\\n    - mfaDeviceProfile // The full profile of the device.\\n \\n The scripted decision node needs the following outcomes defined:\\n\\t- Success\\n    - Error\\n \\n Author: @gwizdala\\n */\\n//// CONSTANTS\\nvar MFA_DEVICE_TYPE = 'mfaDeviceType';\\nvar MFA_DEVICE_PROFILE = 'mfaDeviceProfile';\\nvar DEVICE_KEY = 'DeviceProfiles';\\nvar NodeOutcome = {\\n    SUCCESS: \\\"Success\\\",\\n    ERROR: \\\"Error\\\"\\n};\\n\\n//// MAIN\\n(function () {\\n  try {\\n    var uid = nodeState.get('_id');\\n    var mfaDeviceType = nodeState.get(MFA_DEVICE_TYPE);\\n    var mfaDeviceProfile = JSON.parse(nodeState.get(MFA_DEVICE_PROFILE)); \\n    outcome = NodeOutcome.SUCCESS;\\n\\n    if (!uid) {\\n      throw('Missing User context in shared state');\\n    }\\n    \\n    if (!mfaDeviceType) {\\n        throw('Missing mfaDeviceType in Shared State');\\n    }\\n\\n    if (!mfaDeviceProfile) {\\n        throw('Missing mfaDeviceProfile in Shared State');\\n    }\\n\\n    var deviceKey = `${mfaDeviceType.toLowerCase()}${DEVICE_KEY}`;\\n\\n    var identity = idRepository.getIdentity(uid);\\n    var deviceProfiles = identity.getAttributeValues(deviceKey);\\n    var newDeviceProfiles = [];\\n    var foundProfile = false;\\n\\n    deviceProfiles.forEach(function(deviceProfileString) {\\n      var deviceProfile = JSON.parse(deviceProfileString);\\n\\n      if (deviceProfile['uuid'] == mfaDeviceProfile.uuid) {\\n        // Index found. Don't push this value\\n        foundProfile = true;\\n      } else {\\n        newDeviceProfiles.push(deviceProfileString);\\n      }\\n    });\\n\\n    if (!foundProfile) {\\n        // Index not found. Throw error\\n        throw(`Device not found.`);\\n    } else {\\n        // Save the changes on the Identity\\n        identity.setAttribute(deviceKey, newDeviceProfiles);\\n        identity.store();\\n\\n        // Wipe shared state - this device doesn't exist anymore\\n        nodeState.putShared(MFA_DEVICE_TYPE, null);\\n        nodeState.putShared(MFA_DEVICE_PROFILE, null);\\n    }\\n\\n\\n  } catch(e) {\\n    logger.error(e);\\n    outcome = NodeOutcome.ERROR;\\n  }  \\n\\n  action.goTo(outcome);\\n}());\"",
+          "default": false,
+          "language": "JAVASCRIPT",
+          "context": "AUTHENTICATION_TREE_DECISION_NODE",
+          "createdBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
+          "creationDate": 1735852948669,
+          "lastModifiedBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
+          "lastModifiedDate": 1735852948669,
+          "evaluatorVersion": "2.0"
+        },
+        "0896d82f-40ff-481b-9cae-3910235f2a1b": {
+          "_id": "0896d82f-40ff-481b-9cae-3910235f2a1b",
+          "name": "Display MFA Device Selection Message",
+          "description": "Displays an Information message to the user indicating what MFA device they have selected.",
+          "script": "\"/*\\nDisplays an Information message to the user indicating what MFA device they have selected.\\nIf no data has been stored in shared state, or an error has occurred, the script will not display a message.\\n\\nThis script does not need to be parametrized. It will work properly as is.\\nThis script expects to be placed inside of a Page Node.\\nThis script expects the following to be loaded in shared state:\\n  - mfaDeviceType\\n  - mfaDeviceName\\n \\n The scripted decision node needs the following outcomes defined:\\n\\t- Success \\n \\n Author: @gwizdala\\n */\\n\\n//// CONSTANTS\\nvar MFA_DEVICE_TYPE = \\\"mfaDeviceType\\\";\\nvar MFA_DEVICE_NAME = \\\"mfaDeviceName\\\";\\nvar MESSAGE_LEVEL = 0; // 0: Info, 1: Warning, 2: Error\\n\\nvar NodeOutcome = {\\n  SUCCESS: \\\"Success\\\"\\n};\\n\\n//// MAIN\\n(function () {\\n  outcome = NodeOutcome.SUCCESS;\\n\\n  try {\\n    var mfaDeviceType = nodeState.get(MFA_DEVICE_TYPE);\\n    var mfaDeviceName = nodeState.get(MFA_DEVICE_NAME);\\n\\n    if (!!mfaDeviceType && !!mfaDeviceName) {\\n      // Render the Callback\\n      if (callbacks.isEmpty()) {\\n        // Read-Only callbacks: https://docs.pingidentity.com/pingoneaic/latest/am-authentication/callbacks-read-only.html#textoutputcallback\\n        callbacksBuilder.textOutputCallback(\\n          MESSAGE_LEVEL,\\n          `MFA Device Selected: ${mfaDeviceType} - ${mfaDeviceName}`\\n        );\\n      }\\n    }\\n  } catch(e) {\\n    logger.error(e);\\n  }\\n\\n  action.goTo(outcome);\\n}());\"",
+          "default": false,
+          "language": "JAVASCRIPT",
+          "context": "AUTHENTICATION_TREE_DECISION_NODE",
+          "createdBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
+          "creationDate": 1735840474956,
+          "lastModifiedBy": "id=fc48fcec-043c-47af-b6db-c5b3fc6ac47e,ou=user,ou=am-config",
+          "lastModifiedDate": 1735843726996,
+          "evaluatorVersion": "2.0"
+        }
+      },
+      "emailTemplates": {},
+      "socialIdentityProviders": {},
+      "themes": [],
+      "saml2Entities": {},
+      "circlesOfTrust": {}
     }
   }
+}
