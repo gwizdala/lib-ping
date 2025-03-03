@@ -1,17 +1,14 @@
 /*
-Name: library_passwordPolicy
-Description: Takes a password configuration and evaluates the inputted password based on that configuration.
+ This library script evaluates password policy requirements. Used to provide custom password policies through Journeys.
 
-This library script evaluates password policy requirements. Used to provide custom password policies through Journeys.
+ This script expects the creation of a passwordPolicy object, with its values translated into the variables defined in the constructor.
+ For ease of use, it is suggested to add a passwordPolicy object attribute on your Organization for quick administrative updating.
 
-This script expects the creation of a passwordPolicy object, with its values translated into the configuration variables defined in the constructor.
-For ease of use, it is suggested to add a passwordPolicy object attribute on your Organization for quick administrative updating.
+ Frodo command:
+ frodo script import -f library_passwordPolicy.js <tenant> 
 
-Frodo command:
-frodo script import -f library_logger.js <tenant> 
-
-Author: @gwizdala
-*/
+ Author: @gwizdala
+ */
 
 /**
 * Note that Rhino ES2015 has the following engine compatibility: 
@@ -21,55 +18,103 @@ Author: @gwizdala
 */
 
 /**
- * Takes a password configuration and evaluates the inputted password based on that configuration.
+ * Takes a password and a password policy and evaluates the inputted password based on that policy.
  * 
  * Example Usage:
  * ```
- * const config = {
- *  minPasswordLength: 5,
+ * const passwordPolicy = {
  *  requireUpperCase: true,
- *  requireLowerCase: true,
- *  requireNumber: true,
- *  requireSpecialChar: true,
  *  requireNoRepeatChars: true
  * };
- * console.log(passwordPolicy.evaluatePassword(this, config, 'Example!123ee', userId)); // { valid: false, message: ["Must not contain any repeated characters (e.g. aaa)"]}
+ * logger.info(passwordPolicy.evaluatePassword(this, passwordPolicy, 'Example!123ee')); 
+ * // { valid: false, evaluation: [{ policy: "Must not contain any repeated characters (e.g. aaa)", passed: false }, { policy: "Must contain at least one uppercase character", passed: true }]}
+ * logger.info(passwordPolicy.evaluatePassword(this, passwordPolicy, 'example!')); 
+ * // { valid: false, evaluation: [{ policy: "Must not contain any repeated characters (e.g. aaa)", passed: true }, { policy: "Must contain at least one uppercase character", passed: false }]}
+ * 
+ * const userConfig = {
+ *  uid: 123-456-789,
+ *  orgId: 098-765-432,
+ *  objectAttributes: {
+ *    givenName: 'MyNew',
+ *    sn: 'Name',
+ *    userName: 'example'
+ *  }
+ * }
+ * 
+ * const userAttributeConfig = {
+ *  disallowedUserAttributes: ['userName', 'givenName', 'sn', 'mail']
+ * };
+ * // User's username is "example"
+ * logger.info(passwordPolicy.evaluatePassword(this, userAttributeConfig, 'Example!123ee', userConfig)); 
+ * // { valid: false, evaluation: [{ policy: "Must not contain values that are part of your account (e.g. name, email, username)" passed: false }]}
+ * 
+ * const orgAttributeConfig = {
+ *  disallowedOrgAttributes: ['name', 'description']
+ * };
+ * // Org's name is 'Org'
+ * logger.info(passwordPolicy.evaluatePassword(this, orgAttributeConfig, 'Org!123ee', userConfig)); 
+ * // { valid: false, evaluation: [{ policy: "Must not contain easy-to-guess values that relate back to the platform (e.g. the Company Name)", passed: false }]}
  * ```
  */
+
+//// UTILITY FUNCTIONS
+function getFieldsFromAttributesArray(attributes) {
+    var fields = "";
+    if (attributes) {
+      for (var i = 0; i < attributes.length; i++) {
+        if (i > 0) {
+          fields += ","; 
+        }
+        fields += attributes[i];
+      }   
+    }
+
+    return fields;
+}
 
 //// METHODS
 /**
  * @param {this} caller (Use `this`) The parent context, used to get FR functions
- * @param config the config gathered for this policy
- * @param config.oid the organization identifier
- * @param config.minPasswordLength the minimum password length allowed. Must be greater than 0
- * @param config.disallowedUserAttributes a list of user attributes not allowed within the password
- * @param config.disallowedOrgAttributes a list of organization attributes not allowed within the password - requires config.oid
- * @param config.reqireNoCommonlyUsedPasswords no commonly used passwords
- * @param config.requireUpperCase > 1 Upper Case Letter (English)
- * @param config.requireLowerCase > 1 Lower Case Letter (English)
- * @param config.requireNumber > 1 Number (0-9)
- * @param config.requireSpecialChar > 1 Special Character (e.g. !@#$%)
- * @param config.requireNoRepeatChars No Repetitive Characters (e.g. aaa)
+ * -- Password Config
+ * @param passwordPolicy the passwordPolicy gathered for this policy
+ * @param passwordPolicy.minPasswordLength the minimum password length allowed. Must be greater than 0
+ * @param passwordPolicy.maxPasswordLength the maximum password length allowed. Must be greater than or equal to minPasswordLength
+ * @param passwordPolicy.disallowedUserAttributes a list of user attributes not allowed within the password - requires userId or objectAttributes
+ * @param passwordPolicy.disallowedOrgAttributes a list of organization attributes not allowed within the password - requires orgId
+ * @param passwordPolicy.reqireNoCommonlyUsedPasswords no commonly used passwords. Uses the EXTERNAL HaveIBeenPwned API - use at your own risk
+ * @param passwordPolicy.requireUpperCase > 1 Upper Case Letter (English)
+ * @param passwordPolicy.requireLowerCase > 1 Lower Case Letter (English)
+ * @param passwordPolicy.requireNumber > 1 Number (0-9)
+ * @param passwordPolicy.requireSpecialChar > 1 Special Character (e.g. !@#$%)
+ * @param passwordPolicy.requireNoRepeatChars No Repetitive Characters (e.g. aaa)
+ * -- The Password
  * @param password the password to evaluate
- * @param uid the user which is looking to use this password - can be null 
- * @return {object} whether or not the password is valid. Returns {valid: boolean, evaluation: Array({valid: boolean, evaluation: {policy: message, passed: true/false}})}
+ * -- Nullable Values:
+ * @param userContext.uid the user's _id. Used to evaluate disallowedUserAttributes
+ * @param userContext.orgId the organization that this password is related to. Used to evaluate disallowedOrgAttributes
+ * @param userContext.objectAttributes the values that the user is looking to use to update/create alongside their password. Used along with uid to evaluate disallowedUserAttributes
+ * @return {object} whether or not the password is valid. Returns {valid: boolean, evaluation: Array({valid: boolean, evaluation: {id: passwordPolicyKey, policy: message, passed: true/false}})}
  */
-exports.evaluatePassword = (caller, config, password, uid) => {
-  this.minPasswordLength = (config.minPasswordLength && typeof config.minPasswordLength === 'number') ? config.minPasswordLength : 1;
-  this.disallowedUserAttributes = config.disallowedUserAttributes ? config.disallowedUserAttributes : [];
-  this.disallowedOrgAttributes = config.disallowedOrgAttributes ? config.disallowedOrgAttributes : [];
-  this.requireUpperCase = !!config.requireUpperCase || false;
-  this.requireLowerCase = !!config.requireLowerCase || false;
-  this.requireNumber = !!config.requireNumber || false;
-  this.requireSpecialChar = !!config.requireSpecialChar || false;
-  this.requireNoRepeatChars = !!config.requireNoRepeatChars || false;
+exports.evaluatePassword = (caller, passwordPolicy, password, userContext) => {
+  this.minPasswordLength = (passwordPolicy.minPasswordLength && typeof passwordPolicy.minPasswordLength === 'number') ? passwordPolicy.minPasswordLength : 1;
+  this.maxPasswordLength = (passwordPolicy.maxPasswordLength && typeof passwordPolicy.maxPasswordLength === 'number') ? passwordPolicy.maxPasswordLength : null;
+  this.disallowedUserAttributes = passwordPolicy.disallowedUserAttributes ? passwordPolicy.disallowedUserAttributes : [];
+  this.disallowedOrgAttributes = passwordPolicy.disallowedOrgAttributes ? passwordPolicy.disallowedOrgAttributes : [];
+  this.reqireNoCommonlyUsedPasswords = !!passwordPolicy.reqireNoCommonlyUsedPasswords || false;
+  this.requireUpperCase = !!passwordPolicy.requireUpperCase || false;
+  this.requireLowerCase = !!passwordPolicy.requireLowerCase || false;
+  this.requireNumber = !!passwordPolicy.requireNumber || false;
+  this.requireSpecialChar = !!passwordPolicy.requireSpecialChar || false;
+  this.requireNoRepeatChars = !!passwordPolicy.requireNoRepeatChars || false;
 
   // Object of policy requirements. In object here to make localization easier - add country codes to this section and it will apply to each policy
+  // e.g. minPasswordLength: { "en": "The english requirements", "es": "Los requisitos españoles" }
   this.policyRequirements = {
       minPasswordLength: `Must be at least ${this.minPasswordLength} characters long`,
+      maxPasswordLength: `Must be at most ${this.maxPasswordLength} characters long`,
       disallowedUserAttributes: `Must not contain values that are part of your account (e.g. name, email, username)`,
       disallowedOrgAttributes: `Must not contain easy-to-guess values that relate back to the platform (e.g. the Company Name)`,
+      requireNoCommonlyUsedPasswords: `Must not be a commonly used password (e.g. 'Password123')`,
       requireUpperCase: `Must contain at least one uppercase character`,
       requireLowerCase: `Must contain at least one lowercase character`,
       requireNumber: `Must contain at least one number`,
@@ -82,7 +127,7 @@ exports.evaluatePassword = (caller, config, password, uid) => {
   var totalPolicyEval = true; // the complete evaluation of the whole policy. Will return false if any policy fails
 
   if (this.minPasswordLength) {
-    policyEval = this.evaluatePasswordLength(password);
+    policyEval = this.evaluatePasswordLength(password, this.minPasswordLength);
     
     policiesEvaluated.push({
        policy: this.policyRequirements.minPasswordLength,
@@ -91,8 +136,18 @@ exports.evaluatePassword = (caller, config, password, uid) => {
 
     totalPolicyEval = totalPolicyEval & policyEval;
   }
+  if (this.maxPasswordLength) {
+    policyEval = this.evaluatePasswordLength(password, this.minPasswordLength, this.maxPasswordLength);
+    
+    policiesEvaluated.push({
+       policy: this.policyRequirements.maxPasswordLength,
+       passed: policyEval
+    });
+
+    totalPolicyEval = totalPolicyEval & policyEval;
+  }
   if (this.disallowedUserAttributes.length > 0) {
-    policyEval = this.evaluateDisallowedUserAttributes(caller, password, uid, disallowedUserAttributes);
+    policyEval = this.evaluateDisallowedUserAttributes(caller, password, userContext, this.disallowedUserAttributes);
     
     policiesEvaluated.push({
        policy: this.policyRequirements.disallowedUserAttributes,
@@ -102,8 +157,7 @@ exports.evaluatePassword = (caller, config, password, uid) => {
     totalPolicyEval = totalPolicyEval & policyEval;
   }
   if (this.disallowedOrgAttributes.length > 0) {
-    // @TODO: pass orgID vs userId
-    policyEval = this.evaluateDisallowedOrgAttributes(caller, password, uid, disallowedOrgAttributes);
+    policyEval = this.evaluateDisallowedOrgAttributes(caller, password, userContext, this.disallowedOrgAttributes);
     
     policiesEvaluated.push({
        policy: this.policyRequirements.disallowedOrgAttributes,
@@ -111,6 +165,14 @@ exports.evaluatePassword = (caller, config, password, uid) => {
     });
 
     totalPolicyEval = totalPolicyEval & policyEval;
+  }
+  if (this.reqireNoCommonlyUsedPasswords) {
+    policyEval = this.evaluateNoCommonlyUsedPasswords(caller, password);
+
+    policiesEvaluated.push({
+      policy: this.policyRequirements.requireNoCommonlyUsedPasswords,
+      passed: policyEval
+    })
   }
   if (this.requireUpperCase) {
     policyEval = this.evaluateUpperCase(password);
@@ -173,36 +235,135 @@ exports.evaluatePassword = (caller, config, password, uid) => {
 /**
      * Determines if the password meets minimum password requirements
      * @param password the password to evaluate
+     * @param minLength the minimum length of the password. Must be greater than 0
+     * @param maxLength the maximum length of the password. Must be greater than minLength
      * @return {boolean} whether or not the password passes evaluation
      */
-function evaluatePasswordLength(password) {
-  return password.length >= this.minPasswordLength;
+function evaluatePasswordLength(password, minLength, maxLength) {
+  var minLengthToEvaluate = 1;
+  var isCompliant = true;
+
+  if (minLength && minLength > 0) {
+    isCompliant = password.length >= minLength;
+    minLengthToEvaluate = minLength;
+  }
+  
+  if (maxLength && maxLength >= minLengthToEvaluate) {
+    isCompliant = password.length <= maxLength;
+  }
+
+  return isCompliant;
 }
 
 /**
-     * Determines if the password contains any attributes defined on the user object
+     * Determines if the password contains any attributes defined on the user object.
+     * If the user does not exist, then the policy will evaluate to true.
      * @param {this} caller (Use `this`) The parent context, used to get FR functions
      * @param password the password to evaluate
-     * @param uid the user identifier, used to evaluate if the user's attributes exist in this password
-     * @param {array} attributes the attributes validated to not be within the user's password
+     * @param userAttributes the metadata on the user to evaluate
+     * @param {array} attributesToEvaluate the attributes validated to not be within the user's password
      * @return {boolean} whether or not the password passes evaluation
      */
-function evaluateDisallowedUserAttributes(caller, password, uid, attributes) {
-  // @TODO add in logic here. Will require openidm context passed OR user attributes (during registration)
-  return true;
+function evaluateDisallowedUserAttributes(caller, password, userAttributes, attributesToEvaluate) {
+  // Evaluate if any of the attributes trigger a policy violation
+  var isCompliant = true;
+  var attributesIndex = 0;
+
+  if (!!userAttributes) {
+    // Get pre-existing user data, if it exists
+    var userMetadata = !!userAttributes.uid ? caller.openidm.read(`managed${caller.realm}_user/${userAttributes.uid}`, null, attributesToEvaluate) : {};
+    // Merge the data with the updated values
+    if (!!userAttributes.objectAttributes) {
+      Object.assign(userMetadata, userAttributes.objectAttributes);
+    }
+
+    if (!!userMetadata && Object.keys(userMetadata).length > 0) {
+      while(isCompliant && attributesIndex < attributesToEvaluate.length) {
+        var attribute = attributesToEvaluate[attributesIndex];
+        var attributeValue = userMetadata[attribute];
+    
+        isCompliant = !password.includes(attributeValue);
+    
+        attributesIndex += 1;
+      } 
+    }
+  }
+
+  return isCompliant;
 }
 
 /**
-     * Determines if the password contains any attributes defined on the org object
+     * Determines if the password contains any attributes defined on the org object.
+     * If the org does not exist, then the policy will evaluate to true.
      * @param {this} caller (Use `this`) The parent context, used to get FR functions
      * @param password the password to evaluate
-     * @param orgId the org identifier, used to evaluate if the org's attributes exist in this password
-     * @param {array} attributes the attributes validated to not be within the user's password
+     * @param userAttributes the metadata on the user to evaluate
+     * @param {array} attributesToEvaluate the attributes validated to not be within the user's password
      * @return {boolean} whether or not the password passes evaluation
      */
-function evaluateDisallowedOrgAttributes(caller, password, orgId, attributes) {
-  // @TODO add in logic here. Will require openidm context passed
-  return true;
+function evaluateDisallowedOrgAttributes(caller, password, userAttributes, attributesToEvaluate) {
+  var orgMetadata = !!userAttributes && !!userAttributes.orgId ? caller.openidm.read(`managed${caller.realm}_organization/${userAttributes.orgId}`, null, attributesToEvaluate) : null;
+
+  // Evaluate if any of the attributes trigger a policy violation
+  var isCompliant = true;
+  var attributesIndex = 0;
+
+  if (!!orgMetadata && Object.keys(orgMetadata).length > 0) {
+    while(isCompliant && attributesIndex < attributesToEvaluate.length) {
+      var attribute = attributesToEvaluate[attributesIndex];
+      var attributeValue = orgMetadata[attribute];
+  
+      isCompliant = !password.includes(attributeValue);
+  
+      attributesIndex += 1;
+    } 
+  }
+
+  return isCompliant;
+}
+
+/**
+     * Determines if the password is found on the common list of passwords defined at [HaveIBeenPwned](https://haveibeenpwned.com/Passwords).
+     * This search uses a k-Anonymity model to protect the value of the source password ([link](https://haveibeenpwned.com/API/v2#PwnedPasswords)), 
+     * however you should still exercise caution when sending sensitive data via a public REST API. Use this policy with caution.
+     * @param {this} caller (Use `this`) The parent context, used to get FR functions
+     * @param password the password to evaluate
+     * @return {boolean} whether or not the password passes evaluation
+     */
+function evaluateNoCommonlyUsedPasswords(caller, password) {
+  var passwordData = caller.utils.types.stringToBytes(password);
+  var passwordHash = caller.utils.crypto.subtle.digest("SHA-1", passwordData);
+  var passwordHashString = String(passwordHash.map((byte) => ('0' + (byte & 0xFF).toString(16)).slice(-2)).join("")).toUpperCase(); // converts bytes to hex string
+  var hashPrefix = passwordHashString.substring(0,5);
+  var hashSuffix = passwordHashString.substring(5);
+  var isCompliant = true;
+
+  var requestURL = `https://api.pwnedpasswords.com/range/${hashPrefix}`;
+  var options = {
+    method: "GET"
+  };
+  var response = caller.httpClient.send(requestURL, options).get();
+
+  if (response.status === 200) {
+    var payload = response.text();
+    var hashData = payload.split('\n');
+
+    var hashDataIndex = 0;
+
+    // Check if this password is on the compromised list
+    while(isCompliant && hashDataIndex < hashData.length) {
+      var hashDataValue = hashData[hashDataIndex];
+      var hashDataSuffix = hashDataValue.split(':')[0];
+
+      isCompliant = hashSuffix != hashDataSuffix;
+
+      hashDataIndex += 1;
+    }
+  } else {
+    throw(`HaveIBeenPwned API returned error: ${e}`);
+  }
+
+  return isCompliant;
 }
 
 /**

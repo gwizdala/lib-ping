@@ -5,7 +5,7 @@ Description: Access and interact with MFA devices
  This script allows you to view and manage a user's MFA devices.
 
  Frodo command:
- frodo script import -f library_logger.js <tenant>
+ frodo script import -f library_mfa.js <tenant>
  
  Author: @gwizdala
  */

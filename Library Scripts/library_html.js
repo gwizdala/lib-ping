@@ -5,7 +5,7 @@ Description:
     that can be injected into a journey using `callbacksBuilder.scriptTextOutputCallback(library_html.function(x))`
 
 Frodo command:
-frodo script import -f library_logger.js <tenant>
+frodo script import -f library_html.js <tenant>
  
  Author: @gwizdala
  */

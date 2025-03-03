@@ -3,10 +3,11 @@ Name: library_org
 Description: Return organization metadata based on information you may know (such as the org name or a user id)
  
 Frodo command:
-frodo script import -f library_logger.js <tenant> 
+frodo script import -f library_org.js <tenant> 
 
 Author: @gwizdala
  */
+
 
 /**
 * Note that Rhino ES2015 has the following engine compatibility: 
@@ -213,9 +214,10 @@ exports.getOrgsMetadataByQueryFilter = function(caller, realm, orgAttributes, qu
 * @param {string} uid the user id in which to find the organization
 * @param {string} relationship the relationship the user has with the org(s), either "member", "admin", or "owner"
 * @param {array[string]} orgAttributes the attributes to retrieve from the organization. If null, will return all default attributes
+* @param {boolean} singleLevel whether or not the metadata should be returned for child relationships. default is `false` (all levels)
 * @return {array[object]} the list of orgs, or an empty array
 */
-exports.getOrgsMetadataByUID = function(caller, realm, uid, relationship, orgAttributes) {
+exports.getOrgsMetadataByUID = function(caller, realm, uid, relationship, orgAttributes, singleLevel) {
   var idmRealm = getRealmFormatted(realm);
   var orgRelationship = getOrgRelationshipFormatted(relationship);
   var orgsMetadata = null;
@@ -237,7 +239,7 @@ exports.getOrgsMetadataByUID = function(caller, realm, uid, relationship, orgAtt
             queryFilter += " or "; 
         }
     
-        queryFilter += `(_id eq "${org._refResourceId}") or (parentIDs eq "${org._refResourceId}")`;
+        queryFilter += `(_id eq "${org._refResourceId}") ${!singleLevel ? `or (parentIDs eq "${org._refResourceId}")` : ''}`;
     }
     
     var fields = getFieldsFromAttributesArray(orgAttributes);
