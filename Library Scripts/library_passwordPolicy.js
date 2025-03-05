@@ -93,7 +93,7 @@ function getFieldsFromAttributesArray(attributes) {
  * @param userContext.uid the user's _id. Used to evaluate disallowedUserAttributes
  * @param userContext.orgId the organization that this password is related to. Used to evaluate disallowedOrgAttributes
  * @param userContext.objectAttributes the values that the user is looking to use to update/create alongside their password. Used along with uid to evaluate disallowedUserAttributes
- * @return {object} whether or not the password is valid. Returns {valid: boolean, evaluation: Array({valid: boolean, evaluation: {id: passwordPolicyKey, policy: message, passed: true/false}})}
+ * @return {object} whether or not the password is valid. Returns {valid: boolean, evaluation: Array({policy: message, passed: true/false})}
  */
 exports.evaluatePassword = (caller, passwordPolicy, password, userContext) => {
   this.minPasswordLength = (passwordPolicy.minPasswordLength && typeof passwordPolicy.minPasswordLength === 'number') ? passwordPolicy.minPasswordLength : 1;
