@@ -81,7 +81,7 @@ function getFieldsFromAttributesArray(attributes) {
  * @param passwordPolicy.maxPasswordLength the maximum password length allowed. Must be greater than or equal to minPasswordLength
  * @param passwordPolicy.disallowedUserAttributes a list of user attributes not allowed within the password - requires userId or objectAttributes
  * @param passwordPolicy.disallowedOrgAttributes a list of organization attributes not allowed within the password - requires orgId
- * @param passwordPolicy.reqireNoCommonlyUsedPasswords no commonly used passwords. Uses the EXTERNAL HaveIBeenPwned API - use at your own risk
+ * @param passwordPolicy.requireNoCommonlyUsedPasswords no commonly used passwords. Uses the EXTERNAL HaveIBeenPwned API - use at your own risk
  * @param passwordPolicy.requireUpperCase > 1 Upper Case Letter (English)
  * @param passwordPolicy.requireLowerCase > 1 Lower Case Letter (English)
  * @param passwordPolicy.requireNumber > 1 Number (0-9)
@@ -100,7 +100,7 @@ exports.evaluatePassword = (caller, passwordPolicy, password, userContext) => {
   this.maxPasswordLength = (passwordPolicy.maxPasswordLength && typeof passwordPolicy.maxPasswordLength === 'number') ? passwordPolicy.maxPasswordLength : null;
   this.disallowedUserAttributes = passwordPolicy.disallowedUserAttributes ? passwordPolicy.disallowedUserAttributes : [];
   this.disallowedOrgAttributes = passwordPolicy.disallowedOrgAttributes ? passwordPolicy.disallowedOrgAttributes : [];
-  this.reqireNoCommonlyUsedPasswords = !!passwordPolicy.reqireNoCommonlyUsedPasswords || false;
+  this.requireNoCommonlyUsedPasswords = !!passwordPolicy.requireNoCommonlyUsedPasswords || false;
   this.requireUpperCase = !!passwordPolicy.requireUpperCase || false;
   this.requireLowerCase = !!passwordPolicy.requireLowerCase || false;
   this.requireNumber = !!passwordPolicy.requireNumber || false;
@@ -166,7 +166,7 @@ exports.evaluatePassword = (caller, passwordPolicy, password, userContext) => {
 
     totalPolicyEval = totalPolicyEval & policyEval;
   }
-  if (this.reqireNoCommonlyUsedPasswords) {
+  if (this.requireNoCommonlyUsedPasswords) {
     policyEval = this.evaluateNoCommonlyUsedPasswords(caller, password);
 
     policiesEvaluated.push({
