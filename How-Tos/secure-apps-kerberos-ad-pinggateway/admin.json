@@ -1,0 +1,56 @@
+{
+  "mode": "DEVELOPMENT", // Enables a PUBLIC route to Gateway Studio on http://<gateway-url>:8080/openig/studio/
+  "connectors": [
+    {
+      "port": 8080 // Your default Gateway hosting
+    },
+    {
+      "port": 8443, // Required for Identity Assertion
+      "tls": "ServerTlsOptions-1"
+    }
+  ],
+  "session": {
+	"cookie": {
+		"sameSite":  "none",
+		"secure": true // ensure the browser passes the session cookie in form-POST for CDSSO
+	}
+  },
+  "heap": [
+    {
+      "name": "ServerTlsOptions-1",
+      "type": "ServerTlsOptions",
+      "config": {
+        "keyManager": {
+          "type": "SecretsKeyManager",
+          "config": {
+            "signingSecretId": "key.manager.secret.id",
+            "secretsProvider": "ServerIdentityStore"
+          }
+        }
+      }
+    },
+    {
+      "type": "FileSystemSecretStore",
+      "name": "SecretsPasswords",
+      "config": {
+        "directory": "<your-file-path>/Desktop/secrets", // Where the secrets are located
+        "format": "PLAIN"
+      }
+    },
+    {
+      "name": "ServerIdentityStore",
+      "type": "KeyStoreSecretStore",
+      "config": {
+        "file": "<your-file-path>/Desktop/secrets/keystore.pkcs12", // Where the keystore is located
+        "storePasswordSecretId": "keystore.pass",
+        "secretsProvider": "SecretsPasswords",
+        "mappings": [
+          {
+            "secretId": "key.manager.secret.id",
+            "aliases": ["https-connector-key"]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "name": "identity-assertion-idc",
+  "condition": "${find(request.uri.path, '^/idassert')}", // The URL path that triggers this flow. AIC will be hitting Gateway with this request.
+  "properties": {
+    "amIdcPeer": "<your-tenant-url>" // The AIC tenant we are targeting, e.g. openam-example.forgeblocks.com
+  },
+  "handler": "IdentityAssertionHandler-1",
+  "heap": [
+    {
+      "name": "IdentityAssertionHandler-1",
+      "type": "IdentityAssertionHandler", // https://docs.pingidentity.com/pinggateway/2024.9/reference/IdentityAssertionHandler.html
+      "config": {
+        "identityAssertionPlugin": "BasicAuthScriptablePlugin",
+        "selfIdentifier": "https://<gateway-url>:8443", // The gateway url
+        "peerIdentifier": "&{amIdcPeer}",
+        "secretsProvider": [
+          "secrets-pem"
+        ],
+        "encryptionSecretId": "idassert" // The pem file we generated and stored in aic as an esv as well as locally for our gateway
+      }
+    },
+    {
+      "name": "BasicAuthScriptablePlugin",
+      "type": "ScriptableIdentityAssertionPlugin",
+      "config": {
+        "type": "application/x-groovy",
+        "source": [
+          "import org.forgerock.openig.assertion.IdentityAssertionClaims",
+          "import org.forgerock.openig.assertion.plugin.IdentityAssertionPluginException",
+          "import org.forgerock.openig.assertion.IdentityRequestJwtContext",
+          "logger.info('Running ScriptableIdentityAssertionPlugin')",
+          "logger.info('IdentityRequestJwtContext redirect: {}', context.asContext(IdentityRequestJwtContext.class).redirect())",
+          "return new IdentityAssertionClaims('test')" // The user information we are returning in this example
+        ]
+      }
+    },
+    {
+      "name": "pemPropertyFormat",
+      "type": "PemPropertyFormat"
+    },
+    {
+      "name": "secrets-pem",
+      "type": "FileSystemSecretStore",
+      "config": {
+        "directory": "&{ig.instance.dir}/secrets/igfs", // The location where this secret is stored. You'll need to create this folder
+        "suffix": ".pem",
+        "format": "pemPropertyFormat",
+        "mappings": [
+          {
+            "secretId": "idassert",
+            "format": "pemPropertyFormat"
+          }
+        ]
+      }
+    }
+  ]
+}

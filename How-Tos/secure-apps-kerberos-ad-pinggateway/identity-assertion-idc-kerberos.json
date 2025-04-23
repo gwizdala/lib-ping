@@ -1,0 +1,63 @@
+{
+  "name": "identity-assertion-idc-kerberos",
+  "condition": "${find(request.uri.path, '^/kerb')}", // The URL path that triggers this flow. AIC will be hitting Gateway with this request.
+  "properties": {
+    "amIdcPeer": "<your-tenant-url>" // The AIC tenant we are targeting, e.g. openam-example.forgeblocks.com
+  },
+  "handler": "IdentityAssertionHandler-1",
+  "heap": [
+    {
+      "name": "SystemAndEnvSecretStore-1",
+      "type": "SystemAndEnvSecretStore" // How we retrieve the secret. In this case, from the system's ESV
+    },
+    {
+      "name": "IdentityAssertionHandler-1",
+      "type": "IdentityAssertionHandler", // https://docs.pingidentity.com/pinggateway/2024.9/reference/IdentityAssertionHandler.html
+      "config": {
+        "identityAssertionPlugin": "KerberosIdentityAssertionPlugin-1",
+        "selfIdentifier": "https://<gateway-url>:8443", // The gateway url
+        "peerIdentifier": "&{amIdcPeer}",
+        "secretsProvider": [
+          "secrets-pem"
+        ],
+        "encryptionSecretId": "idassert" // The pem file we generated and stored in aic as an esv as well as locally for our gateway
+      }
+    },
+	{
+	  "name": "KerberosIdentityAssertionPlugin-1",
+	  "type": "KerberosIdentityAssertionPlugin", // https://docs.pingidentity.com/pinggateway/2024.11/reference/KerberosIdentityAssertionPlugin.html
+	  "config": {
+		"serviceLogin": "UsernamePasswordServiceLogin-1",
+		"trustedRealms": ["EXAMPLE.COM"] // The (trusted) Realm matching the user's principal name
+	  }
+	},
+	{
+	  "name": "UsernamePasswordServiceLogin-1",
+	  "type": "UsernamePasswordServiceLogin",
+	  "config": {
+		"username": "<service-account-username>", // Your service account username (run as admin on AD host): setspn -s HTTP/<gateway-host> <service-account-username>
+		"passwordSecretId": "kerberos.secret.id", // Your user account password, stored as a base64-encoded secret
+		"secretsProvider": "SystemAndEnvSecretStore-1"
+	  }
+	},
+    {
+      "name": "pemPropertyFormat",
+      "type": "PemPropertyFormat"
+    },
+    {
+      "name": "secrets-pem",
+      "type": "FileSystemSecretStore",
+      "config": {
+        "directory": "&{ig.instance.dir}/secrets/igfs", // The location where this secret is stored. You'll need to create this folder
+        "suffix": ".pem",
+        "format": "pemPropertyFormat",
+        "mappings": [
+          {
+            "secretId": "idassert",
+            "format": "pemPropertyFormat"
+          }
+        ]
+      }
+    }
+  ]
+}

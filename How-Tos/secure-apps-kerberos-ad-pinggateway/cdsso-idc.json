@@ -1,0 +1,51 @@
+{
+  "name": "cdsso-idc",
+  "baseURI": "http://app.example.com:8081", // The application we redirect to with the session
+  "condition": "${find(request.uri.path, '^/home/cdsso')}", // The URL path that triggers this flow. Gateway will be hit first with this request.
+  "properties": {
+    "amInstanceUrl": "https://<your-tenant-url>/am" // The AIC tenant we are targeting, e.g. openam-example.forgeblocks.com
+  },
+  "heap": [
+    {
+      "name": "SystemAndEnvSecretStore-1",
+      "type": "SystemAndEnvSecretStore" // How we retrieve the secret. In this case, from the system's ESV
+    },
+    {
+      "name": "AmService-1",
+      "type": "AmService",
+      "config": {
+        "url": "&{amInstanceUrl}",
+        "realm": "/alpha",
+        "agent": {
+          "username": "<your-gateway-name>", // The gateway name in AIC
+          "passwordSecretId": "agent.secret.id" // The ESV on this machine that holds the gateway's password - stored in base64 with the naming convention AGENT_SECRET_ID
+        },
+        "secretsProvider": "SystemAndEnvSecretStore-1",
+        "sessionCache": {
+          "enabled": false
+        }
+      }
+    }
+  ],
+  "handler": {
+    "type": "Chain",
+    "config": {
+      "filters": [
+        {
+          "name": "CrossDomainSingleSignOnFilter-1",
+          "type": "CrossDomainSingleSignOnFilter",
+          "config": {
+            "redirectEndpoint": "/home/cdsso/redirect",
+            "authCookie": {
+              "path": "/home",
+              "name": "ig-token-cookie"
+            },
+            "amService": "AmService-1", // The default login journey
+			      "_authenticationService": "IdAssertKerberos" // Your own login Journey - this is how we can assert the identity later. To use, remove the "_" from the beginning of the key name
+          }
+        }
+      ],
+      "handler": "ReverseProxyHandler"
+    }
+  }
+}

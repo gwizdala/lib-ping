@@ -1,0 +1,185 @@
+{
+  "meta": {
+    "treesSelectedForExport": [
+      "Agent"
+    ],
+    "innerTreesIncluded": []
+  },
+  "trees": {
+    "Agent": {
+      "tree": {
+        "_id": "Agent",
+        "_rev": "257580636",
+        "identityResource": "managed/alpha_user",
+        "uiConfig": {
+          "categories": "[\"Gateway\"]"
+        },
+        "entryNodeId": "8ba3196d-c57d-4595-9fc8-8976653644d9",
+        "innerTreeOnly": false,
+        "nodes": {
+          "8ba3196d-c57d-4595-9fc8-8976653644d9": {
+            "connections": {
+              "false": "9da3ad68-2e24-4126-8f1b-ccf3054d345c",
+              "true": "cbd6fb74-5ba6-4d48-bcb2-b7414001098f"
+            },
+            "displayName": "Zero Page Login Collector",
+            "nodeType": "ZeroPageLoginNode",
+            "x": 168,
+            "y": 217.515625
+          },
+          "9da3ad68-2e24-4126-8f1b-ccf3054d345c": {
+            "connections": {
+              "outcome": "cbd6fb74-5ba6-4d48-bcb2-b7414001098f"
+            },
+            "displayName": "Page Node",
+            "nodeType": "PageNode",
+            "x": 449,
+            "y": 382.515625
+          },
+          "cbd6fb74-5ba6-4d48-bcb2-b7414001098f": {
+            "connections": {
+              "false": "e301438c-0bd0-429c-ab0c-66126501069a",
+              "true": "70e691a5-1e33-4ac3-a356-e7b6d60d92e0"
+            },
+            "displayName": "Agent Data Store Decision",
+            "nodeType": "AgentDataStoreDecisionNode",
+            "x": 682,
+            "y": 226.515625
+          }
+        },
+        "description": "Authenticate a PingGateway agent to PingOne Advanced Identity Cloud",
+        "staticNodes": {
+          "70e691a5-1e33-4ac3-a356-e7b6d60d92e0": {
+            "x": 970,
+            "y": 116
+          },
+          "e301438c-0bd0-429c-ab0c-66126501069a": {
+            "x": 991,
+            "y": 463
+          },
+          "startNode": {
+            "x": 50,
+            "y": 250
+          }
+        },
+        "mustRun": false,
+        "enabled": true
+      },
+      "nodes": {
+        "8ba3196d-c57d-4595-9fc8-8976653644d9": {
+          "_id": "8ba3196d-c57d-4595-9fc8-8976653644d9",
+          "_rev": "-1362779146",
+          "passwordHeader": "X-OpenAM-Password",
+          "referrerWhiteList": [],
+          "allowWithoutReferer": true,
+          "usernameHeader": "X-OpenAM-Username",
+          "_type": {
+            "_id": "ZeroPageLoginNode",
+            "name": "Zero Page Login Collector",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "true",
+              "displayName": "Has Credentials"
+            },
+            {
+              "id": "false",
+              "displayName": "No Credentials"
+            }
+          ]
+        },
+        "9da3ad68-2e24-4126-8f1b-ccf3054d345c": {
+          "_id": "9da3ad68-2e24-4126-8f1b-ccf3054d345c",
+          "_rev": "1194275994",
+          "nodes": [
+            {
+              "_id": "a1c5a243-9f5f-46fd-8553-120419d7879c",
+              "nodeType": "ValidatedUsernameNode",
+              "displayName": "Platform Username"
+            },
+            {
+              "_id": "6b585649-28b4-4f47-a9a9-67aebb516eff",
+              "nodeType": "ValidatedPasswordNode",
+              "displayName": "Platform Password"
+            }
+          ],
+          "pageDescription": {},
+          "pageHeader": {},
+          "_type": {
+            "_id": "PageNode",
+            "name": "Page Node",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "outcome",
+              "displayName": "Outcome"
+            }
+          ]
+        },
+        "cbd6fb74-5ba6-4d48-bcb2-b7414001098f": {
+          "_id": "cbd6fb74-5ba6-4d48-bcb2-b7414001098f",
+          "_rev": "-1619030364",
+          "_type": {
+            "_id": "AgentDataStoreDecisionNode",
+            "name": "Agent Data Store Decision",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "true",
+              "displayName": "True"
+            },
+            {
+              "id": "false",
+              "displayName": "False"
+            }
+          ]
+        }
+      },
+      "innerNodes": {
+        "a1c5a243-9f5f-46fd-8553-120419d7879c": {
+          "_id": "a1c5a243-9f5f-46fd-8553-120419d7879c",
+          "_rev": "-1871713860",
+          "usernameAttribute": "userName",
+          "validateInput": false,
+          "_type": {
+            "_id": "ValidatedUsernameNode",
+            "name": "Platform Username",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "outcome",
+              "displayName": "Outcome"
+            }
+          ]
+        },
+        "6b585649-28b4-4f47-a9a9-67aebb516eff": {
+          "_id": "6b585649-28b4-4f47-a9a9-67aebb516eff",
+          "_rev": "-878691112",
+          "passwordAttribute": "password",
+          "validateInput": false,
+          "_type": {
+            "_id": "ValidatedPasswordNode",
+            "name": "Platform Password",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "outcome",
+              "displayName": "Outcome"
+            }
+          ]
+        }
+      },
+      "scripts": {},
+      "emailTemplates": {},
+      "socialIdentityProviders": {},
+      "themes": [],
+      "saml2Entities": {},
+      "circlesOfTrust": {}
+    }
+  }
+}
