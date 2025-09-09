@@ -26,17 +26,24 @@ frodo script import -f library_callbacks.js <tenant>
  * @param {Object} callbacksBuilder - The callbacks builder object used to render the callbacks.
  * @throws {Error} - If the callback type is unknown.
  */
-function renderInteractiveCallbackOptions(inputs, callbacksBuilder) {
+exports.renderInteractiveCallbackOptions = function(inputs, callbacksBuilder) {
     inputs.forEach(function(input) {
         switch(input.type) {
             case "NameCallback":
-                callbacksBuilder.nameCallback(input.label, input.value);
+                if (input.name) {
+                    callbacksBuilder.nameCallback(input.label, input.name);
+                } else {
+                    callbacksBuilder.nameCallback(input.label);
+                }
                 break;
             case "PasswordCallback":
                 callbacksBuilder.passwordCallback(input.label, false);
                 break;
             case "HiddenValueCallback":
                 callbacksBuilder.hiddenValueCallback(input.id, input.value);
+                break;
+            case "BooleanAttributeInputCallback":
+                callbacksBuilder.booleanAttributeInputCallback(input.id, input.label, !!input.value, false);
                 break;
             case "ChoiceCallback":
                 var choices = [];
@@ -57,7 +64,7 @@ function renderInteractiveCallbackOptions(inputs, callbacksBuilder) {
                 throw(`Unknown Callback: ${input.label}`);
         }
     });
-}
+};
 
 /**
  * Given a list of interactive callbacks, gather each callback option
@@ -66,7 +73,7 @@ function renderInteractiveCallbackOptions(inputs, callbacksBuilder) {
  * @returns {Object} - The gathered callback responses, keyed to their ID
  * @throws {Error} - If the callback type is unknown.
  */
-function gatherInteractiveCallbackResponses(inputs, callbacks) {
+exports.gatherInteractiveCallbackResponses = function(inputs, callbacks) {
     var responses = {};
     var receivedCallbacks = {}; // callbackType: { callbacksObject, currentIndex }
     inputs.forEach(function(input) {
@@ -90,6 +97,9 @@ function gatherInteractiveCallbackResponses(inputs, callbacks) {
                 // We aren't updating this value, so we just store what was hidden
                 responses[input.id] = input.value;
                 break;
+            case "BooleanAttributeInputCallback":
+                responses[input.id] = currentCallback ? true : false;
+                break;
             case "ChoiceCallback":
                 // Gather the value stored within the input array itself. To do this, we get the received callback index and then reference the "value" key
                 responses[input.id] = input.choices[currentCallback[0]].value;
@@ -102,4 +112,4 @@ function gatherInteractiveCallbackResponses(inputs, callbacks) {
         }
     });
     return responses;
-}
+};
