@@ -30,26 +30,41 @@ exports.renderInteractiveCallbackOptions = function(inputs, callbacksBuilder) {
     inputs.forEach(function(input) {
         switch(input.type) {
             case "NameCallback":
-                if (input.name) {
-                    callbacksBuilder.nameCallback(input.label, input.name);
+                // callbacksBuilder.nameCallback(prompt, defaultName)
+                // You can optionally provide a delimiter to split the value into multiple values for a single input field.
+                if (input.value && input.value.length > 0) {
+                    if (!!input.delimiter && Array.isArray(input.value)) {
+                        var valuesString = input.value.join(input.delimiter);
+                        callbacksBuilder.nameCallback(input.label, valuesString);
+                    } else {
+                        callbacksBuilder.nameCallback(input.label, input.value);
+                    }
                 } else {
                     callbacksBuilder.nameCallback(input.label);
                 }
                 break;
             case "PasswordCallback":
+                // callbacksBuilder.passwordCallback(prompt, echoOn)
                 callbacksBuilder.passwordCallback(input.label, false);
                 break;
             case "HiddenValueCallback":
+                // callbacksBuilder.hiddenValueCallback(id, value)
                 callbacksBuilder.hiddenValueCallback(input.id, input.value);
                 break;
+            case "NumberAttributeInputCallback":
+                // callbacksBuilder.numberAttributeInputCallback(name, prompt, value, required)
+                callbacksBuilder.numberAttributeInputCallback(input.id, input.label, parseInt(input.value, 10), !!input.required);
+                break;
             case "BooleanAttributeInputCallback":
-                callbacksBuilder.booleanAttributeInputCallback(input.id, input.label, !!input.value, false);
+                // callbacksBuilder.booleanAttributeInputCallback(name, prompt, value, required)
+                callbacksBuilder.booleanAttributeInputCallback(input.id, input.label, !!input.value, !!input.required);
                 break;
             case "ChoiceCallback":
                 var choices = [];
                 input.choices.forEach(function(choice) {
                     choices.push(choice.label);
                 });
+                // callbacksBuilder.choiceCallback(prompt, choices, defaultChoice, multipleSelectionsAllowed)
                 callbacksBuilder.choiceCallback(input.label, choices, 0, false);
                 break;
             case "ConfirmationCallback":
@@ -58,10 +73,12 @@ exports.renderInteractiveCallbackOptions = function(inputs, callbacksBuilder) {
                 input.choices.forEach(function(choice) {
                     choices.push(choice.label);
                 });
+                // callbacksBuilder.confirmationCallback(messageType, options, defaultOption)
+                // messageType: 0 = INFO, 1 = WARNING, 2 = ERROR
                 callbacksBuilder.confirmationCallback(0, choices, 0);
                 break;
             default:
-                throw(`Unknown Callback: ${input.label}`);
+                throw(`Unknown Callback: ${input.type} | ${input.label}`);
         }
     });
 };
@@ -88,7 +105,14 @@ exports.gatherInteractiveCallbackResponses = function(inputs, callbacks) {
         var currentCallback = receivedCallbacks[input.type].callbacksObject.get(receivedCallbacks[input.type].index);
         switch(input.type) {
             case "NameCallback":
-                responses[input.id] = currentCallback;
+                if (!!input.delimiter && input.delimiter.length > 0) {
+                    // Custom multi-value
+                    responses[input.id] = currentCallback.split(input.delimiter).map(function(value) {
+                        return value.trim();
+                    });
+                } else {
+                    responses[input.id] = currentCallback;
+                }
                 break;
             case "PasswordCallback":
                 responses[input.id] = currentCallback;
@@ -96,6 +120,9 @@ exports.gatherInteractiveCallbackResponses = function(inputs, callbacks) {
             case "HiddenValueCallback":
                 // We aren't updating this value, so we just store what was hidden
                 responses[input.id] = input.value;
+                break;
+            case "NumberAttributeInputCallback":
+                responses[input.id] = currentCallback;
                 break;
             case "BooleanAttributeInputCallback":
                 responses[input.id] = currentCallback ? true : false;
@@ -108,7 +135,7 @@ exports.gatherInteractiveCallbackResponses = function(inputs, callbacks) {
                 responses[input.id] = input.choices[currentCallback].value;
                 break;
             default:
-                throw(`Unknown Callback: ${input.label}`);
+                throw(`Unknown Callback: ${input.type} | ${input.label}`);
         }
     });
     return responses;
