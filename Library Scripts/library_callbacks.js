@@ -18,6 +18,75 @@ frodo script import -f library_callbacks.js <tenant>
 */
 
 //// UTILITY FUNCTIONS
+/**
+ * Given an input object, return a formatted string that can be used to render the input in a ScriptTextOutputCallback.
+ * This function is not supported natively in the SDK.
+ * @param {Object} input - The input object containing the properties needed to render the input.
+ * @param {Object} callbacksBuilder - The callbacks builder object used to render the callbacks.
+ * @returns {string} - The formatted string that can be used to render the input.
+ */
+exports.formatInteractiveCallbackOptions = function(inputs, callbacksBuilder) {
+    var css = `\
+    .info-details {\
+        text-align: right;\
+        position: absolute;\
+        padding: 5px;\
+        top: 7px;\
+        right: -15px;\
+        z-index: 2;\
+    }\
+    .info-details[open] {\
+        z-index: 3;\
+    }\
+    `;
+    var script = `\
+    var updateInput = function(label, required, description, tooltip) {\
+        var input = document.querySelector('*[data-vv-as="' + label + '"]');\
+        if (!input) {\
+            return;\
+        }\
+        input.required = !!required;\
+        if (description) {\
+            var labelElement = document.createElement("p");\
+            labelElement.textContent = description;\
+            labelElement.style = "font-size: smaller; text-align: left";\
+            input.parentNode.appendChild(labelElement);\
+        }\
+        if (tooltip) {\
+            var details = document.createElement("details");\
+            details.className = "btn btn-primary info-details";\
+            var summary = document.createElement("summary");\
+            summary.textContent = "?";\
+            var description = document.createElement("p");\
+            description.innerHTML = tooltip;\
+            description.style = "font-size: smaller; text-align: right";\
+            details.appendChild(summary);\
+            details.appendChild(description);\
+            input.parentNode.parentNode.appendChild(details);\
+        }\
+    };\
+    var updateInputs = function() {\
+        var inputs = ${JSON.stringify(inputs)};\
+        if (!Array.isArray(inputs)) {\
+            inputs = [inputs];\
+        }\
+        if (inputs.length === 0) {\
+            return;\
+        }\  
+        inputs.forEach(function(input) {\
+            updateInput(input.label, input.required, input.description, input.tooltip);\
+        });\
+
+        document.head.appendChild(document.createElement("style")).textContent = "${css}";\
+    };\
+    if (document.readState === "loading") {
+        document.addEventListener("DOMContentLoaded", updateInputs);
+    } else {
+        updateInputs();
+    }`;
+
+    callbacksBuilder.scriptTextOutputCallback(String(script));
+}
 
 //// EXPORTS
 /**
