@@ -107,9 +107,13 @@ exports.gatherInteractiveCallbackResponses = function(inputs, callbacks) {
             case "NameCallback":
                 if (!!input.delimiter && input.delimiter.length > 0) {
                     // Custom multi-value
-                    responses[input.id] = currentCallback.split(input.delimiter).map(function(value) {
-                        return value.trim();
-                    });
+                    if (currentCallback.length > 0) {
+                        responses[input.id] = currentCallback.split(input.delimiter).map(function(value) {
+                            return value.trim();
+                        });
+                    } else {
+                        responses[input.id] = [];
+                    }
                 } else {
                     responses[input.id] = currentCallback;
                 }
