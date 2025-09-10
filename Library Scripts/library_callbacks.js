@@ -133,8 +133,19 @@ exports.renderInteractiveCallbackOptions = function(inputs, callbacksBuilder) {
                 input.choices.forEach(function(choice) {
                     choices.push(choice.label);
                 });
+                // Check if there's a default value. If so, find the index of that value in the choices array.
+                // If not found, default to 0.
+                var defaultChoice = 0;
+                if (input.value && input.value.length > 0) {
+                    var defaultChoiceIndex = input.choices.findIndex(function(choice) {
+                        return choice.value === input.value;
+                    });
+                    if (defaultChoiceIndex != -1) {
+                        defaultChoice = defaultChoiceIndex;
+                    }
+                }
                 // callbacksBuilder.choiceCallback(prompt, choices, defaultChoice, multipleSelectionsAllowed)
-                callbacksBuilder.choiceCallback(input.label, choices, 0, false);
+                callbacksBuilder.choiceCallback(input.label, choices, defaultChoice, false);
                 break;
             case "ConfirmationCallback":
                 // WARNING: You probably only want one confirmationcallback, as this renders buttons for the user to select from
