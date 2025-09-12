@@ -2,6 +2,8 @@
 
 Library Scripts are reusable pieces of code that can be executed across Journeys in the PingOne AIC platform.
 
+Some libraries may have an example script available to use for testing within Journeys.
+
 Helpful Links:
 
 - [Next-Gen Scripts](https://docs.pingidentity.com/pingoneaic/latest/am-scripting/scripting-api-node-migrate.html)
