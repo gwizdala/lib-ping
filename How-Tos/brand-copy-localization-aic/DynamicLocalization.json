@@ -1,0 +1,320 @@
+{
+  "meta": {
+    "exportToolVersion": "1.0",
+    "treesSelectedForExport": [
+      "DynamicLocalization"
+    ],
+    "innerTreesIncluded": []
+  },
+  "trees": {
+    "DynamicLocalization": {
+      "tree": {
+        "_id": "DynamicLocalization",
+        "_rev": "1384995537",
+        "identityResource": "managed/alpha_user",
+        "entryNodeId": "752716d1-b96e-49bd-a384-f4120b923041",
+        "innerTreeOnly": false,
+        "description": "An example journey showcasing how you can enforce dynamic localization based on managed object properties",
+        "noSession": false,
+        "mustRun": false,
+        "enabled": true,
+        "uiConfig": {
+          "categories": "[]"
+        },
+        "nodes": {
+          "63d18d71-34bc-44b1-b451-b860f5a8e506": {
+            "x": 788,
+            "y": 80,
+            "connections": {
+              "outcome": "30c555cb-4016-49f3-9b6c-a199d499bd6c"
+            },
+            "nodeType": "PageNode",
+            "displayName": "Page Node"
+          },
+          "752716d1-b96e-49bd-a384-f4120b923041": {
+            "x": 210,
+            "y": 148,
+            "connections": {
+              "Found": "9feb5cdf-cdf0-45f6-af34-5823400039d4",
+              "Missing": "63d18d71-34bc-44b1-b451-b860f5a8e506",
+              "Error": "e301438c-0bd0-429c-ab0c-66126501069a"
+            },
+            "nodeType": "ScriptedDecisionNode",
+            "displayName": "Get Org ID from Query Param"
+          },
+          "9feb5cdf-cdf0-45f6-af34-5823400039d4": {
+            "x": 528,
+            "y": 95.5,
+            "connections": {
+              "Error": "e301438c-0bd0-429c-ab0c-66126501069a",
+              "Success": "63d18d71-34bc-44b1-b451-b860f5a8e506"
+            },
+            "nodeType": "ScriptedDecisionNode",
+            "displayName": "Get Locale"
+          },
+          "30c555cb-4016-49f3-9b6c-a199d499bd6c": {
+            "x": 1087,
+            "y": 161.5,
+            "connections": {
+              "true": "70e691a5-1e33-4ac3-a356-e7b6d60d92e0",
+              "false": "e301438c-0bd0-429c-ab0c-66126501069a"
+            },
+            "nodeType": "DataStoreDecisionNode",
+            "displayName": "Data Store Decision"
+          }
+        },
+        "staticNodes": {
+          "startNode": {
+            "x": 70,
+            "y": 188.5
+          },
+          "70e691a5-1e33-4ac3-a356-e7b6d60d92e0": {
+            "x": 1368,
+            "y": 102.33333333333333
+          },
+          "e301438c-0bd0-429c-ab0c-66126501069a": {
+            "x": 1354,
+            "y": 420.16666666666663
+          }
+        }
+      },
+      "nodes": {
+        "63d18d71-34bc-44b1-b451-b860f5a8e506": {
+          "_id": "63d18d71-34bc-44b1-b451-b860f5a8e506",
+          "_rev": "1216932421",
+          "nodes": [
+            {
+              "_id": "fa1db3c9-9eef-4dc4-93f6-fd784bfd3a96",
+              "nodeType": "ScriptedDecisionNode",
+              "displayName": "Set Locale"
+            },
+            {
+              "_id": "62dd3fb6-8c63-4731-8261-7e4166d2a3cf",
+              "nodeType": "ValidatedUsernameNode",
+              "displayName": "Platform Username"
+            },
+            {
+              "_id": "2a61787f-a055-4e99-8b74-f0092cd9656b",
+              "nodeType": "ValidatedPasswordNode",
+              "displayName": "Platform Password"
+            }
+          ],
+          "pageDescription": {
+            "en": "The Default Description",
+            "es": "La Descripción Predeterminada"
+          },
+          "stage": "{\"pageFooter\":{\"en\":\"The Default Footer\",\"es\":\"El Pie de Página Predeterminado\"}}",
+          "pageHeader": {
+            "en": "The Default Message",
+            "es": "El Mensaje Predeterminado"
+          },
+          "_type": {
+            "_id": "PageNode",
+            "name": "Page Node",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "outcome",
+              "displayName": "Outcome"
+            }
+          ]
+        },
+        "752716d1-b96e-49bd-a384-f4120b923041": {
+          "_id": "752716d1-b96e-49bd-a384-f4120b923041",
+          "_rev": "294215581",
+          "script": "bcc8160f-cba7-4e00-9b68-88c192a703e5",
+          "outcomes": [
+            "Found",
+            "Missing",
+            "Error"
+          ],
+          "outputs": [
+            "*"
+          ],
+          "inputs": [
+            "*"
+          ],
+          "_type": {
+            "_id": "ScriptedDecisionNode",
+            "name": "Scripted Decision",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "Found",
+              "displayName": "Found"
+            },
+            {
+              "id": "Missing",
+              "displayName": "Missing"
+            },
+            {
+              "id": "Error",
+              "displayName": "Error"
+            }
+          ]
+        },
+        "9feb5cdf-cdf0-45f6-af34-5823400039d4": {
+          "_id": "9feb5cdf-cdf0-45f6-af34-5823400039d4",
+          "_rev": "410996540",
+          "script": "80dc2bcd-6889-4f0a-8695-ab4a143cf362",
+          "outcomes": [
+            "Success",
+            "Error"
+          ],
+          "outputs": [
+            "*"
+          ],
+          "inputs": [
+            "*"
+          ],
+          "_type": {
+            "_id": "ScriptedDecisionNode",
+            "name": "Scripted Decision",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "Success",
+              "displayName": "Success"
+            },
+            {
+              "id": "Error",
+              "displayName": "Error"
+            }
+          ]
+        },
+        "30c555cb-4016-49f3-9b6c-a199d499bd6c": {
+          "_id": "30c555cb-4016-49f3-9b6c-a199d499bd6c",
+          "_rev": "-840174537",
+          "_type": {
+            "_id": "DataStoreDecisionNode",
+            "name": "Data Store Decision",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "true",
+              "displayName": "True"
+            },
+            {
+              "id": "false",
+              "displayName": "False"
+            }
+          ]
+        }
+      },
+      "innerNodes": {
+        "fa1db3c9-9eef-4dc4-93f6-fd784bfd3a96": {
+          "_id": "fa1db3c9-9eef-4dc4-93f6-fd784bfd3a96",
+          "_rev": "-1674515261",
+          "script": "1afd2254-1e0b-4aaa-9b7f-38335003f300",
+          "outcomes": [
+            "Success"
+          ],
+          "outputs": [
+            "*"
+          ],
+          "inputs": [
+            "*"
+          ],
+          "_type": {
+            "_id": "ScriptedDecisionNode",
+            "name": "Scripted Decision",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "Success",
+              "displayName": "Success"
+            }
+          ]
+        },
+        "62dd3fb6-8c63-4731-8261-7e4166d2a3cf": {
+          "_id": "62dd3fb6-8c63-4731-8261-7e4166d2a3cf",
+          "_rev": "1868728179",
+          "usernameAttribute": "userName",
+          "validateInput": false,
+          "_type": {
+            "_id": "ValidatedUsernameNode",
+            "name": "Platform Username",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "outcome",
+              "displayName": "Outcome"
+            }
+          ]
+        },
+        "2a61787f-a055-4e99-8b74-f0092cd9656b": {
+          "_id": "2a61787f-a055-4e99-8b74-f0092cd9656b",
+          "_rev": "1697115731",
+          "passwordAttribute": "password",
+          "validateInput": false,
+          "_type": {
+            "_id": "ValidatedPasswordNode",
+            "name": "Platform Password",
+            "collection": true
+          },
+          "_outcomes": [
+            {
+              "id": "outcome",
+              "displayName": "Outcome"
+            }
+          ]
+        }
+      },
+      "scripts": {
+        "bcc8160f-cba7-4e00-9b68-88c192a703e5": {
+          "_id": "bcc8160f-cba7-4e00-9b68-88c192a703e5",
+          "name": "Get Org ID by Query Parameter",
+          "description": null,
+          "script": "\"/*\\n Capture the URL Query Param specified\\n \\n This script does not need to be parametrized. It will work properly as is.\\n \\n The scripted decision node needs the following outcomes defined:\\n - Found\\n - Missing\\n - Error\\n \\n Author: @gwizdala\\n */\\n//// CONSTANTS\\n// Change the query parameter below if you want to gather a different value.\\n// Ideally, this sort of functionality could be handled in a library script.\\nvar QUERY_PARAM = \\\"orgId\\\";\\nvar SHARED_STATE_KEY = \\\"orgId\\\";\\n// Request Params\\nvar HOST = requestHeaders.get(\\\"host\\\").get(0); // e.g. openam-example.forgeblocks.com\\n\\nvar NodeOutcome = {\\n    FOUND: \\\"Found\\\",\\n    MISSING: \\\"Missing\\\",\\n    ERROR: \\\"Error\\\"\\n};\\n\\n//// MAIN\\n(function () {\\n    try {  \\n      // Gather the Query Parameter & pass into shared state\\n      if (requestParameters.get(QUERY_PARAM)) {\\n        nodeState.putShared(SHARED_STATE_KEY, decodeURI(requestParameters.get(QUERY_PARAM).get(0)));\\n        outcome = NodeOutcome.FOUND;\\n      } else {\\n\\t\\toutcome = NodeOutcome.MISSING;\\n      }\\n    } catch (e) {\\n        logger.error(e);\\n        outcome = NodeOutcome.ERROR;\\n    }\\n    \\n    action.goTo(outcome);\\n}());\\n\"",
+          "default": false,
+          "language": "JAVASCRIPT",
+          "context": "AUTHENTICATION_TREE_DECISION_NODE",
+          "createdBy": "id=ffbd8af2-73a2-43c7-8f26-6efe7b80d395,ou=user,ou=am-config",
+          "creationDate": 1741617551310,
+          "lastModifiedBy": "id=ffbd8af2-73a2-43c7-8f26-6efe7b80d395,ou=user,ou=am-config",
+          "lastModifiedDate": 1741617551310,
+          "evaluatorVersion": "2.0"
+        },
+        "80dc2bcd-6889-4f0a-8695-ab4a143cf362": {
+          "_id": "80dc2bcd-6889-4f0a-8695-ab4a143cf362",
+          "name": "Get Locale From Organization Metadata",
+          "description": "Utilizing the organization ID provided gather the locale information.",
+          "script": "\"/*\\nUtilizing the organization ID provided gather the locale information\\n\\nThis script does not need to be parametrized. It will work properly as is.\\n \\n The scripted decision node needs the following outcomes defined:\\n    - Success\\n    - Error\\n \\n Author: @gwizdala\\n */\\n\\n//// CONSTANTS\\nvar REALM = 'alpha';\\nvar NodeOutcome = {\\n  SUCCESS: \\\"Success\\\",\\n  ERROR: \\\"Error\\\"\\n};\\n\\n//// MAIN\\n(function () {\\n    outcome = NodeOutcome.ERROR;\\n\\n    try {\\n        var orgId = nodeState.get('orgId');\\n\\n        if (null != orgId) {\\n            var queryFilter = `_id eq \\\"${orgId}\\\"`;\\n            var fields = 'name,locale';\\n            \\n            var orgMetadata = openidm.query(`managed/${REALM}_organization`, { \\n              \\\"_queryFilter\\\": queryFilter,\\n              \\\"_fields\\\": fields\\n            }).result;\\n  \\n            if (null != orgMetadata && orgMetadata.length === 1) {\\n                var orgMetadataJson = JSON.parse(orgMetadata[0]);\\n                var locale = orgMetadataJson.locale;\\n                nodeState.putShared('locale', locale);\\n                outcome = NodeOutcome.SUCCESS;\\n            } else {\\n                throw('No Organization metadata found.');\\n            }\\n        } else {\\n            throw('No Organization ID found in shared state');\\n        }\\n    } catch(e) {\\n        logger.error(e);\\n        outcome = NodeOutcome.ERROR;\\n    }\\n\\n    action.goTo(outcome);\\n}());\\n\"",
+          "default": false,
+          "language": "JAVASCRIPT",
+          "context": "AUTHENTICATION_TREE_DECISION_NODE",
+          "createdBy": "id=ffbd8af2-73a2-43c7-8f26-6efe7b80d395,ou=user,ou=am-config",
+          "creationDate": 1757949099628,
+          "lastModifiedBy": "id=ffbd8af2-73a2-43c7-8f26-6efe7b80d395,ou=user,ou=am-config",
+          "lastModifiedDate": 1757949099628,
+          "evaluatorVersion": "2.0"
+        },
+        "1afd2254-1e0b-4aaa-9b7f-38335003f300": {
+          "_id": "1afd2254-1e0b-4aaa-9b7f-38335003f300",
+          "name": "Set Locale on Page",
+          "description": "Checks to see if locale is stored in shared state.\nIf so, it will use the locale provided to update the current page node description and header to match.\nIf not, it will leave the page as is.\nAdditionally, the user's langauage preference is checked to ensure that the right locale is used.\nIf the user's language preference is not found, the default locale is used.",
+          "script": "\"/*\\nChecks to see if locale is stored in shared state.\\nIf so, it will use the locale provided to update the current page node description and header to match.\\nIf not, it will leave the page as is.\\nAdditionally, the user's langauage preference is checked to ensure that the right locale is used.\\nIf the user's language preference is not found, the default locale is used.\\n\\nThis script expects the following optional values in shared state:\\n-  locale: The locale to use for the current user session.\\n\\nThis script does not need to be parametrized. It will work properly as is.\\n \\n The scripted decision node needs the following outcomes defined:\\n    - Success\\n\\n While this script may fail, it will error silently and not impact the user experience.\\n\\nauthor: @gwizdala\\n*/\\n\\n//// CONSTANTS\\nvar CONSTANTS = {\\n    HOST: requestHeaders.get(\\\"host\\\").get(0)\\n};\\n\\nvar NodeOutcome = {\\n    SUCCESS: \\\"Success\\\"\\n};\\n\\n/**\\n * Gets the current locale and then checks to see if the provided locales have a matching language.\\n * If a matching language is found, it will return that locale.\\n * If not, it will return null.\\n * @param {Array} localeMessages - An array of locale objects to check against.\\n * @returns {Object|null} - The matching locale object or null if no match is found.\\n */\\nfunction getCurrentLocale(localeMessages) {\\n    if (!localeMessages || !Array.isArray(localeMessages) || localeMessages.length === 0) {\\n        return null;\\n    }\\n\\n    var userLangs = requestHeaders.get(\\\"accept-language\\\").get(0).split(\\\",\\\");\\n    for (var j = 0; j < userLangs.length; j++) {\\n        var userLang = userLangs[j].trim().split(';')[0].toLowerCase();\\n        for (var i = 0; i < localeMessages.length; i++) {\\n            if (localeMessages[i].language.toLowerCase() === userLang) {\\n                return localeMessages[i];\\n            }\\n        }\\n    }\\n    return null;\\n}\\n\\n/**\\n * Updates the header, description, and footer of the current node to match the locale provided in shared state.\\n * @param {Object} locales - An object containing arrays of locale message objects.\\n * @returns {null}\\n */\\nfunction renderLocale(locales) {\\n    var header = getCurrentLocale(locales.headers);\\n    var description = getCurrentLocale(locales.descriptions);\\n    var footer = getCurrentLocale(locales.footers);\\n\\n    // Note we are using \\\"textContent\\\" to avoid XSS issues.\\n    // If you want to allow HTML, you can use \\\"innerHTML\\\" instead, but be aware of the risks.\\n    var script = `\\\\\\n        function updateHeader(message) {\\\\\\n            if (!message) return;\\\\\\n            const headerBlock = document.querySelector('.card-header.login-header');\\\\\\n            if (headerBlock) {\\\\\\n                const header = headerBlock.querySelector('h1');\\\\\\n                if (header) {\\\\\\n                    header.textContent = message;\\\\\\n                }\\\\\\n            }\\\\\\n        }\\\\\\n        function updateDescription(message) {\\\\\\n            if (!message) return;\\\\\\n            const descriptionBlock = document.querySelector('.card-header.login-header');\\\\\\n            if (descriptionBlock) {\\\\\\n                const description = descriptionBlock.querySelector('p');\\\\\\n                if (description) {\\\\\\n                    description.textContent = message;\\\\\\n                }\\\\\\n            }\\\\\\n        }\\\\\\n        function updateFooter(message) {\\\\\\n            if (!message) return;\\\\\\n            const footerBlock = document.querySelector('.card-footer');\\\\\\n            if (footerBlock) {\\\\\\n                footerBlock.textContent = message;\\\\\\n            }\\\\\\n        }\\\\\\n        function updateLocales() {\\\\\\n            updateHeader(${header && header.message ? '`' + header.message.replace(/`/g, '\\\\\\\\`') + '`' : 'null'});\\\\\\n            updateDescription(${description && description.message ? '`' + description.message.replace(/`/g, '\\\\\\\\`') + '`' : 'null'});\\\\\\n            updateFooter(${footer && footer.message ? '`' + footer.message.replace(/`/g, '\\\\\\\\`') + '`' : 'null'});\\\\\\n        }\\\\\\n        if (document.readyState === 'loading') {\\\\\\n            document.addEventListener('DOMContentLoaded', updateLocales);\\\\\\n        } else {\\\\\\n            updateLocales();\\\\\\n        }\\\\\\n    `;\\n\\n    callbacksBuilder.scriptTextOutputCallback(script);\\n}\\n\\n//// MAIN\\n(function() {\\n    outcome = NodeOutcome.SUCCESS;\\n    try {\\n        // check if we've already loaded this callback\\n        if (callbacks.isEmpty()) {\\n            // gather the locale\\n            var locales = nodeState.get(\\\"locale\\\");\\n            if (!locales) {\\n                logger.debug(\\\"No locales found in Node State.\\\");\\n            } else {\\n                // render the locale using a scripttextoutputcallback\\n                renderLocale(locales);\\n            }\\n        }\\n    } catch(e) {\\n        logger.error(`Error while setting locale: ${e}`);\\n    }\\n    action.goTo(outcome);\\n}());\"",
+          "default": false,
+          "language": "JAVASCRIPT",
+          "context": "AUTHENTICATION_TREE_DECISION_NODE",
+          "createdBy": "id=ffbd8af2-73a2-43c7-8f26-6efe7b80d395,ou=user,ou=am-config",
+          "creationDate": 1757951299224,
+          "lastModifiedBy": "id=ffbd8af2-73a2-43c7-8f26-6efe7b80d395,ou=user,ou=am-config",
+          "lastModifiedDate": 1758732682123,
+          "evaluatorVersion": "2.0"
+        }
+      },
+      "emailTemplates": {},
+      "socialIdentityProviders": {},
+      "themes": [],
+      "saml2Entities": {},
+      "circlesOfTrust": {}
+    }
+  }
+}
