@@ -31,9 +31,15 @@ exports.formatInteractiveCallbackOptions = function(inputs, callbacksBuilder) {
         text-align: right;\
         position: absolute;\
         padding: 5px;\
+        z-index: 2;\
+    }\
+    .info-details--input {\
         top: 7px;\
         right: -15px;\
-        z-index: 2;\
+    }\
+    .info-details--boolean {\
+        top: inherit;\
+        right: 25px;\
     }\
     .info-details[open] {\
         z-index: 3;\
@@ -41,7 +47,15 @@ exports.formatInteractiveCallbackOptions = function(inputs, callbacksBuilder) {
     `;
     var script = `\
     var updateInput = function(label, required, description, tooltip) {\
-        var input = document.querySelector('*[data-vv-as="' + label + '"]');\
+        var configs = [{ type: "input", selector: '*[data-vv-as="' + label + '"]', tooltipLevel: 2 }, { type: "boolean", selector: '*[data-testid="fr-field-' + label + '"]', tooltipLevel: 0 }];\
+        var configIdx = 0;\
+        var input = null;\
+        var config = null;\
+        while (!input && configIdx < configs.length) {\
+            input = document.querySelector(configs[configIdx].selector);\
+            config = configs[configIdx];\
+            configIdx++;\
+        }\
         if (!input) {\
             return;\
         }\
@@ -54,7 +68,7 @@ exports.formatInteractiveCallbackOptions = function(inputs, callbacksBuilder) {
         }\
         if (tooltip) {\
             var details = document.createElement("details");\
-            details.className = "btn btn-primary info-details";\
+            details.className = "btn btn-primary info-details info-details--" + config.type;\
             var summary = document.createElement("summary");\
             summary.textContent = "?";\
             var description = document.createElement("p");\
@@ -62,7 +76,12 @@ exports.formatInteractiveCallbackOptions = function(inputs, callbacksBuilder) {
             description.style = "font-size: smaller; text-align: right";\
             details.appendChild(summary);\
             details.appendChild(description);\
-            input.parentNode.parentNode.appendChild(details);\
+            var parent = input;\
+            for (var i = 0; i < config.tooltipLevel; i++) {\
+                parent = parent.parentNode;\
+            }\
+            console.log("Adding tooltip to", parent);\
+            parent.appendChild(details);\
         }\
     };\
     var updateInputs = function() {\
